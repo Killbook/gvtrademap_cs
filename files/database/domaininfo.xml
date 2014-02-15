@@ -732,4 +732,13 @@
     <server name="Notos" country="Venezia" />
     <server name="Boreas" country="England" />
   </domain_info>
+     <domain_info name="ハワイ">
+    <server name="Euros" country="France" />
+    <server name="Zephyros" country="England" />
+    <server name="Notos" country="Venezia" />
+    <server name="Boreas" country="England" />
+  </domain_info>
+  
+  
+  
 </domaininfo_root>

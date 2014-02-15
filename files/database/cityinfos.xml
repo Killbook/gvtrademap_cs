@@ -17550,4 +17550,409 @@
 		<item name="マネキン(通常女性型)" price="3000" />
     </group>
   </cityinfo>
+  <cityinfo name="ハワイ">
+    <group name="[交易]">
+      <item name="ヤシ油" price="209" />
+      <item name="タロイモ" price="77" />
+      <item name="キャッサバ" price="68" />
+      <item name="マカダミアナッツ" price="378" />
+      <item name="パパイヤ"  price="346" /> 
+    </group>
+    <group name="[道具]">
+	  <item name="木槍" price="34400" />
+      <item name="狩人の槍" price="38700" />
+	  <item name="釣具" price="2500" />	  
+      <item name="投石" price="30" />
+      <item name="ブーメラン" price="150" />  
+      <item name="強力粘着油" price="200" />
+	  <item name="秘伝の治療薬" price="600" />    	
+	  <item name="治療薬詰め合わせ" price="900" />
+    </group>
+  </cityinfo>
+
+   <cityinfo name="コッコラ">
+    <group name="[交易]">
+      <item name="丸太" price="" />
+      <item name="真ちゅう" price="768" investment="60k" />
+      <item name="鋼" price="778" />
+      <item name="鉄鉱石" price="" />
+      <item name="銅鉱石" price="" />
+      <item name="亜鉛鉱石" price="" />
+      <item name="カラス麦" price="" />
+      <item name="ライ麦" price="" />
+      <item name="白い鉱石" option="*" price="1122" investment="70k" />
+
+    </group>
+    <group name="[道具]">
+      <item name="スナップロック式射撃銃" price="8000" />
+      <item name="釣具" price="2500" />
+      <item name="毒薬" price="250" />
+      <item name="解毒剤" price="100" />
+    </group>
+    <group name="[工房]">
+      <item name="四分儀" price="500" />
+      <item name="望郷のカリヨンベル" price="200" />	  
+      <item name="船歌の楽譜" price="200" />  	  
+      <item name="海洋生物の像彫刻術" price="10000" />
+    </group>
+
+    <group name="[船]">
+      <item name="バルシャ" price="2000" />
+      <item name="ハンザ・コグ" price="24000" />
+      <item name="武装コグ" price="25000" />
+      <item name="軽キャラベル" price="92000" />
+      <item name="小型キャラベル" price="92000" />
+      <item name="2本マストコグ" price="96000" />
+      <item name="フーカー" price="220000" />
+      <item name="ウォーリックコグ" price="230000" />
+      <item name="戦闘用フリュート" price="400000" />
+      <item name="フリュート" price="410000" />
+      <item name="商用フリュート" price="420000" />
+      <item name="軽キャラック" price="478000" />
+      <item name="小型キャラック" price="480000" />
+      <item name="輸送用キャラック" price="488000" />
+      <item name="キャラック" price="720000" />
+      <item name="戦闘用キャラック" price="720000" />
+      <item name="商用キャラック" price="728000" />
+      <item name="ピンネース" price="950000" />
+      <item name="戦闘用ピンネース" price="950000" />
+      <item name="商用ピンネース" price="960000" />
+      <item name="大型キャラック" price="1800000" />
+      <item name="商用大型キャラック" price="1840000" />
+      <item name="探検用大型キャラック" price="3360000" />
+      <item name="商用武装キャラック" price="4000000" />
+      <item name="戦闘用ピンネース★★" option="*" price="142500" />
+      <item name="商用ピンネース★★" option="*" price="144000" />
+      <item name="戦闘用ピンネース★★★" option="*" price="285000" />
+      <item name="商用ピンネース★★★" option="*" price="288000" />
+      <item name="バルティックガレオン★" price="24600000" />
+      <item name="バルティックガレオン★★" option="*" price="6150000" investment="64k" />
+      <item name="バルティックガレオン★★★" price="12300000" />
+      <item name="北欧型重ガレー★" price="12204000" />
+      <item name="北欧型重ガレー★★" option="*" price="3051000" investment="64k" />
+      <item name="北欧型重ガレー★★★" price="6102000" />
+    </group>
+    <group name="[大砲]">
+      <item name="ファルコン砲2門" price="500" />
+      <item name="ファルコン砲4門" price="2000" />
+      <item name="ファルコン砲6門" price="4600" />
+      <item name="ファルコン砲8門" price="8100" />
+      <item name="ミニオン砲2門" price="1400" />
+      <item name="ミニオン砲4門" price="5600" />
+      <item name="ミニオン砲6門" price="12400" />
+      <item name="ミニオン砲8門" price="22400" />
+      <item name="ミニオン砲10門" price="34800" />
+      <item name="セイカー砲2門" price="3200" />
+      <item name="セイカー砲4門" price="12600" />
+      <item name="セイカー砲6門" price="28400" />
+      <item name="セイカー砲8門" price="50500" />
+      <item name="セイカー砲10門" price="79000" />
+      <item name="デミ・カルヴァリン砲2門" price="4000" />
+      <item name="デミ・カルヴァリン砲4門" price="16200" />
+      <item name="デミ・カルヴァリン砲6門" price="36400" />
+      <item name="デミ・カルヴァリン砲8門" price="64600" />
+      <item name="デミ・カルヴァリン砲10門" price="101000" />
+      <item name="デミ・カルヴァリン砲12門" price="145400" />
+      <item name="カルヴァリン砲4門" price="21800" />
+      <item name="カルヴァリン砲6門" price="49100" />
+      <item name="カルヴァリン砲8門" price="87300" />
+      <item name="カルヴァリン砲10門" price="136300" />
+      <item name="カルヴァリン砲12門" price="196300" />
+      <item name="エンジェル砲2門" price="10000" />
+      <item name="エンジェル砲4門" price="39900" />
+      <item name="エンジェル砲6門" price="89800" />
+      <item name="エンジェル砲8門" price="159600" />
+      <item name="エンジェル砲10門" price="249400" />
+      <item name="ラピッドファイア砲2門" price="4900" />
+      <item name="ラピッドファイア砲4門" price="19700" />
+      <item name="ラピッドファイア砲6門" price="44400" />
+      <item name="ラピッドファイア砲8門" price="78900" />
+      <item name="ラピッドファイア砲10門" price="123200" />
+      <item name="デミ・キャノン砲4門" price="6200" />
+      <item name="デミ・キャノン砲6門" price="24800" />
+      <item name="デミ・キャノン砲8門" price="55900" />
+      <item name="デミ・キャノン砲10門" price="99400" />
+      <item name="カロネード砲4門" price="14500" />
+      <item name="パイロ砲4門" price="12500" />
+      <item name="パイロ砲6門" price="38000" />
+      <item name="ドラコニス砲4門" price="18200" />
+      <item name="ドラコニス砲6門" price="55500" />
+      <item name="ドラコニス砲8門" price="103600" />
+      <item name="アンフェール砲4門" price="26600" />
+      <item name="アンフェール砲6門" price="81000" />
+      <item name="フランゴ砲4門" price="12500" />
+      <item name="フランゴ砲6門" price="38000" />
+      <item name="カプリス砲4門" price="18200" />
+      <item name="カプリス砲6門" price="55500" />
+      <item name="カプリス砲8門" price="103600" />
+      <item name="メテオーラ砲4門" price="26600" />
+      <item name="メテオーラ砲6門" price="81000" />
+      <item name="小型ラム" price="1000" />
+      <item name="小型コーヴァス" price="3000" />
+      <item name="小型船首楼" price="5000" />
+      <item name="船首楼" price="16000" />
+      <item name="追加小スプリット" price="2000" />
+      <item name="追加スプリット" price="44000" />
+      <item name="小型船尾楼" price="39000" />
+      <item name="船尾楼" price="130000" />
+      <item name="追加小スパンカー" price="3500" />
+      <item name="追加スパンカー" price="55000" />
+      <item name="造船素材・鋳造の書 第1巻" option="%" />
+    </group>
+    <group name="[板]">
+      <item name="軽量シーダー板" price="880" />
+      <item name="レッドパイン板" price="2700" />
+      <item name="ビーチ板" price="6400" />
+      <item name="エルム板" price="13000" />
+      <item name="オーク板" price="34000" />
+      <item name="銅板" price="73000" />
+      <item name="鉄板" price="130000" />
+      <item name="造船素材・工芸の書 第1巻" option="%" />
+    </group>
+    <group name="[帆]">
+      <item name="ボンネット" price="25000" />
+      <item name="幅広ボンネット" price="38000" />
+      <item name="小インナージブ" price="500" />
+      <item name="インナージブ" price="1700" />
+      <item name="アウタージブ" price="18000" />
+      <item name="アウター＆インナージブ" price="23000" />
+      <item name="フライングアウタージブ" price="49000" />
+      <item name="フライングインナージブ" price="58000" />
+      <item name="フォアステイスル" price="8300" />
+      <item name="ミズンステイスル" price="11000" />
+      <item name="フォアトップゲルンスル" price="2400" />
+      <item name="ミズントップゲルンスル" price="4200" />
+      <item name="フォアトップステイスル" price="29000" />
+      <item name="ミズントップステイスル" price="35000" />
+      <item name="フォアゲルンボンネット" price="110000" />
+      <item name="ミズンゲルンボンネット" price="130000" />
+      <item name="フォアゲルンステイスル" price="22000" />
+      <item name="ミズンゲルンステイスル" price="22000" />
+      <item name="フォアローヤルゲルンスル" price="26000" />
+      <item name="ミズンローヤルステイスル" price="79000" />
+      <item name="フォアトップローヤルスル" price="48000" />
+      <item name="ミズントップローヤルスル" price="45000" />
+      <item name="造船素材・縫製の書 第1巻" option="%" />
+    </group>
+  </cityinfo> 
+  
+    <cityinfo name="ハワイ沖">
+    <group name="[交易]">
+      <item name="イワシ" />
+      <item name="カツオ" />
+      <item name="ヒラアジ" />
+      <item name="カジキ" />
+      <item name="海水" price="-1" />
+      <item name="丸太" price="-1" />
+      <item name="カキ" price="-1" />
+      <item name="竜涎香" price="-1" />
+    </group>
+  </cityinfo>
+  
+ 
+ 
+ 
+  
+     <cityinfo name="サンクトペテルブルク">
+    <group name="[交易]">
+      <item name="フェルト" option="*" price="" />
+      <item name="アレキサンドライト" option="*" price="" investment="17世紀第5期-18世紀第3期登場" />
+      <item name="毛皮" option="*" price="" investment="180K超240k以下" />
+      <item name="ウサギ毛" option="*" price="" />
+      <item name="金" option="*" price="" />
+      <item name="鉄材" option="*" price=""  investment="210k" />
+      <item name="石油" price="508" />
+      <item name="ウォッカ" price="397" />
+      <item name="紙" option="*" price="" investment="120K超180k以下" />
+      <item name="木材" price="1122" investment="70k" />
+    </group>
+    <group name="[道具]">
+      <item name="解毒剤" price="100" />
+      <item name="トビの羽" price="100" />
+      <item name="治療薬" price="300" />
+	  <item name="傷薬詰め合わせ" price="500" />
+	  <item name="モードデザイン集・第1巻" price="10000" />
+      <item name="剣錬成・応用" price="50000" investment="120K以下" />
+      <item name="織物秘伝・生地の書" price="10000" />
+    </group>
+
+    <group name="[工房]">
+      <item name="四分儀" price="500" />
+      <item name="望郷のカリヨンベル" price="200" />	  
+      <item name="船歌の楽譜" price="200" />  	  
+      <item name="簡易サルベージロープ" price="500" />
+      <item name="簡易曳航補助ロープ" price="500" />
+      <item name="船大工入門・縫製の書" price="10000" />
+      <item name="船大工入門・工芸の書" price="10000" />
+      <item name="海洋生物の像彫刻術" price="10000" />
+      <item name="特殊兵装縫製法" price="50000" investment="120K超240k以下" />
+      <item name="汎用小型船体" price="100000" investment="240K超320k以下" />
+      <item name="汎用小型櫂船" price="100000" investment="240K超320k以下" />
+      <item name="汎用小ラティーンセイル" price="30000" investment="240K超320k以下" />
+      <item name="汎用小スクウェアセイル" price="30000" investment="240K超320k以下" />
+      <item name="汎用小型砲門" price="30000" investment="240K超320k以下" />
+    </group>
+
+    <group name="[船]">
+      <item name="バルシャ" price="2000" />
+      <item name="ハンザ・コグ" price="24000" />
+      <item name="武装コグ" price="25000" />
+      <item name="軽キャラベル" price="92000" />
+      <item name="小型キャラベル" price="92000" />
+      <item name="2本マストコグ" price="96000" />
+      <item name="フーカー" price="220000" />
+      <item name="ウォーリックコグ" price="230000" />
+      <item name="戦闘用フリュート" price="400000" />
+      <item name="フリュート" price="410000" />
+      <item name="商用フリュート" price="420000" />
+      <item name="軽キャラック" price="478000" />
+      <item name="小型キャラック" price="480000" />
+      <item name="輸送用キャラック" price="488000" />
+      <item name="キャラック" price="720000" />
+      <item name="戦闘用キャラック" price="720000" />
+      <item name="商用キャラック" price="728000" />
+      <item name="ピンネース" price="950000" />
+      <item name="戦闘用ピンネース" price="950000" />
+      <item name="商用ピンネース" price="960000" />
+      <item name="大型キャラック" price="1800000" />
+      <item name="商用大型キャラック" price="1840000" />
+      <item name="探検用大型キャラック" price="3360000" />
+      <item name="商用武装キャラック" price="4000000" />
+      <item name="戦闘用ピンネース★★" option="*" price="142500" />
+      <item name="商用ピンネース★★" option="*" price="144000" />
+      <item name="戦闘用ピンネース★★★" option="*" price="285000" />
+      <item name="商用ピンネース★★★" option="*" price="288000" />
+      <item name="バルティックガレオン★" price="24600000" />
+      <item name="バルティックガレオン★★" option="*" price="6150000" investment="64k" />
+      <item name="バルティックガレオン★★★" price="12300000" />
+      <item name="北欧型重ガレー★" price="12204000" />
+      <item name="北欧型重ガレー★★" option="*" price="3051000" investment="64k" />
+      <item name="北欧型重ガレー★★★" price="6102000" />
+    </group>
+    <group name="[大砲]">
+      <item name="ファルコン砲2門" price="500" />
+      <item name="ファルコン砲4門" price="2000" />
+      <item name="ファルコン砲6門" price="4600" />
+      <item name="ファルコン砲8門" price="8100" />
+      <item name="ミニオン砲2門" price="1400" />
+      <item name="ミニオン砲4門" price="5600" />
+      <item name="ミニオン砲6門" price="12400" />
+      <item name="ミニオン砲8門" price="22400" />
+      <item name="ミニオン砲10門" price="34800" />
+      <item name="セイカー砲2門" price="3200" />
+      <item name="セイカー砲4門" price="12600" />
+      <item name="セイカー砲6門" price="28400" />
+      <item name="セイカー砲8門" price="50500" />
+      <item name="セイカー砲10門" price="79000" />
+      <item name="デミ・カルヴァリン砲2門" price="4000" />
+      <item name="デミ・カルヴァリン砲4門" price="16200" />
+      <item name="デミ・カルヴァリン砲6門" price="36400" />
+      <item name="デミ・カルヴァリン砲8門" price="64600" />
+      <item name="デミ・カルヴァリン砲10門" price="101000" />
+      <item name="デミ・カルヴァリン砲12門" price="145400" />
+      <item name="カルヴァリン砲4門" price="21800" />
+      <item name="カルヴァリン砲6門" price="49100" />
+      <item name="カルヴァリン砲8門" price="87300" />
+      <item name="カルヴァリン砲10門" price="136300" />
+      <item name="カルヴァリン砲12門" price="196300" />
+      <item name="エンジェル砲2門" price="10000" />
+      <item name="エンジェル砲4門" price="39900" />
+      <item name="エンジェル砲6門" price="89800" />
+      <item name="エンジェル砲8門" price="159600" />
+      <item name="エンジェル砲10門" price="249400" />
+      <item name="ラピッドファイア砲2門" price="4900" />
+      <item name="ラピッドファイア砲4門" price="19700" />
+      <item name="ラピッドファイア砲6門" price="44400" />
+      <item name="ラピッドファイア砲8門" price="78900" />
+      <item name="ラピッドファイア砲10門" price="123200" />
+      <item name="デミ・キャノン砲4門" price="6200" />
+      <item name="デミ・キャノン砲6門" price="24800" />
+      <item name="デミ・キャノン砲8門" price="55900" />
+      <item name="デミ・キャノン砲10門" price="99400" />
+      <item name="カロネード砲4門" price="14500" />
+      <item name="パイロ砲4門" price="12500" />
+      <item name="パイロ砲6門" price="38000" />
+      <item name="ドラコニス砲4門" price="18200" />
+      <item name="ドラコニス砲6門" price="55500" />
+      <item name="ドラコニス砲8門" price="103600" />
+      <item name="アンフェール砲4門" price="26600" />
+      <item name="アンフェール砲6門" price="81000" />
+      <item name="フランゴ砲4門" price="12500" />
+      <item name="フランゴ砲6門" price="38000" />
+      <item name="カプリス砲4門" price="18200" />
+      <item name="カプリス砲6門" price="55500" />
+      <item name="カプリス砲8門" price="103600" />
+      <item name="メテオーラ砲4門" price="26600" />
+      <item name="メテオーラ砲6門" price="81000" />
+      <item name="小型ラム" price="1000" />
+	  <item name="ラム" price="4800" />
+      <item name="小型コーヴァス" price="3000" />
+	  <item name="コーヴァス" price="24000" />
+      <item name="小型船首楼" price="5000" />
+      <item name="船首楼" price="16000" />
+      <item name="追加小スプリット" price="2000" />
+      <item name="追加スプリット" price="44000" />
+      <item name="小型船尾楼" price="39000" />
+      <item name="船尾楼" price="130000" />
+      <item name="追加小スパンカー" price="3500" />
+      <item name="追加スパンカー" price="55000" />
+    </group>
+    <group name="[板]">
+      <item name="シーダー板" price="880" />
+      <item name="軽量シーダー板" price="880" />
+      <item name="レッドパイン板" price="2700" />
+      <item name="軽量レッドパイン板" price="3000" />
+      <item name="ビーチ板" price="6400" />
+      <item name="軽量ビーチ板" price="7000" />	  
+      <item name="エルム板" price="13000" />
+      <item name="オーク板" price="34000" />
+      <item name="軽量オーク板" price="38000" />
+      <item name="銅板" price="73000" />
+	  <item name="簡易鉄板" price="80000" />
+      <item name="鉄板" price="130000" />
+    </group>
+    <group name="[帆]">
+      <item name="ボンネット" price="25000" />
+      <item name="幅広ボンネット" price="38000" />
+      <item name="小インナージブ" price="500" />
+      <item name="インナージブ" price="1700" />
+      <item name="アウタージブ" price="18000" />
+      <item name="アウター＆インナージブ" price="23000" />
+      <item name="フライングアウタージブ" price="49000" />
+      <item name="フライングインナージブ" price="58000" />
+      <item name="フォアステイスル" price="8300" />
+      <item name="ミズンステイスル" price="11000" />
+      <item name="フォアトップゲルンスル" price="2400" />
+      <item name="ミズントップゲルンスル" price="4200" />
+      <item name="フォアトップステイスル" price="29000" />
+      <item name="ミズントップステイスル" price="35000" />
+      <item name="フォアゲルンボンネット" price="110000" />
+      <item name="ミズンゲルンボンネット" price="130000" />
+      <item name="フォアゲルンステイスル" price="22000" />
+      <item name="ミズンゲルンステイスル" price="22000" />
+      <item name="フォアローヤルゲルンスル" price="26000" />
+      <item name="ミズンローヤルステイスル" price="79000" />
+      <item name="フォアトップローヤルスル" price="48000" />
+      <item name="ミズントップローヤルスル" price="45000" />
+    </group>
+	    <group name="[人物]">
+      <item name="罠" option="s" price="冒険ギルド" />
+      <item name="ノルド語" option="s" price="商人ギルド" />
+      <item name="スラブ語" option="s" price="海事ギルド" />
+      <item name="海洋生物" option="h" price="大黒屋光太夫" />
+      <item name="日本語" option="s" price="大黒屋光太夫" />
+      <item name="極北諸語" option="s" price="大黒屋光太夫" />
+	</group>
+	    <group name="[行商人]">
+      <item name="予備舵" option="-" />
+      <item name="停戦協定" option="-" />
+      <item name="懲罰ロープ" option="-" />
+      <item name="安眠ハンモック" option="-" />
+      <item name="目印のリボン" option="-" />
+    </group>
+	
+	
+  </cityinfo> 
+  
+  
 </cityinfo_root>
