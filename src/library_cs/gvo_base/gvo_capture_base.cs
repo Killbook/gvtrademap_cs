@@ -360,49 +360,59 @@ namespace gvo_base
 		---------------------------------------------------------------------------*/
 		private void analize_point()
 		{
-			bool	chk	= false;
+            m_point.X = 0;
+            m_point.Y = 0;
+            int state = 0; // 0:先頭余白 1:X座標解析中 2:X,Y区切り文字 3:Y座標解析中
+            for (int i = 0; i < 10; ++i)
+            {
+                int num;
+                if (analize_number(i, out num))
+                {
+                    switch (state)
+                    {
+                        case 0:
+                            state = 1;
+                            m_point.X = m_point.X * 10 + num;
+                            break;
+                        case 1:
+                            m_point.X = m_point.X * 10 + num;
+                            break;
+                        case 2:
+                            state = 3;
+                            m_point.Y = m_point.Y * 10 + num;
+                            break;
+                        case 3:
+                            m_point.Y = m_point.Y * 10 + num;
+                            break;
+                    }
+                }
+                else
+                {
+                    switch (state)
+                    {
+                        case 0:
+                            break;
+                        case 1:
+                            state = 2;
+                            break;
+                        case 2:
+                            break;
+                        case 3:
+                            state = 4;
+                            break;
+                    }
+                }
+                if (state == 4)
+                {
+                    break;
+                }
+            }
 
-			// x
-			m_point.X	= 0;
-			for(int i=0; i<5; i++){
-				int num;
-				if(analize_number(i, out num)){
-					chk			= true;		// 解析できた
-					m_point.X	*= 10;
-					m_point.X	+= num;
-				}else{
-					if(chk){
-						// 1文字以上キャプチャ出来てて、途中で失敗
-						chk		= false;
-						break;				// 解析中止
-					}
-				}
-			}
-			if(!chk){
-				m_point		= new Point(-1, -1);	// 解析失敗
-				return;
-			}
-
-			// y
-			chk			= false;
-			m_point.Y	= 0;
-			for(int i=6; i<10; i++){
-				int num;
-				if(analize_number(i, out num)){
-					chk			= true;		// 解析できた
-					m_point.Y	*= 10;
-					m_point.Y	+= num;
-				}else{
-					if(chk){
-						// 1文字以上キャプチャ出来てて、途中で失敗
-						break;				// 成功したと見るしかない
-					}
-				}
-			}
-			if(!chk){
-				m_point		= new Point(-1, -1);	// 解析失敗
-			}
-		}
+            if (state < 3)
+            {
+                m_point = new Point(-1, -1); // 解析失敗
+            }
+        }
 
 		/*-------------------------------------------------------------------------
 		 日付を得る
