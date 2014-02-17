@@ -27,7 +27,7 @@ namespace gvtrademap_cs
 	{
 		private const int					COUNTER_MAX	= 999;	// 999日でカンストする
 	
-		private setting						m_setting;
+		private GlobalSettings						m_setting;
 
 		private bool						m_is_now_build;		// 造船中ならtrue
 		private string						m_ship_name;		// 船名
@@ -41,7 +41,7 @@ namespace gvtrademap_cs
 		/*-------------------------------------------------------------------------
 		 
 		---------------------------------------------------------------------------*/
-		public gvo_build_ship_counter(setting _setting)
+		public gvo_build_ship_counter(GlobalSettings _setting)
 			: base()
 		{
 			// カンストする日数を設定する

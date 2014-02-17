@@ -34,7 +34,7 @@ namespace gvtrademap_cs
 	public partial class sea_routes_form2 : Form
 	{
 		private gvt_lib					m_lib;					// よく使う機能をまとめたもの
-		private database				m_db;					// データベース
+		private GvoDatabase				m_db;					// データベース
 
 		private bool					m_disable_update_select;
 
@@ -45,7 +45,7 @@ namespace gvtrademap_cs
 		/*-------------------------------------------------------------------------
 
 		---------------------------------------------------------------------------*/
-		public sea_routes_form2(gvt_lib lib, database db)
+		public sea_routes_form2(gvt_lib lib, GvoDatabase db)
 		{
 			m_lib		= lib;
 			m_db		= db;
@@ -61,9 +61,9 @@ namespace gvtrademap_cs
 			toolTip1.BackColor			= Color.LightYellow;
 
 			// ViewとDBを関連付けておく
-			m_view1		= new list_view_db(listView1, m_db.searoute.searoutes);
-			m_view2		= new list_view_db(listView2, m_db.searoute.favorite_sea_routes);
-			m_view3		= new list_view_db(listView3, m_db.searoute.trash_sea_routes);
+			m_view1		= new list_view_db(listView1, m_db.SeaRoute.searoutes);
+			m_view2		= new list_view_db(listView2, m_db.SeaRoute.favorite_sea_routes);
+			m_view3		= new list_view_db(listView3, m_db.SeaRoute.trash_sea_routes);
 
 			// 各ページの初期化
 			init_page1();
@@ -133,7 +133,7 @@ namespace gvtrademap_cs
 				this.Hide();	// 非表示にする
 
 				// 選択状態をリセットする
-				m_db.searoute.ResetSelectFlag();
+				m_db.SeaRoute.ResetSelectFlag();
 			}
 		}
 
@@ -186,7 +186,7 @@ namespace gvtrademap_cs
 		---------------------------------------------------------------------------*/
 		private void update_sea_routes_list()
 		{
-			tabPage1.Text					= String.Format("航路図({0})", m_db.searoute.searoutes.Count);
+			tabPage1.Text					= String.Format("航路図({0})", m_db.SeaRoute.searoutes.Count);
 			update_list_count(m_view1);
 		}
 
@@ -195,7 +195,7 @@ namespace gvtrademap_cs
 		---------------------------------------------------------------------------*/
 		private void update_favorite_sea_routes_list()
 		{
-			tabPage2.Text					= String.Format("お気に入り航路({0})", m_db.searoute.favorite_sea_routes.Count);
+			tabPage2.Text					= String.Format("お気に入り航路({0})", m_db.SeaRoute.favorite_sea_routes.Count);
 			update_list_count(m_view2);
 		}
 
@@ -204,7 +204,7 @@ namespace gvtrademap_cs
 		---------------------------------------------------------------------------*/
 		private void update_trash_sea_routes_list()
 		{
-			tabPage3.Text					= String.Format("過去の航路図(非表示)({0})", m_db.searoute.trash_sea_routes.Count);
+			tabPage3.Text					= String.Format("過去の航路図(非表示)({0})", m_db.SeaRoute.trash_sea_routes.Count);
 			update_list_count(m_view3);
 		}
 
@@ -273,7 +273,7 @@ namespace gvtrademap_cs
 			if(m_disable_update_select)			return;
 
 			// 選択状態をリセットする
-			m_db.searoute.ResetSelectFlag();
+			m_db.SeaRoute.ResetSelectFlag();
 
 			if(view.view.SelectedIndices.Count < 1)	return;
 
@@ -341,7 +341,7 @@ namespace gvtrademap_cs
 		private void set_draw_flag(list_view_db view, bool is_show)
 		{
 			// 選択状態をリセットする
-			m_db.searoute.ResetSelectFlag();
+			m_db.SeaRoute.ResetSelectFlag();
 
 			if(view.view.SelectedIndices.Count < 1)	return;
 
@@ -390,7 +390,7 @@ namespace gvtrademap_cs
 		private void button3_Click(object sender, EventArgs e)
 		{
 			// 選択状態をリセットする
-			m_db.searoute.ResetSelectFlag();
+			m_db.SeaRoute.ResetSelectFlag();
 
 			m_disable_update_select	= true;
 			listView1.SelectedIndices.Clear();
@@ -409,8 +409,8 @@ namespace gvtrademap_cs
 			if(list == null)	return;
 			if(!ask_remove())	return;
 
-			m_db.searoute.RemoveSeaRoutes(list);
-			m_db.searoute.ResetSelectFlag();
+			m_db.SeaRoute.RemoveSeaRoutes(list);
+			m_db.SeaRoute.ResetSelectFlag();
 			update_sea_routes_list();
 		}
 		private void toolStripMenuItem4_Click(object sender, EventArgs e)
@@ -419,8 +419,8 @@ namespace gvtrademap_cs
 			if(list == null)	return;
 			if(!ask_remove())	return;
 
-			m_db.searoute.RemoveFavoriteSeaRoutes(list);
-			m_db.searoute.ResetSelectFlag();
+			m_db.SeaRoute.RemoveFavoriteSeaRoutes(list);
+			m_db.SeaRoute.ResetSelectFlag();
 			update_favorite_sea_routes_list();
 		}
 		private void toolStripMenuItem8_Click(object sender, EventArgs e)
@@ -429,8 +429,8 @@ namespace gvtrademap_cs
 			if(list == null)	return;
 			if(!ask_remove())	return;
 
-			m_db.searoute.RemoveTrashSeaRoutes(list);
-			m_db.searoute.ResetSelectFlag();
+			m_db.SeaRoute.RemoveTrashSeaRoutes(list);
+			m_db.SeaRoute.ResetSelectFlag();
 			update_trash_sea_routes_list();
 		}
 
@@ -470,8 +470,8 @@ namespace gvtrademap_cs
 		{
 			List<SeaRoutes.Voyage>	list	= get_selected_routes_list(m_view1);
 			if(list == null)	return;
-			m_db.searoute.MoveSeaRoutesToFavoriteSeaRoutes(list);
-			m_db.searoute.ResetSelectFlag();
+			m_db.SeaRoute.MoveSeaRoutesToFavoriteSeaRoutes(list);
+			m_db.SeaRoute.ResetSelectFlag();
 			UpdateAllList();
 		}
 
@@ -482,8 +482,8 @@ namespace gvtrademap_cs
 		{
 			List<SeaRoutes.Voyage>	list	= get_selected_routes_list(m_view1);
 			if(list == null)	return;
-			m_db.searoute.MoveSeaRoutesToTrashSeaRoutes(list);
-			m_db.searoute.ResetSelectFlag();
+			m_db.SeaRoute.MoveSeaRoutesToTrashSeaRoutes(list);
+			m_db.SeaRoute.ResetSelectFlag();
 			UpdateAllList();
 		}
 
@@ -494,8 +494,8 @@ namespace gvtrademap_cs
 		{
 			List<SeaRoutes.Voyage>	list	= get_selected_routes_list(m_view2);
 			if(list == null)	return;
-			m_db.searoute.MoveFavoriteSeaRoutesToTrashSeaRoutes(list);
-			m_db.searoute.ResetSelectFlag();
+			m_db.SeaRoute.MoveFavoriteSeaRoutesToTrashSeaRoutes(list);
+			m_db.SeaRoute.ResetSelectFlag();
 			UpdateAllList();
 		}
 
@@ -506,8 +506,8 @@ namespace gvtrademap_cs
 		{
 			List<SeaRoutes.Voyage>	list	= get_selected_routes_list(m_view3);
 			if(list == null)	return;
-			m_db.searoute.MoveTrashSeaRoutesToFavoriteSeaRoutes(list);
-			m_db.searoute.ResetSelectFlag();
+			m_db.SeaRoute.MoveTrashSeaRoutesToFavoriteSeaRoutes(list);
+			m_db.SeaRoute.ResetSelectFlag();
 			UpdateAllList();
 		}
 
@@ -550,9 +550,9 @@ namespace gvtrademap_cs
 		---------------------------------------------------------------------------*/
 		private ListViewItem create_item(SeaRoutes.Voyage i, bool is_draw_show_flag)
 		{
-			GvoWorldInfo.Info	info1	= m_db.world.FindInfo_WithoutSea(transform.ToPoint(i.MapPoint1st));
+			GvoWorldInfo.Info	info1	= m_db.World.FindInfo_WithoutSea(transform.ToPoint(i.MapPoint1st));
 			string	_1st_name		= (info1 != null)? info1.Name: "";
-			GvoWorldInfo.Info	info2	= m_db.world.FindInfo_WithoutSea(transform.ToPoint(i.MapPointLast));
+			GvoWorldInfo.Info	info2	= m_db.World.FindInfo_WithoutSea(transform.ToPoint(i.MapPointLast));
 			string last_name		= (info2 != null)? info2.Name: "";
 
 			string	show_str		= (i.IsEnableDraw)? "表示": "非表示";

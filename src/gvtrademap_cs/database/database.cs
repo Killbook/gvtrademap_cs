@@ -23,7 +23,7 @@ namespace gvtrademap_cs
 	/*-------------------------------------------------------------------------
 
 	---------------------------------------------------------------------------*/
-	public class database : IDisposable
+	public class GvoDatabase : IDisposable
 	{
 		/*-------------------------------------------------------------------------
 
@@ -38,7 +38,8 @@ namespace gvtrademap_cs
 		private interest_days		m_interest_days;	// 利息からの経過日数
 		private gvo_build_ship_counter	m_build_ship_counter;	// 造船日数管理
 		private map_mark			m_map_mark;			// メモアイコン
-		private ItemDatabaseCustom		m_item_database;	// アイテムデータベース
+		private ItemDatabaseCustom	m_item_database;	// アイテムデータベース
+		private ShipPartsDataBase	m_ship_parts_database;	// 船部品データベース
 		private sea_area			m_sea_area;			// 危険海域変動システム
 		private gvo_season			m_season;			// 季節チェック
 	
@@ -47,24 +48,24 @@ namespace gvtrademap_cs
 		/*-------------------------------------------------------------------------
 
 		---------------------------------------------------------------------------*/
-		public GvoWorldInfo world				{	get{	return m_world_info;		}}
-		public gvo_capture capture			{	get{	return m_capture;			}}
-		public SeaRoutes searoute			{	get{	return m_searoute;			}}
-		public speed_calculator speed		{	get{	return m_speed;				}}
-		public ShareRoutes share_routes	{	get{	return m_share_routes;		}}
-		public WebIcons web_icons			{	get{	return m_web_icons;			}}
-		public gvo_chat gvochat				{	get{	return m_gvochat;			}}
-		public interest_days interest_days	{	get{	return m_interest_days;		}}
-		public gvo_build_ship_counter build_ship_counter	{	get{	return m_build_ship_counter;	}}
-		public map_mark map_mark			{	get{	return m_map_mark;			}}
-		public ItemDatabaseCustom item_database	{	get{	return m_item_database;		}}
-		public sea_area sea_area			{	get{	return m_sea_area;			}}
-		public gvo_season season			{	get{	return m_season;			}}
+		public GvoWorldInfo World				{	get{	return m_world_info;		}}
+		public gvo_capture Capture			{	get{	return m_capture;			}}
+		public SeaRoutes SeaRoute			{	get{	return m_searoute;			}}
+		public speed_calculator SpeedCalculator		{	get{	return m_speed;				}}
+		public ShareRoutes ShareRoutes	{	get{	return m_share_routes;		}}
+		public WebIcons WebIcons			{	get{	return m_web_icons;			}}
+		public gvo_chat GvoChat				{	get{	return m_gvochat;			}}
+		public interest_days InterestDays	{	get{	return m_interest_days;		}}
+		public gvo_build_ship_counter BuildShipCounter	{	get{	return m_build_ship_counter;	}}
+		public map_mark MapMark			{	get{	return m_map_mark;			}}
+		public ItemDatabaseCustom ItemDatabase	{	get{	return m_item_database;		}}
+		public sea_area SeaArea			{	get{	return m_sea_area;			}}
+		public gvo_season GvoSeason			{	get{	return m_season;			}}
 	
 		/*-------------------------------------------------------------------------
 
 		---------------------------------------------------------------------------*/
-		public database(gvt_lib lib)
+		public GvoDatabase(gvt_lib lib)
 		{
 			m_lib						= lib;
 
@@ -74,12 +75,15 @@ namespace gvtrademap_cs
 			// 世界の情報
 			m_world_info				= new GvoWorldInfo(	lib,
 															m_season,
-															def.WORLDINFO_FULLFNAME,
-															def.DOMAINS_INDEX_FULLFNAME,
+															def.WORLDINFOS_FULLNAME,
 															def.MEMO_PATH);
 
 			// アイテムデータベース
 			m_item_database				= new ItemDatabaseCustom(def.ITEMDB_FULLNAME);
+
+			// 船パーツ
+			m_ship_parts_database		= new ShipPartsDataBase(def.SHIP_PARTS_FULLNAME);
+            m_item_database.MergeShipPartsDatabase(m_ship_parts_database);
 
 			// 速度
 			m_speed						= new speed_calculator(def.GAME_WIDTH);
@@ -142,7 +146,7 @@ namespace gvtrademap_cs
 			m_searoute.WriteTrash(def.TRASH_SEAROUTE_FULLFNAME);
 
 			// 詳細情報書き出し
-			m_world_info.Write(def.INFO_PATH);
+			m_world_info.WriteDomains(def.LOCAL_NEW_DOMAINS_INDEX_FULLFNAME);
 
 			// メモ書き出し
 			m_world_info.WriteMemo(def.MEMO_PATH);
@@ -208,27 +212,27 @@ namespace gvtrademap_cs
 		/*-------------------------------------------------------------------------
 		 できるだけ検索
 		---------------------------------------------------------------------------*/
-		public List<find> FindAll(string find_string)
+		public List<Find> FindAll(string find_string)
 		{
-			List<find>	list	= new List<find>();
+			List<Find>	list	= new List<Find>();
 
-			find.FindHandler	handler;
+			Find.FindHandler	handler;
 
 			// 検索方法
 			// 部分一致等
 			switch(m_lib.setting.find_filter3){
 			case _find_filter3.full_match:
-				handler		= new find.FindHandler(find.FindHander2);
+				handler		= new Find.FindHandler(Find.FindHander2);
 				break;
 			case _find_filter3.prefix_search:
-				handler		= new find.FindHandler(find.FindHander3);
+				handler		= new Find.FindHandler(Find.FindHander3);
 				break;
 			case _find_filter3.suffix_search:
-				handler		= new find.FindHandler(find.FindHander4);
+				handler		= new Find.FindHandler(Find.FindHander4);
 				break;
 			case _find_filter3.full_text_search:
 			default:
-				handler		= new find.FindHandler(find.FindHander1);
+				handler		= new Find.FindHandler(Find.FindHander1);
 				break;
 			}
 			
@@ -238,7 +242,7 @@ namespace gvtrademap_cs
 				// 世界の情報から検索
 				if(m_lib.setting.find_filter == _find_filter.both
 					|| m_lib.setting.find_filter == _find_filter.world_info){
-					world.FindAll(find_string, list, handler);
+					World.FindAll(find_string, list, handler);
 				}
 				// アイテムデータベースから検索
 				if(m_lib.setting.find_filter == _find_filter.both
@@ -250,7 +254,7 @@ namespace gvtrademap_cs
 				// 世界の情報から検索
 				if(m_lib.setting.find_filter == _find_filter.both
 					|| m_lib.setting.find_filter == _find_filter.world_info){
-					world.FindAll_FromType(find_string, list, handler);
+					World.FindAll_FromType(find_string, list, handler);
 				}
 				// アイテムデータベースから検索
 				if(m_lib.setting.find_filter == _find_filter.both
@@ -264,38 +268,35 @@ namespace gvtrademap_cs
 		/*-------------------------------------------------------------------------
 		 文化圏一覧を得る
 		---------------------------------------------------------------------------*/
-		public List<find> GetCulturalSphereList()
+		public List<Find> GetCulturalSphereList()
 		{
-			List<find>	list	= new List<find>();
 			// 文化圏検索
 			// 必ず特定の一覧が得られる
-			world.CulturalSphereList(list);
-			return list;
+			return new List<Find>(World.CulturalSphereList());
 		}
 
 		/*-------------------------------------------------------------------------
 		 できるだけ検索
 		---------------------------------------------------------------------------*/
-		public class find
+		public class Find
 		{
-			public enum find_type{
-				data,				// アイテム
-				data_price,			// アイテムの値段内
-				database,			// アイテムデータベース
-				info_name,			// 街名等
-				lang,				// 使用言語
-				cultural_sphere,	// 文化圏
-				MAX
+			public enum FindType{
+				Data,				// アイテム
+				DataPrice,			// アイテムの値段内
+				Database,			// アイテムデータベース
+				InfoName,			// 街名等
+				Lang,				// 使用言語
+                CulturalSphere,		// 文化圏
 			};
 
-			private find_type						m_type;				// 見つかった種類
+			private FindType						m_type;				// 見つかった種類
 
 			private GvoWorldInfo.Info.Group.Data	m_data;				// アイテム
-			private ItemDatabaseCustom.Data				m_database;			// アイテムデータベース
+			private ItemDatabase.Data				m_database;			// アイテムデータベース
 			private string							m_info_name;		// 街名等
 																		// スポット用に Type が database 以外は内容が入る
 			private string							m_lang;				// 使用言語
-			private GvoDomains.CulturalSphere		m_cultural_sphere;	// 文化圏検索時
+			private GvoWorldInfo.CulturalSphere		m_cultural_sphere;	// 文化圏検索時
 			private string							m_cultural_sphere_tool_tip;
 
 			// str1 に str2 が含まれるかどうかを返す
@@ -304,93 +305,93 @@ namespace gvtrademap_cs
 			/*-------------------------------------------------------------------------
 			 
 			---------------------------------------------------------------------------*/
-			public find_type type						{	get{	return m_type;		}}
-			public GvoWorldInfo.Info.Group.Data data	{	get{	return m_data;		}}
-			public ItemDatabaseCustom.Data database			{	get{	return m_database;	}}
-			public string info_name						{	get{	return m_info_name;	}}
-			public string lang							{	get{	return m_lang;		}}
-			public GvoDomains.CulturalSphere cultural_sphere	{	get{	return m_cultural_sphere;	}}
+			public FindType Type						{	get{	return m_type;		}}
+			public GvoWorldInfo.Info.Group.Data Data	{	get{	return m_data;		}}
+			public ItemDatabaseCustom.Data Database			{	get{	return m_database;	}}
+			public string InfoName						{	get{	return m_info_name;	}}
+			public string Lang							{	get{	return m_lang;		}}
+			public GvoWorldInfo.CulturalSphere CulturalSphere	{	get{	return m_cultural_sphere;	}}
 
 			// リストへの表示用
-			public string name_string{
+			public string NameString{
 				get{
-					switch(type){
-					case find_type.data:
-						if(data == null)		break;
-						return data.Name + "[" + data.Price + "]";
-					case find_type.data_price:
-						if(data == null)		break;
-						return data.Price + "[" + data.Name + "]";
-					case find_type.database:
-						if(database == null)	break;
-						return database.Name;
-					case find_type.info_name:
-						if(info_name == null)	break;
-						return info_name;
-					case find_type.lang:
-						if(lang == null)		break;
-						return lang;
-					case find_type.cultural_sphere:
-						return GvoDomains.GetCulturalSphereString(cultural_sphere);
+					switch(Type){
+					case FindType.Data:
+						if(Data == null)		break;
+						return Data.Name + "[" + Data.Price + "]";
+					case FindType.DataPrice:
+						if(Data == null)		break;
+						return Data.Price + "[" + Data.Name + "]";
+					case FindType.Database:
+						if(Database == null)	break;
+						return Database.Name;
+					case FindType.InfoName:
+						if(InfoName == null)	break;
+						return InfoName;
+					case FindType.Lang:
+						if(Lang == null)		break;
+						return Lang;
+					case FindType.CulturalSphere:
+						return GvoWorldInfo.GetCulturalSphereString(CulturalSphere);
 					}
 					return "不明";
 				}
 			}
-			public string type_string{
+			public string TypeString{
 				get{
-					switch(type){
-					case find_type.data:
-						if(data == null)		break;
-						if(data.ItemDb != null)	return data.ItemDb.Type;
-						return data.GroupIndexString;
-					case find_type.data_price:
-						if(data == null)		break;
-						if(data.ItemDb != null)	return data.ItemDb.Type + "[TAG]";
-						return data.GroupIndexString + "[TAG]";
-					case find_type.database:
-						if(database == null)	break;
-						return database.Type;
-					case find_type.info_name:
+					switch(Type){
+					case FindType.Data:
+						if(Data == null)		break;
+						if(Data.ItemDb != null)	return Data.ItemDb.Type;
+						return Data.GroupIndexString;
+					case FindType.DataPrice:
+						if(Data == null)		break;
+						if(Data.ItemDb != null)	return Data.ItemDb.Type + "[TAG]";
+						return Data.GroupIndexString + "[TAG]";
+					case FindType.Database:
+						if(Database == null)	break;
+						return Database.Type;
+					case FindType.InfoName:
 						return "街名等";
-					case find_type.lang:
+					case FindType.Lang:
 						return "使用言語";
-					case find_type.cultural_sphere:
+					case FindType.CulturalSphere:
 						return "文化圏";
 					}
 					return "不明";
 				}
 			}
-			public string spot_string{
+			public string SpotString{
 				get{
-					switch(type){
-					case find_type.data:
-					case find_type.data_price:
-					case find_type.lang:
-					case find_type.info_name:
-						if(info_name == null)	break;
-						return info_name;
-					case find_type.database:
+					switch(Type){
+					case FindType.Data:
+					case FindType.DataPrice:
+					case FindType.Lang:
+					case FindType.InfoName:
+						if(InfoName == null)	break;
+						return InfoName;
+					case FindType.Database:
 						return "アイテムデータベース";
-					case find_type.cultural_sphere:
+					case FindType.CulturalSphere:
 						return "";
 					}
 					return "不明";
 				}
 			}
-			public string tool_tip{
+			public string TooltipString{
 				get{
-					switch(type){
-					case find_type.database:
-						if(database == null)	break;
-						return database.GetToolTipString();
-					case find_type.data:
-					case find_type.data_price:
-						if(data == null)		break;
-						return data.TooltipString;
-					case find_type.info_name:
-					case find_type.lang:
+					switch(Type){
+					case FindType.Database:
+						if(Database == null)	break;
+						return Database.GetToolTipString();
+					case FindType.Data:
+					case FindType.DataPrice:
+						if(Data == null)		break;
+						return Data.TooltipString;
+					case FindType.InfoName:
+					case FindType.Lang:
 						break;
-					case find_type.cultural_sphere:
+					case FindType.CulturalSphere:
 						return m_cultural_sphere_tool_tip;
 					}
 					return "";
@@ -400,61 +401,47 @@ namespace gvtrademap_cs
 			/*-------------------------------------------------------------------------
 			 
 			---------------------------------------------------------------------------*/
-			public find(string _info_name)
-			{
-				m_type				= find_type.info_name;
+      private Find()
+      {
+        this.m_type = FindType.InfoName;
+        this.m_data = (GvoWorldInfo.Info.Group.Data) null;
+        this.m_database = (ItemDatabase.Data) null;
+        this.m_info_name = "";
+        this.m_lang = (string) null;
+        this.m_cultural_sphere = GvoWorldInfo.CulturalSphere.Unknown;
+        this.m_cultural_sphere_tool_tip = "";
+      }
 
-				m_data				= null;
-				m_database			= null;
+			public Find(string _info_name) : this()
+			{
+				m_type				= FindType.InfoName;
 				m_info_name			= _info_name;
-				m_lang				= null;
-				m_cultural_sphere	= GvoDomains.CulturalSphere.unknown;
-				m_cultural_sphere_tool_tip	= "";
 			}
-			public find(find_type _type, string _info_name, GvoWorldInfo.Info.Group.Data _data)
+			public Find(FindType _type, string _info_name, GvoWorldInfo.Info.Group.Data _data) : this()
 			{
 				m_type				= _type;
 
 				m_data				= _data;
-				m_database			= null;
 				if(m_data != null){
 					m_database	= m_data.ItemDb;
 				}
 				m_info_name			= _info_name;
-				m_lang				= null;
-				m_cultural_sphere	= GvoDomains.CulturalSphere.unknown;
-				m_cultural_sphere_tool_tip	= "";
 			}
-			public find(string _info_name, string _lang)
+			public Find(string _info_name, string _lang) : this()
 			{
-				m_type				= find_type.lang;
-
-				m_data				= null;
-				m_database			= null;
+				m_type				= FindType.Lang;
 				m_info_name			= _info_name;
 				m_lang				= _lang;
-				m_cultural_sphere	= GvoDomains.CulturalSphere.unknown;
-				m_cultural_sphere_tool_tip	= "";
 			}
-			public find(ItemDatabaseCustom.Data _database)
+			public Find(ItemDatabaseCustom.Data _database)
 			{
-				m_type				= find_type.database;
-
-				m_data				= null;
+				m_type				= FindType.Database;
 				m_database			= _database;
-				m_info_name			= null;
-				m_lang				= null;
-				m_cultural_sphere	= GvoDomains.CulturalSphere.unknown;
-				m_cultural_sphere_tool_tip	= "";
 			}
-			public find(GvoDomains.CulturalSphere cs, string tooltip_str)
+			public Find(GvoWorldInfo.CulturalSphere cs, string tooltip_str) : this()
 			{
-				m_type				= find_type.cultural_sphere;
-
-				m_data				= null;
-				m_database			= null;
-				m_info_name			= GvoDomains.GetCulturalSphereString(cs);
-				m_lang				= null;
+				m_type				= FindType.CulturalSphere;
+				m_info_name			= GvoWorldInfo.GetCulturalSphereString(cs);
 				m_cultural_sphere	= cs;
 				m_cultural_sphere_tool_tip	= tooltip_str;
 			}

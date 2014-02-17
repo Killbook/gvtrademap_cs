@@ -28,7 +28,7 @@ namespace gvtrademap_cs
 	{
 		private gvt_lib							m_lib;
 		private List<sea_area_once_from_dd>		m_list;
-		private database						m_db;
+		private GvoDatabase						m_db;
 
 		// フィルタ後のリスト
 		private List<sea_area_once_from_dd>		m_filterd_list;
@@ -41,7 +41,7 @@ namespace gvtrademap_cs
 		/*-------------------------------------------------------------------------
 		 
 		---------------------------------------------------------------------------*/
-		public sea_area_dd_form(gvt_lib lib, database db, List<sea_area_once_from_dd> list)
+		public sea_area_dd_form(gvt_lib lib, GvoDatabase db, List<sea_area_once_from_dd> list)
 		{
 			m_lib				= lib;
 			m_list				= list;
@@ -97,7 +97,7 @@ namespace gvtrademap_cs
 				// フィルタ
 				if(checkBox1.Checked){
 					// サーバによるフィルタ
-					if(m_db.world.Server != GvoDomains.GetServerFromString(o.server_str)){
+					if(m_db.World.MyServer != GvoWorldInfo.GetServerFromString(o.server_str)){
 						continue;
 					}
 				}

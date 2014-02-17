@@ -80,7 +80,7 @@ namespace gvtrademap_cs
 		private icons				m_icons;				// アイコン管理
 		private infonameimage		m_infonameimage;		// 街等の文字の絵管理
 		private seainfonameimage	m_seainfonameimage;		// 海域の文字の絵管理
-		private setting				m_setting;				// 設定項目
+		private GlobalSettings				m_setting;				// 設定項目
 		private IniProfileSetting	m_ini_manager;			// 設定の読み書き管理
 		private KeyAssignManager	m_key_assign_manager;	// キー割り当て管理
 
@@ -92,7 +92,7 @@ namespace gvtrademap_cs
 		public icons icons{							get{	return m_icons;					}}
 		public infonameimage infonameimage{			get{	return m_infonameimage;			}}
 		public seainfonameimage seainfonameimage{	get{	return m_seainfonameimage;		}}
-		public setting setting{						get{	return m_setting;				}}
+		public GlobalSettings setting{						get{	return m_setting;				}}
 		public IniProfileSetting IniManager{		get{	return m_ini_manager;			}}
 		public KeyAssignManager KeyAssignManager{	get{	return m_key_assign_manager;	}}
 
@@ -105,7 +105,7 @@ namespace gvtrademap_cs
 			m_ini_manager				= new IniProfileSetting(ini_file_name);
 
 			// 設定項目
-			m_setting					= new setting();
+			m_setting					= new GlobalSettings();
 			// キー割り当て管理
 			m_key_assign_manager		= new KeyAssignManager();
 

@@ -13,6 +13,7 @@ using System.Collections.Generic;
 using System;
 using System.Drawing;
 using System.IO;
+using System.Diagnostics;
 
 /*-------------------------------------------------------------------------
 
@@ -36,7 +37,9 @@ namespace directx
 			private	Vector2				m_lefttop;		// 左上のオフセット
 			private Vector2				m_size;			// サイズ
 
-			/*-------------------------------------------------------------------------
+            private Rectangle m_rect;
+
+            /*-------------------------------------------------------------------------
 
 			---------------------------------------------------------------------------*/
 			public Vector2[] offset	{	get{	return m_offset;	}}
@@ -52,8 +55,9 @@ namespace directx
 			{
 				m_lefttop		= offset;
 				m_size			= new Vector2(_rect.Width, _rect.Height);
+                m_rect          = _rect;
 
-				Vector2	uv0		= new Vector2(	(float)_rect.X / tex_size.X,
+                Vector2	uv0		= new Vector2(	(float)_rect.X / tex_size.X,
 												(float)_rect.Y / tex_size.Y);
 				Vector2	uv1		= new Vector2(	((float)_rect.X + _rect.Width) / tex_size.X,
 												((float)_rect.Y + _rect.Height) / tex_size.Y);
@@ -72,7 +76,27 @@ namespace directx
 				m_uv[2]		= new Vector2(uv0.X, uv1.Y);
 				m_uv[3]		= uv1;
 			}
-		}
+
+            internal void DumpRects(string bmp_file_name)
+            {
+                Debug.WriteLine("OBJDT\ticons_0[] = {");
+                Debug.WriteLine("\t{\t\"" + bmp_file_name + "\",");
+                Debug.WriteLine("\t\t\t0,\t\t// PaletteName");
+                Debug.WriteLine(string.Format("\t\t{0}, {1}, {2}, {3},", (object)this.m_rect.Left, (object)this.m_rect.Top, (object)this.m_rect.Right, (object)this.m_rect.Bottom));
+                Debug.WriteLine(string.Format("\t\t{0}, {1},", (object)((int)this.m_lefttop.X).ToString(), (object)((int)this.m_lefttop.Y).ToString()));
+                Debug.WriteLine("\t\t   0,\t   0,\t\t// Invers V , Invers H ");
+                Debug.WriteLine("\t\t   1,\t\t\t\t// Term");
+                Debug.WriteLine("\t\t   0,\t\t\t\t// Depth_Index");
+                Debug.WriteLine("\t\t   0,\t\t// name");
+                Debug.WriteLine("\t\t0,\t\t// bank");
+                Debug.WriteLine("\t\t   0,\t\t\t\t// optimize");
+                Debug.WriteLine("\t\t   0,\t\t\t\t// drawmode");
+                Debug.WriteLine("\t\t   0,\t\t\t\t// lock");
+                Debug.WriteLine("\t\t   0,\t\t\t\t// mode");
+                Debug.WriteLine("\t}");
+                Debug.WriteLine("};");
+            }
+        }
 	
 		/*-------------------------------------------------------------------------
 
@@ -159,5 +183,11 @@ namespace directx
 		{
 			return m_rects[index];
 		}
-	}
+
+        protected void DumpRects(string bmp_file_name)
+        {
+            foreach (d3d_sprite_rects.rect rect in this.m_rects)
+                rect.DumpRects(bmp_file_name);
+        }
+    }
 }

@@ -16,7 +16,7 @@ namespace Utility
 	/*-------------------------------------------------------------------------
 	 
 	---------------------------------------------------------------------------*/
-	public class request_ctrl
+	public class RequestCtrl
 	{
 		private bool						m_request;
 		private object						m_arg1;			// 引数1
@@ -25,13 +25,13 @@ namespace Utility
 		/*-------------------------------------------------------------------------
 		 
 		---------------------------------------------------------------------------*/
-		public object arg1{				get{	return m_arg1;			}}
-		public object arg2{				get{	return m_arg2;			}}
+		public object Arg1{				get{	return m_arg1;			}}
+		public object Arg2{				get{	return m_arg2;			}}
 
 		/*-------------------------------------------------------------------------
 		 
 		---------------------------------------------------------------------------*/
-		public request_ctrl()
+		public RequestCtrl()
 		{
 			CancelRequest();
 			m_arg1		= null;

@@ -876,41 +876,41 @@ namespace gvtrademap_cs
 			private bool is_draw_popups(int index)
 			{
 				// 描画フラグ
-				draw_setting_accidents	flag	= m_lib.setting.draw_setting_accidents;
+				DrawSettingAccidents	flag	= m_lib.setting.draw_setting_accidents;
 
 				switch(index){
 				case 101:
-					if((flag & draw_setting_accidents.accident_0) == 0)		return false;
+					if((flag & DrawSettingAccidents.accident_0) == 0)		return false;
 					break;
 				case 102:
-					if((flag & draw_setting_accidents.accident_1) == 0)		return false;
+					if((flag & DrawSettingAccidents.accident_1) == 0)		return false;
 					break;
 				case 103:
-					if((flag & draw_setting_accidents.accident_2) == 0)		return false;
+					if((flag & DrawSettingAccidents.accident_2) == 0)		return false;
 					break;
 				case 104:
-					if((flag & draw_setting_accidents.accident_3) == 0)		return false;
+					if((flag & DrawSettingAccidents.accident_3) == 0)		return false;
 					break;
 				case 105:
-					if((flag & draw_setting_accidents.accident_4) == 0)		return false;
+					if((flag & DrawSettingAccidents.accident_4) == 0)		return false;
 					break;
 				case 106:
-					if((flag & draw_setting_accidents.accident_5) == 0)		return false;
+					if((flag & DrawSettingAccidents.accident_5) == 0)		return false;
 					break;
 				case 107:
-					if((flag & draw_setting_accidents.accident_6) == 0)		return false;
+					if((flag & DrawSettingAccidents.accident_6) == 0)		return false;
 					break;
 				case 108:
-					if((flag & draw_setting_accidents.accident_7) == 0)		return false;
+					if((flag & DrawSettingAccidents.accident_7) == 0)		return false;
 					break;
 				case 109:
-					if((flag & draw_setting_accidents.accident_8) == 0)		return false;
+					if((flag & DrawSettingAccidents.accident_8) == 0)		return false;
 					break;
 				case 110:
-					if((flag & draw_setting_accidents.accident_9) == 0)		return false;
+					if((flag & DrawSettingAccidents.accident_9) == 0)		return false;
 					break;
 				case 111:
-					if((flag & draw_setting_accidents.accident_10) == 0)	return false;
+					if((flag & DrawSettingAccidents.accident_10) == 0)	return false;
 					break;
 				}
 				return true;
@@ -1148,8 +1148,8 @@ namespace gvtrademap_cs
 		// 選択中は選択されている航路図のみ描画する
 		private bool					m_is_select_mode;
 
-		private request_ctrl			m_req_update_list;		// 航路図一覧更新リクエスト
-		private request_ctrl			m_req_redraw_list;		// 航路図一覧再描画リクエスト
+		private RequestCtrl			m_req_update_list;		// 航路図一覧更新リクエスト
+		private RequestCtrl			m_req_redraw_list;		// 航路図一覧再描画リクエスト
 
 		/*-------------------------------------------------------------------------
 
@@ -1157,8 +1157,8 @@ namespace gvtrademap_cs
 		public List<Voyage> searoutes						{	get{	return m_sea_routes;			}}
 		public List<Voyage> favorite_sea_routes				{	get{	return m_favorite_sea_routes;	}}
 		public List<Voyage> trash_sea_routes				{	get{	return m_trash_sea_routes;		}}
-		public request_ctrl req_update_list					{	get{	return m_req_update_list;		}}
-		public request_ctrl req_redraw_list					{	get{	return m_req_redraw_list;		}}
+		public RequestCtrl req_update_list					{	get{	return m_req_update_list;		}}
+		public RequestCtrl req_redraw_list					{	get{	return m_req_redraw_list;		}}
 		
 		/*-------------------------------------------------------------------------
 
@@ -1170,8 +1170,8 @@ namespace gvtrademap_cs
 			m_sea_routes				= new List<Voyage>();
 			m_favorite_sea_routes		= new List<Voyage>();
 			m_trash_sea_routes			= new List<Voyage>();
-			m_req_update_list			= new request_ctrl();
-			m_req_redraw_list			= new request_ctrl();
+			m_req_update_list			= new RequestCtrl();
+			m_req_redraw_list			= new RequestCtrl();
 
 			// 選択モード
 			m_is_select_mode			= false;

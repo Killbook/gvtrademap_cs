@@ -27,147 +27,42 @@ namespace gvo_base
 	---------------------------------------------------------------------------*/
 	public class ItemDatabase : MultiDictionary<string, ItemDatabase.Data>
 	{
-		// カテゴリ
-		public enum Categoly{
-			_1,
-			_2,
-			_3,
-			_4,
-			unknown
-		};
-		// 種類のグループ
-		public enum TypeGroup{
-			all,		// 全ての種類
-			city_name,	// 街名等
-			use_lang,	// 使用言語
-			trade,		// 交易品
-			item,		// アイテム
-			equip,		// 装備
-			ship,		// 船
-			rigging,	// 艤装
-			skill,		// スキル
-			report,		// 報告
-			technic,	// 陸戦テクニック
-			unknown,	// 不明
-		};
-
-		/*-------------------------------------------------------------------------
-		 アイテム
-		---------------------------------------------------------------------------*/
-		public class Data : IDictionaryNode<string>
-		{
-			private int						m_id;
-			private string					m_name;
-			private string					m_type;
-			private string					m_document;
-			private Categoly				m_categoly;				// 交易品時のカテゴリ
-			private TypeGroup				m_type_group;			// 種類のグループ
-			private bool					m_is_combat_item;		// 陸戦アイテムのときtreu
-
-			/*-------------------------------------------------------------------------
-			 
-			---------------------------------------------------------------------------*/
-			public string Key{				get{	return m_name;			}}
-			public int Id{					get{	return m_id;			}}
-			public string Name{				get{	return m_name;			}}
-			public string Type{				get{	return m_type;			}}
-			public string Document{			get{	return m_document;		}}
-			public bool IsRecipe{			get{	return (Type == "レシピ帳")? true: false;	}}
-			public bool IsSkill{			get{
-													if(Type == "冒険スキル")	return true;
-													if(Type == "交易スキル")	return true;
-													if(Type == "海事スキル")	return true;
-													if(Type == "言語スキル")	return true;
-													return false;
-											}
-								}
-			public bool IsReport{			get{	return (Type == "報告")? true: false;		}}
-			public Categoly Categoly{		get{	return m_categoly;		}}
-			public Color CategolyColor{		get{	return ItemDatabase.GetCategolyColor(m_categoly);	}}
-			public TypeGroup TypeGroup{		get{	return m_type_group;	}}
-			public bool IsCombatItem{		get{	return m_is_combat_item;	}}
-	
-			/*-------------------------------------------------------------------------
-			 
-			---------------------------------------------------------------------------*/
-			public Data()
-			{
-			}
-
-			/*-------------------------------------------------------------------------
-			 ItemDb.txt から構築
-			---------------------------------------------------------------------------*/
-			public bool CreateFromString(string line)
-			{
-				string[]	tmp		= line.Split(new char[]{','});
-				if(tmp.Length < 4)	return false;
-
-				try{
-					m_id			= Useful.ToInt32(tmp[0].Trim(), 0);
-					m_type			= tmp[1].Trim();
-					m_name			= tmp[2].Trim();
-					m_document		= "";
-					for(int i=3; i<tmp.Length; i++){
-						m_document	+= tmp[i].Trim() + "\n";
-					}
-
-					if(m_document.IndexOf("再使用時間：") >= 0){
-						// 再使用時間：が含まれれば陸戦アイテムとする
-						m_is_combat_item	= true;
-					}
-
-					// 交易品時のカテゴリ
-					m_categoly		= ItemDatabase.GetCategolyFromType(m_type);
-					// 種類のグループ
-					m_type_group	= ItemDatabase.GetTypeGroupFromType(m_type);
-				}catch{
-					return false;
-				}
-				return true;
-			}
-
-			/*-------------------------------------------------------------------------
-			 ツールチップ用の文字列を得る
-			---------------------------------------------------------------------------*/
-			public virtual string GetToolTipString()
-			{
-				string	str		= "名称:" + Name + "\n";
-				str				+= "種類:" + Type + "\n";
-				str				+= "説明:\n" + Document;
-				return str;
-			}
-
-			/*-------------------------------------------------------------------------
-			 レシピ情報wikiを開く
-			 レシピ検索
-			---------------------------------------------------------------------------*/
-			public void OpenRecipeWiki0()
-			{
-				// EUCでURLエンコード
-				string	urlenc	= Useful.UrlEncodeEUCJP(this.Name);
-
-				// 検索結果を開く
-				Process.Start(gvo_def.URL2 + urlenc);	// レシピ検索
-			}
-
-			/*-------------------------------------------------------------------------
-			 レシピ情報wikiを開く
-			 作成可能かどうか検索
-			---------------------------------------------------------------------------*/
-			public void OpenRecipeWiki1()
-			{
-				// EUCでURLエンコード
-				string	urlenc	= Useful.UrlEncodeEUCJP(this.Name);
-
-				// 検索結果を開く
-				Process.Start(gvo_def.URL3 + urlenc);	// レシピで作成可能か検索
-			}
-		}
+		private Dictionary<string, string>		m_ajust_name_list;		// 微妙な名前の間違い調整用
 
 		/*-------------------------------------------------------------------------
 		 
 		---------------------------------------------------------------------------*/
-		private Dictionary<string, string>		m_ajust_name_list;		// 微妙な名前の間違い調整用
+		// カテゴリ
+		public enum Categoly{
+			Categoly1,
+			Categoly2,
+			Categoly3,
+			Categoly4,
+			Unknown
+		};
+		// 種類のグループ
+		public enum TypeGroup{
+			All,		// 全ての種類
+			CityName,	// 街名等
+			UseLang,	// 使用言語
+			Trade,		// 交易品
+			Item,		// アイテム
+			Equip,		// 装備
+			Ship,		// 船
+			Rigging,	// 艤装
+			Skill,		// スキル
+			Report,		// 報告
+			Technic,	// 陸戦テクニック
+			Unknown,	// 不明
+		};
+        // 
+        public enum TypeGroup2
+        {
+            Trade,
+            Item,
+            Ship,
+            Unknown,
+        }
 
 		/*-------------------------------------------------------------------------
 		 
@@ -190,11 +85,12 @@ namespace gvo_base
 		---------------------------------------------------------------------------*/
 		public void Load(string fname)
 		{
-			string line = "";
+			base.Clear();
 			try{
 				using (StreamReader	sr	= new StreamReader(
 					fname, Encoding.GetEncoding("Shift_JIS"))) {
 
+					string line = "";
 					while((line = sr.ReadLine()) != null){
 						Data	_data	= new Data();
 
@@ -348,27 +244,27 @@ namespace gvo_base
 			case "雑貨":
 			case "医薬品":
 			case "家畜":
-				return Categoly._1;
+				return Categoly.Categoly1;
 			case "酒類":
 			case "鉱石":
 			case "染料":
 			case "工業品":
 			case "嗜好品":
-				return Categoly._2;
+				return Categoly.Categoly2;
 			case "繊維":
 			case "織物":
 			case "武具":
 			case "火器":
 			case "工芸品":
 			case "美術品":
-				return Categoly._3;
+				return Categoly.Categoly3;
 			case "香辛料":
 			case "貴金属":
 			case "香料":
 			case "宝石":
-				return Categoly._4;
+				return Categoly.Categoly4;
 			}
-			return Categoly.unknown;
+			return Categoly.Unknown;
 		}
 
 		/*-------------------------------------------------------------------------
@@ -377,10 +273,10 @@ namespace gvo_base
 		static public Color GetCategolyColor(Categoly cate)
 		{
 			switch(cate){
-			case Categoly._1:	return Color.Gray;
-			case Categoly._2:	return Color.OrangeRed;
-			case Categoly._3:	return Color.Green;
-			case Categoly._4:	return Color.Blue;
+			case Categoly.Categoly1:	return Color.Gray;
+			case Categoly.Categoly2:	return Color.OrangeRed;
+			case Categoly.Categoly3:	return Color.Green;
+			case Categoly.Categoly4:	return Color.Blue;
 			}
 			return Color.Black;
 		}
@@ -412,7 +308,7 @@ namespace gvo_base
 			case "武具":
 			case "火器":
 			case "工業品":
-				return TypeGroup.trade;
+				return TypeGroup.Trade;
 			case "消耗品":
 			case "推薦状":
 			case "レシピ帳":
@@ -424,7 +320,7 @@ namespace gvo_base
 			case "船権利書":
 			case "家具":
 			case "物資":
-				return TypeGroup.item;
+				return TypeGroup.Item;
 			case "小型帆船":
 			case "中小型帆船":
 			case "中型帆船":
@@ -434,7 +330,7 @@ namespace gvo_base
 			case "中型ガレー":
 			case "中大型ガレー":
 			case "大型ガレー":
-				return TypeGroup.ship;
+				return TypeGroup.Ship;
 			case "船首像":
 			case "追加装甲":
 			case "特殊兵装":
@@ -443,14 +339,14 @@ namespace gvo_base
 			case "船首砲":
 			case "船尾砲":
 			case "紋章":
-				return TypeGroup.rigging;
+				return TypeGroup.Rigging;
 			case "頭装備品":
 			case "体装備品":
 			case "足装備品":
 			case "手装備品":
 			case "武器・道具":
 			case "装身具":
-				return TypeGroup.equip;
+				return TypeGroup.Equip;
 			case "冒険スキル":
 			case "交易スキル":
 			case "海事スキル":
@@ -458,33 +354,98 @@ namespace gvo_base
 			case "アイテム効果スキル":
 			case "副官スキル":
 			case "船スキルスキル":
-				return TypeGroup.skill;
+				return TypeGroup.Skill;
 			case "報告":
-				return TypeGroup.report;
+				return TypeGroup.Report;
 			case "陸戦テクニック":
-				return TypeGroup.technic;	// 陸戦テクニック
+				return TypeGroup.Technic;	// 陸戦テクニック
 			default:
-				return TypeGroup.unknown;
+				return TypeGroup.Unknown;
 			}
 		}
 
-		/*-------------------------------------------------------------------------
-		 タイプのグループを文字列に変換する
-		---------------------------------------------------------------------------*/
+        public static TypeGroup2 GetTypeGroupFromType2(string name)
+        {
+            switch (name)
+            {
+                case "食料品":
+                case "家畜":
+                case "酒類":
+                case "調味料":
+                case "嗜好品":
+                case "香辛料":
+                case "香料":
+                case "医薬品":
+                case "繊維":
+                case "染料":
+                case "織物":
+                case "貴金属":
+                case "鉱石":
+                case "宝石":
+                case "工芸品":
+                case "美術品":
+                case "雑貨":
+                case "武具":
+                case "火器":
+                case "工業品":
+                    return TypeGroup2.Trade;
+                case "消耗品":
+                case "推薦状":
+                case "レシピ帳":
+                case "宝箱":
+                case "ロット":
+                case "素材":
+                case "ペット権利書":
+                case "家具":
+                    return TypeGroup2.Item;
+                case "小型帆船":
+                case "中小型帆船":
+                case "中型帆船":
+                case "中大型帆船":
+                case "大型帆船":
+                case "中小型ガレー":
+                case "中型ガレー":
+                case "中大型ガレー":
+                case "大型ガレー":
+                    return TypeGroup2.Ship;
+                case "船首像":
+                case "追加装甲":
+                case "特殊兵装":
+                case "補助帆":
+                case "舷側砲":
+                case "船首砲":
+                case "船尾砲":
+                case "紋章":
+                    return TypeGroup2.Item;
+                case "頭装備品":
+                case "体装備品":
+                case "足装備品":
+                case "手装備品":
+                case "武器・道具":
+                case "装身具":
+                    return TypeGroup2.Item;
+                default:
+                    return TypeGroup2.Unknown;
+            }
+        }
+
+        /*-------------------------------------------------------------------------
+         タイプのグループを文字列に変換する
+        ---------------------------------------------------------------------------*/
 		static public string ToString(TypeGroup tg)
 		{
 			switch(tg){
-			case TypeGroup.all:			return "全ての種類";
-			case TypeGroup.city_name:	return "街名等";
-			case TypeGroup.use_lang:	return "使用言語";
-			case TypeGroup.trade:		return "交易品";
-			case TypeGroup.item:		return "アイテム";
-			case TypeGroup.equip:		return "装備";
-			case TypeGroup.ship:		return "船";
-			case TypeGroup.rigging:		return "艤装";
-			case TypeGroup.skill:		return "スキル";
-			case TypeGroup.report:		return "報告";
-			case TypeGroup.technic:		return "陸戦テクニック";
+			case TypeGroup.All:			return "全ての種類";
+			case TypeGroup.CityName:	return "街名等";
+			case TypeGroup.UseLang:	return "使用言語";
+			case TypeGroup.Trade:		return "交易品";
+			case TypeGroup.Item:		return "アイテム";
+			case TypeGroup.Equip:		return "装備";
+			case TypeGroup.Ship:		return "船";
+			case TypeGroup.Rigging:		return "艤装";
+			case TypeGroup.Skill:		return "スキル";
+			case TypeGroup.Report:		return "報告";
+			case TypeGroup.Technic:		return "陸戦テクニック";
 			default:
 				return "不明";
 			}
@@ -561,5 +522,159 @@ namespace gvo_base
 			list.Add(tmp);
 			return list.ToArray();
 		}
+
+        public static string ToString(TypeGroup2 tg)
+        {
+            switch (tg)
+            {
+                case TypeGroup2.Trade:
+                    return "交易品";
+                case TypeGroup2.Item:
+                    return "アイテム";
+                case TypeGroup2.Ship:
+                    return "船";
+                default:
+                    return "不明";
+            }
+        }
+
+        public bool MergeShipPartsDatabase(ShipPartsDataBase db)
+        {
+            if (db == null)
+                return false;
+            foreach (ShipPartsDataBase.ShipPart i in db.PartsList)
+            {
+                ItemDatabase.Data data = GetValue(i.Name);
+                if (data != null)
+                    data.MergeShipPartsDatabase(i);
+            }
+            return true;
+        }
+
+        /*-------------------------------------------------------------------------
+         アイテム
+        ---------------------------------------------------------------------------*/
+		public class Data : IDictionaryNode<string>
+		{
+			private int						m_id;
+			private string					m_name;
+			private string					m_type;
+			private string					m_document;
+			private Categoly				m_categoly;				// 交易品時のカテゴリ
+			private TypeGroup				m_type_group;			// 種類のグループ
+			private TypeGroup2				m_type_group2;			// 所持品カテゴリ
+			private bool					m_is_combat_item;		// 陸戦アイテムのときtreu
+
+			/*-------------------------------------------------------------------------
+			 
+			---------------------------------------------------------------------------*/
+			public string Key{				get{	return m_name;			}}
+			public int Id{					get{	return m_id;			}}
+			public string Name{				get{	return m_name;			}}
+			public string Type{				get{	return m_type;			}}
+			public string Document{			get{	return m_document;		}}
+			public bool IsRecipe{			get{	return (Type == "レシピ帳")? true: false;	}}
+			public bool IsSkill{			get{
+													if(Type == "冒険スキル")	return true;
+													if(Type == "交易スキル")	return true;
+													if(Type == "海事スキル")	return true;
+													if(Type == "言語スキル")	return true;
+													return false;
+											}
+								}
+			public bool IsReport{			get{	return (Type == "報告")? true: false;		}}
+			public Categoly Categoly{		get{	return m_categoly;		}}
+			public Color CategolyColor{		get{	return ItemDatabase.GetCategolyColor(m_categoly);	}}
+			public TypeGroup TypeGroup{		get{	return m_type_group;	}}
+			public bool IsCombatItem{		get{	return m_is_combat_item;	}}
+			public TypeGroup2 TypeGroup2{	get{	return m_type_group2;	}}
+			public string TypeGroup2Str{	get{	return ItemDatabase.ToString(m_type_group2);	}}
+	
+			/*-------------------------------------------------------------------------
+			 
+			---------------------------------------------------------------------------*/
+			public Data()
+			{
+			}
+
+			/*-------------------------------------------------------------------------
+			 ItemDb.txt から構築
+			---------------------------------------------------------------------------*/
+			public bool CreateFromString(string line)
+			{
+				string[]	tmp		= line.Split(new char[]{','});
+				if(tmp.Length < 4)	return false;
+
+				try{
+					m_id			= Useful.ToInt32(tmp[0].Trim(), 0);
+					m_type			= tmp[1].Trim();
+					m_name			= tmp[2].Trim();
+					m_document		= "";
+					for(int i=3; i<tmp.Length; i++){
+						m_document	+= tmp[i].Trim() + "\n";
+					}
+
+					if(m_document.IndexOf("再使用時間：") >= 0){
+						// 再使用時間：が含まれれば陸戦アイテムとする
+						m_is_combat_item	= true;
+					}
+
+					// 交易品時のカテゴリ
+					m_categoly		= ItemDatabase.GetCategolyFromType(m_type);
+					// 種類のグループ
+					m_type_group	= ItemDatabase.GetTypeGroupFromType(m_type);
+					m_type_group2	= ItemDatabase.GetTypeGroupFromType2(m_type);
+				}catch{
+					return false;
+				}
+				return true;
+			}
+
+			/*-------------------------------------------------------------------------
+			 ツールチップ用の文字列を得る
+			---------------------------------------------------------------------------*/
+			public virtual string GetToolTipString()
+			{
+				string	str		= "名称:" + Name + "\n";
+				str				+= "種類:" + Type + "\n";
+				str				+= "説明:\n" + Document;
+				return str;
+			}
+
+			/*-------------------------------------------------------------------------
+			 レシピ情報wikiを開く
+			 レシピ検索
+			---------------------------------------------------------------------------*/
+			public void OpenRecipeWiki0()
+			{
+				// EUCでURLエンコード
+				string	urlenc	= Useful.UrlEncodeEUCJP(this.Name);
+
+				// 検索結果を開く
+				Process.Start(gvo_def.URL2 + urlenc);	// レシピ検索
+			}
+
+			/*-------------------------------------------------------------------------
+			 レシピ情報wikiを開く
+			 作成可能かどうか検索
+			---------------------------------------------------------------------------*/
+			public void OpenRecipeWiki1()
+			{
+				// EUCでURLエンコード
+				string	urlenc	= Useful.UrlEncodeEUCJP(this.Name);
+
+				// 検索結果を開く
+				Process.Start(gvo_def.URL3 + urlenc);	// レシピで作成可能か検索
+			}
+
+            internal void MergeShipPartsDatabase(ShipPartsDataBase.ShipPart i)
+            {
+                if (i == null)
+                    return;
+                ItemDatabase.Data data = this;
+                string str = data.m_document + i.ToStringParamsOnly();
+                data.m_document = str;
+            }
+        }
 	}
 }

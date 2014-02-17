@@ -23,7 +23,7 @@ namespace Utility
 	/*-------------------------------------------------------------------------
 	 
 	---------------------------------------------------------------------------*/
-	public class screen_capture : IDisposable
+	public class ScreenCapture : IDisposable
 	{
 		private Bitmap			m_bitmap;			// キャプチャ用
 		private	byte[]			m_image;			// キャプチャイメージ
@@ -33,14 +33,14 @@ namespace Utility
 		/*-------------------------------------------------------------------------
 		 
 		---------------------------------------------------------------------------*/
-		public byte[] image{	get{	return m_image;		}}
-		public int stride{		get{	return m_stride;	}}
-		public Size size{		get{	return m_size;		}}
+		public byte[] Image{	get{	return m_image;		}}
+		public int Stride{		get{	return m_stride;	}}
+		public Size Size{		get{	return m_size;		}}
 
 		/*-------------------------------------------------------------------------
 		 
 		---------------------------------------------------------------------------*/
-		public screen_capture(int size_x, int size_y)
+		public ScreenCapture(int size_x, int size_y)
 		{
 			m_bitmap		= new Bitmap(size_x, size_y);
 			m_size.Width	= size_x;

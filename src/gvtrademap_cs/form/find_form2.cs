@@ -33,7 +33,7 @@ namespace gvtrademap_cs
 		private const int				LIST_MAX = 2000;		// リストに表示する最大
 	
 		private gvt_lib					m_lib;					// よく使う機能をまとめたもの
-		private database				m_db;					// データベース
+		private GvoDatabase				m_db;					// データベース
 		private spot					m_spot;					// スポット一覧
 		private item_window				m_item_window;			// アイテムウインドウ
 		private Point					m_gpos;
@@ -44,7 +44,7 @@ namespace gvtrademap_cs
 		/*-------------------------------------------------------------------------
 
 		---------------------------------------------------------------------------*/
-		public find_form2(gvt_lib lib, database db, spot _spot, item_window _item_window)
+		public find_form2(gvt_lib lib, GvoDatabase db, spot _spot, item_window _item_window)
 		{
 			m_lib				= lib;
 			m_db				= db;
@@ -162,7 +162,7 @@ namespace gvtrademap_cs
 			}else{
 				this.Cursor	= Cursors.WaitCursor;
 				// 検索
-				List<database.find>	results	= m_db.FindAll(find_string);
+				List<GvoDatabase.Find>	results	= m_db.FindAll(find_string);
 
 				// 検索文字列を更新
 				update_find_strings();
@@ -197,7 +197,7 @@ namespace gvtrademap_cs
 		/*-------------------------------------------------------------------------
 		 検索結果を更新
 		---------------------------------------------------------------------------*/
-		private void update_find_result(List<database.find> results)
+		private void update_find_result(List<GvoDatabase.Find> results)
 		{
 			listView1.BeginUpdate();
 			listView1.Items.Clear();		// アイテム内容をクリア
@@ -205,7 +205,7 @@ namespace gvtrademap_cs
 
 			bool	is_overflow	= false;
 			if(results != null){
-				foreach(database.find i in results){
+				foreach(GvoDatabase.Find i in results){
 					add_item(listView1, i);
 					if(listView1.Items.Count >= LIST_MAX){
 						is_overflow		= true;
@@ -230,17 +230,17 @@ namespace gvtrademap_cs
 		/*-------------------------------------------------------------------------
 		 追加する
 		---------------------------------------------------------------------------*/
-		private void add_item(ListView listview, database.find i)
+		private void add_item(ListView listview, GvoDatabase.Find i)
 		{
 			// フィルタ
-			if(i.type != database.find.find_type.cultural_sphere){
+			if(i.Type != GvoDatabase.Find.FindType.CulturalSphere){
 				// 文化圏以外のとき
 				switch(m_lib.setting.find_filter){
 				case _find_filter.world_info:
-					if(i.type == database.find.find_type.database)	return;
+					if(i.Type == GvoDatabase.Find.FindType.Database)	return;
 					break;
 				case _find_filter.item_database:
-					if(i.type != database.find.find_type.database)	return;
+					if(i.Type != GvoDatabase.Find.FindType.Database)	return;
 					break;
 				case _find_filter.both:
 				default:
@@ -248,11 +248,11 @@ namespace gvtrademap_cs
 				}
 			}
 			
-			ListViewItem	item	= new ListViewItem(i.name_string, 0);
+			ListViewItem	item	= new ListViewItem(i.NameString, 0);
 			item.Tag				= i;
-			item.ToolTipText		= i.tool_tip;
-			item.SubItems.Add(i.type_string);
-			item.SubItems.Add(i.spot_string);
+			item.ToolTipText		= i.TooltipString;
+			item.SubItems.Add(i.TypeString);
+			item.SubItems.Add(i.SpotString);
 
 			listview.Items.Add(item);
 		}
@@ -299,7 +299,7 @@ namespace gvtrademap_cs
 		/*-------------------------------------------------------------------------
 		 選択されているアイテムのTAGを得る
 		---------------------------------------------------------------------------*/
-		private database.find get_selected_item_tag()
+		private GvoDatabase.Find get_selected_item_tag()
 		{
 			return get_selected_item_tag(listView1);
 		}
@@ -307,12 +307,12 @@ namespace gvtrademap_cs
 		/*-------------------------------------------------------------------------
 		 選択されているアイテムのTAGを得る
 		---------------------------------------------------------------------------*/
-		private database.find get_selected_item_tag(ListView view)
+		private GvoDatabase.Find get_selected_item_tag(ListView view)
 		{
 			if(view.SelectedItems.Count <= 0)		return null;
 			ListViewItem	item	= view.SelectedItems[0];
 			if(item.Tag == null)					return null;
-			return (database.find)item.Tag;
+			return (GvoDatabase.Find)item.Tag;
 		}
 	
 		/*-------------------------------------------------------------------------
@@ -341,11 +341,11 @@ namespace gvtrademap_cs
 		---------------------------------------------------------------------------*/
 		private void update_spot_button_status()
 		{
-			database.find	tag		= get_selected_item_tag();
+			GvoDatabase.Find	tag		= get_selected_item_tag();
 			if(tag == null){
 				button3.Enabled		= false;
 			}else{
-				if(tag.type == database.find.find_type.database){
+				if(tag.Type == GvoDatabase.Find.FindType.Database){
 					button3.Enabled		= false;
 				}else{
 					button3.Enabled		= true;
@@ -381,7 +381,7 @@ namespace gvtrademap_cs
 		/*-------------------------------------------------------------------------
 		 スポット表示する
 		---------------------------------------------------------------------------*/
-		private void do_spot(database.find item)
+		private void do_spot(GvoDatabase.Find item)
 		{
 			if(item == null)		return;
 
@@ -421,13 +421,13 @@ namespace gvtrademap_cs
 		{
 			if((e.Button & MouseButtons.Right) == 0)	return;		// 右クリックのみ
 
-			database.find	tag		= get_selected_item_tag();
+			GvoDatabase.Find	tag		= get_selected_item_tag();
 			if(tag == null)								return;
 
 			// 表示位置調整
 			Point		pos	= new Point(e.X, e.Y);
 
-			ItemDatabaseCustom.Data			db		= tag.database;
+			ItemDatabaseCustom.Data			db		= tag.Database;
 			if(db == null){
 				// アイテムデータベースと一致しない
 				open_recipe_wiki0_ToolStripMenuItem.Enabled		= false;
@@ -460,10 +460,10 @@ namespace gvtrademap_cs
 		---------------------------------------------------------------------------*/
 		private void open_recipe_wiki0_ToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			database.find	tag		= get_selected_item_tag();
+			GvoDatabase.Find	tag		= get_selected_item_tag();
 			if(tag == null)										return;
-			if(tag.database == null)							return;
-			tag.database.OpenRecipeWiki0();
+			if(tag.Database == null)							return;
+			tag.Database.OpenRecipeWiki0();
 		}
 
 		/*-------------------------------------------------------------------------
@@ -472,10 +472,10 @@ namespace gvtrademap_cs
 		---------------------------------------------------------------------------*/
 		private void open_recipe_wiki1_ToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			database.find	tag		= get_selected_item_tag();
+			GvoDatabase.Find	tag		= get_selected_item_tag();
 			if(tag == null)										return;
-			if(tag.database == null)							return;
-			tag.database.OpenRecipeWiki1();
+			if(tag.Database == null)							return;
+			tag.Database.OpenRecipeWiki1();
 		}
 
 		/*-------------------------------------------------------------------------
@@ -483,9 +483,9 @@ namespace gvtrademap_cs
 		---------------------------------------------------------------------------*/
 		private void copy_name_to_clipboardToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			database.find	tag		= get_selected_item_tag();
+			GvoDatabase.Find	tag		= get_selected_item_tag();
 			if(tag == null)										return;
-			Clipboard.SetText(tag.name_string);
+			Clipboard.SetText(tag.NameString);
 		}
 
 		/*-------------------------------------------------------------------------
@@ -493,12 +493,12 @@ namespace gvtrademap_cs
 		---------------------------------------------------------------------------*/
 		private void copy_all_to_clipboardToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			database.find	tag		= get_selected_item_tag();
+			GvoDatabase.Find	tag		= get_selected_item_tag();
 			if(tag == null)										return;
-			if(tag.data != null){
-				Clipboard.SetText(tag.data.TooltipString);
-			}else if(tag.database != null){
-				Clipboard.SetText(tag.database.GetToolTipString());
+			if(tag.Data != null){
+				Clipboard.SetText(tag.Data.TooltipString);
+			}else if(tag.Database != null){
+				Clipboard.SetText(tag.Database.GetToolTipString());
 			}
 		}
 
@@ -654,13 +654,13 @@ namespace gvtrademap_cs
 		---------------------------------------------------------------------------*/
 		private void update_cultural_sphere_list()
 		{
-			List<database.find>	results	= m_db.GetCulturalSphereList();
+			List<GvoDatabase.Find>	results	= m_db.GetCulturalSphereList();
 
 			listView3.BeginUpdate();
 			listView3.Items.Clear();
 
 			// リストの追加
-			foreach(database.find i in results){
+			foreach(GvoDatabase.Find i in results){
 				add_item(listView3, i);
 			}
 			listView3.EndUpdate();

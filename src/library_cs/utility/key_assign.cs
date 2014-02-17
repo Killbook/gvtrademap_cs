@@ -482,7 +482,7 @@ namespace Utility.KeyAssign
 		/// </summary>
 		/// <param name="p">IniBase</param>
 		/// <param name="group">グループ名</param>
-		public void IniLoad(IniBase p, string group)
+		public void IniLoad(IIni p, string group)
 		{
 			if(String.IsNullOrEmpty(group))		return;
 			if(p == null)						return;
@@ -496,7 +496,7 @@ namespace Utility.KeyAssign
 		/// </summary>
 		/// <param name="p">IniBase</param>
 		/// <param name="group">グループ名</param>
-		public void IniSave(IniBase p, string group)
+		public void IniSave(IIni p, string group)
 		{
 			if(String.IsNullOrEmpty(group))		return;
 			if(p == null)						return;
@@ -769,7 +769,7 @@ namespace Utility.KeyAssign
 		/// </summary>
 		/// <param name="p">IniBase</param>
 		/// <param name="group">グループ名</param>
-		public void IniLoad(IniBase p, string group)
+		public void IniLoad(IIni p, string group)
 		{
 			if(String.IsNullOrEmpty(group))		return;
 			if(p == null)						return;
@@ -786,7 +786,7 @@ namespace Utility.KeyAssign
 		/// </summary>
 		/// <param name="p">IniBase</param>
 		/// <param name="group">グループ名</param>
-		public void IniSave(IniBase p, string group)
+		public void IniSave(IIni p, string group)
 		{
 			if(String.IsNullOrEmpty(group))		return;
 			if(p == null)						return;
@@ -958,7 +958,7 @@ namespace Utility.KeyAssign
 			/// </summary>
 			/// <param name="p">IniBase</param>
 			/// <param name="group">グループ名</param>
-			internal void IniLoad(IniBase p, string group)
+			internal void IniLoad(IIni p, string group)
 			{
 				if(String.IsNullOrEmpty(group))			return;
 				if(String.IsNullOrEmpty(m_ini_name))	return;
@@ -974,7 +974,7 @@ namespace Utility.KeyAssign
 			/// </summary>
 			/// <param name="p">IniBase</param>
 			/// <param name="group"></param>
-			internal void IniSave(IniBase p, string group)
+			internal void IniSave(IIni p, string group)
 			{
 				if(String.IsNullOrEmpty(group))			return;
 				if(String.IsNullOrEmpty(m_ini_name))	return;

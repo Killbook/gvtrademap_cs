@@ -475,7 +475,7 @@ namespace gvtrademap_cs
 		{
 			if(!m_device_lost && !must_merge)	return;
 
-			date_timer	d	= new date_timer();
+			DateTimer	d	= new DateTimer();
 
 			// テクスチャ更新
 			foreach(TextureUnit tex in m_textures){

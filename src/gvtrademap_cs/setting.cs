@@ -19,32 +19,32 @@ using Utility.Ini;
 namespace gvtrademap_cs
 {
 	// 地図
-	public enum map_index{
-		map1,				// 緑っぽいもの
-		map2,				// 茶色っぽいもの
-		max
+	public enum MapIndex{
+		Map1,				// 緑っぽいもの
+		Map2,				// 茶色っぽいもの
+		Max
 	};
-	public enum map_icon{
-		big,				// 大きいアイコン
-		small,				// 小さいアイコン
+	public enum MapIcon{
+		Big,				// 大きいアイコン
+		Small,				// 小さいアイコン
 	};
-	public enum map_draw_names{
-		draw,				// 街名などを描画する
-		hide,				// 街名などを描画しない
+	public enum MapDrawNames{
+		Draw,				// 街名などを描画する
+		Hide,				// 街名などを描画しない
 	};
 	// 画面キャプチャ間隔
-	public enum capture_interval_index{
-		per_500ms,		// 0.5秒に1回
-		per_1000ms,		// 1秒に1回
-		per_2000ms,		// 2秒に1回
-		per_250ms,		// 0.25秒に1回
+	public enum CaptureIntervalIndex{
+		Per500ms,		// 0.5秒に1回
+		Per1000ms,		// 1秒に1回
+		Per2000ms,		// 2秒に1回
+		Per250ms,		// 0.25秒に1回
 	};
 	// 緯度、経度描画間隔
-	public enum tude_interval{
-		none,			// なし
-		_1000,			// 1000刻み
-		_100,			// 100刻み
-		only_points,	// 座標値のみ
+	public enum TudeInterval{
+		None,			// なし
+		Interval1000,	// 1000刻み
+		Interval100,	// 100刻み
+		OnlyPoints,		// 座標値のみ
 	};
 	// 検索フィルタ
 	public enum _find_filter{
@@ -66,15 +66,15 @@ namespace gvtrademap_cs
 	};
 
 	// 表示項目ページ
-	public enum draw_setting_page{
-		web_icons,		// @Webアイコン
-		memo_icons,		// メモアイコン
-		accidents,		// 災害
-		myship_angle,	// 予想線
+	public enum DrawSettingPage{
+		WebIcons,		// @Webアイコン
+		MemoIcons,		// メモアイコン
+		Accidents,		// 災害
+		MyShipAngle,	// 予想線
 	};
 	// @Web icons
 	[Flags]
-	public enum draw_setting_web_icons{
+	public enum DrawSettingWebIcons{
 		wind				= 1<<0,
 		accident_0			= 1<<1,
 		accident_1			= 1<<2,
@@ -84,7 +84,7 @@ namespace gvtrademap_cs
 	};
 	// Memo icons
 	[Flags]
-	public enum draw_setting_memo_icons{
+	public enum DrawSettingMemoIcons{
 		wind				= 1<<0,
 		memo_0				= 1<<1,
 		memo_1				= 1<<2,
@@ -101,7 +101,7 @@ namespace gvtrademap_cs
 	};
 	// accidents
 	[Flags]
-	public enum draw_setting_accidents{
+	public enum DrawSettingAccidents{
 		accident_0			= 1<<0,
 		accident_1			= 1<<1,
 		accident_2			= 1<<2,
@@ -116,20 +116,20 @@ namespace gvtrademap_cs
 	};
 	// myship_angle
 	[Flags]
-	public enum draw_setting_myship_angle{
+	public enum DrawSettingMyShipAngle{
 		draw_0				= 1<<0,
 		draw_1				= 1<<1,
 	};
-	public enum ss_format{
-		bmp,
-		png,
-		jpeg,
+	public enum SSFormat{
+		Bmp,
+		Png,
+		Jpeg,
 	};
 	
 	/*-------------------------------------------------------------------------
 	 
 	---------------------------------------------------------------------------*/
-	public class setting : IIniSaveLoad
+	public class GlobalSettings : IIniSaveLoad
 	{
 		// 航路図の保持数の初期値
 		private const int				DEF_SEAROUTES_GROUP_MAX			= 20;
@@ -161,11 +161,11 @@ namespace gvtrademap_cs
 		private bool					m_draw_web_icons;			// @Webアイコン描画
 
 		// ダイアログ設定項目
-		private GvoDomains.Server			m_server;					// サーバ
-		private GvoDomains.Country			m_country;					// 自国
-		private map_index				m_map_index;				// 地図
-		private map_icon				m_map_icon;					// 地図のアイコンサイズ
-		private map_draw_names			m_map_draw_names;			// 街名などを描画するかどうか
+		private GvoWorldInfo.Server			m_server;					// サーバ
+		private GvoWorldInfo.Country			m_country;					// 自国
+		private MapIndex				m_map_index;				// 地図
+		private MapIcon				m_map_icon;					// 地図のアイコンサイズ
+		private MapDrawNames			m_map_draw_names;			// 街名などを描画するかどうか
 		private string					m_share_group;				// 航路共有グループ名
 		private string					m_share_group_myname;		// 航路共有表示名
 		private int						m_searoutes_group_max;		// 覚えておく航路図の最大
@@ -175,15 +175,15 @@ namespace gvtrademap_cs
 		private bool					m_windows_vista_aero;		// Aeroモード
 		private bool					m_enable_analize_log_chat;	// 災害用にログを解析する
 		private bool					m_is_share_routes;			// 航路共有する
-		private capture_interval_index	m_capture_interval;			// 画面キャプチャ間隔
+		private CaptureIntervalIndex	m_capture_interval;			// 画面キャプチャ間隔
 		private bool					m_connect_web_icon;			// @Webアイコンをダウンロードする
 		private bool					m_compatible_windows_rclick;	// 右クリックの動作をwindows互換にする
-		private tude_interval			m_tude_interval;			// 緯度、経度描画方法
+		private TudeInterval			m_tude_interval;			// 緯度、経度描画方法
 		private bool					m_use_mixed_map;			// お気に入り航路と合成された地図を使用する
 		private bool					m_window_top_most;			// ウインドウを常に最前面に表示する
 		private bool					m_enable_line_antialias;	// 線の描画のギザギザを軽減する
 		private bool					m_enable_sea_routes_aplha;	// アクティブな航路図以外を半透明で描画する
-		private ss_format				m_ss_format;				// スクリーンショットの書き出しフォーマット
+		private SSFormat				m_ss_format;				// スクリーンショットの書き出しフォーマット
 		private bool					m_remove_near_web_icons;	// 距離が近く同じ種類の@Webアイコンを一覧から削除する
 		private bool					m_draw_capture_info;		// キャプチャの詳細を描画する
 		private bool					m_is_server_mode;			// TCPサーバモード
@@ -193,11 +193,6 @@ namespace gvtrademap_cs
 		private bool					m_enable_favorite_sea_routes_alpha;	// お気に入り航路図を半透明で描画する
 		private bool					m_draw_favorite_sea_routes_alpha_popup;	// お気に入り航路図の災害ポップアップを描画する
 		private	bool					m_debug_flag_show_potision;	// 情報ウインドウの座標を地図座標系で表示する
-
-		// 航路削除関係
-		private bool					m_remove_sea_routes_routes;		// 航路線の削除
-		private bool					m_remove_sea_routes_popup;		// 日付ポップアップの削除
-		private bool					m_remove_sea_routes_accident;	// 災害ポップアップの削除
 
 		// 表示関係
 		private string					m_select_info;				// 選択中の世界情報
@@ -227,22 +222,22 @@ namespace gvtrademap_cs
 
 
 		// 表示項目
-		private draw_setting_web_icons		m_draw_setting_web_icons;
-		private draw_setting_memo_icons		m_draw_setting_memo_icons;
-		private draw_setting_accidents		m_draw_setting_accidents;
-		private draw_setting_myship_angle	m_draw_setting_myship_angle;
+		private DrawSettingWebIcons		m_draw_setting_web_icons;
+		private DrawSettingMemoIcons		m_draw_setting_memo_icons;
+		private DrawSettingAccidents		m_draw_setting_accidents;
+		private DrawSettingMyShipAngle	m_draw_setting_myship_angle;
 		private bool						m_draw_setting_myship_angle_with_speed_pos;
 		private bool						m_draw_setting_myship_expect_pos;
 		
 		// リクエスト
-		private request_ctrl			m_req_screen_shot;			// スクリーンショット
-		private request_ctrl			m_req_update_map;			// 地図の合成リクエスト
+		private RequestCtrl			m_req_screen_shot;			// スクリーンショット
+		private RequestCtrl			m_req_update_map;			// 地図の合成リクエスト
 
-		private request_ctrl			m_req_centering_gpos;		// 特定のゲーム座標をセンタリングするリクエスト
+		private RequestCtrl			m_req_centering_gpos;		// 特定のゲーム座標をセンタリングするリクエスト
 		private Point					m_centering_gpos;			// センタリングする座標
 
-		private request_ctrl			m_req_spot_item;			// スポットリクエスト
-		private request_ctrl			m_req_spot_item_changed;	// スポットリクエスト(対象変更)
+		private RequestCtrl			m_req_spot_item;			// スポットリクエスト
+		private RequestCtrl			m_req_spot_item_changed;	// スポットリクエスト(対象変更)
 
 		/*-------------------------------------------------------------------------
 		 
@@ -293,15 +288,15 @@ namespace gvtrademap_cs
 		public bool	draw_myship_angle{			get{	return m_draw_myship_angle;				}
 												set{	m_draw_myship_angle	= value;			}}
 		
-		public map_index	map{				get{	return m_map_index;						}
+		public MapIndex	map{				get{	return m_map_index;						}
 												set{	m_map_index	= value;					}}
-		public map_icon	map_icon{				get{	return m_map_icon;						}
+		public MapIcon	map_icon{				get{	return m_map_icon;						}
 												set{	m_map_icon	= value;					}}
-		public map_draw_names map_draw_names{	get{	return m_map_draw_names;				}
+		public MapDrawNames map_draw_names{	get{	return m_map_draw_names;				}
 												set{	m_map_draw_names	= value;			}}
-		public GvoDomains.Server server{			get{	return m_server;						}
+		public GvoWorldInfo.Server server{			get{	return m_server;						}
 												set{	m_server	= value;					}}
-		public GvoDomains.Country country{			get{	return m_country;						}
+		public GvoWorldInfo.Country country{			get{	return m_country;						}
 												set{	m_country	= value;					}}
 	
 
@@ -342,8 +337,8 @@ namespace gvtrademap_cs
 		public int def_trash_searoutes_group_max{		get{	return DEF_TRASH_SEAROUTES_GROUP_MAX;		}}
 
 
-		public request_ctrl req_screen_shot{			get{	return m_req_screen_shot;			}}
-		public request_ctrl req_update_map{				get{	return m_req_update_map;			}}
+		public RequestCtrl req_screen_shot{			get{	return m_req_screen_shot;			}}
+		public RequestCtrl req_update_map{				get{	return m_req_update_map;			}}
 
 		public bool	connect_network{			get{	return m_connect_network;				}
 												set{	m_connect_network		= value;		}}
@@ -356,7 +351,7 @@ namespace gvtrademap_cs
 
 		public bool is_share_routes{			get{	return m_is_share_routes;				}
 												set{	m_is_share_routes		= value;		}}
-		public ss_format ss_format			{	get{	return m_ss_format;						}
+		public SSFormat ss_format			{	get{	return m_ss_format;						}
 												set{	m_ss_format	= value;					}}
 
 		// 外部からの航路共有有効かどうかのチェック用
@@ -370,13 +365,6 @@ namespace gvtrademap_cs
 			}
 		}
 
-		public bool remove_sea_routes_routes{	get{	return m_remove_sea_routes_routes;		}
-												set{	m_remove_sea_routes_routes	= value;	}}
-		public bool remove_sea_routes_popup{	get{	return m_remove_sea_routes_popup;		}
-												set{	m_remove_sea_routes_popup	= value;	}}
-		public bool remove_sea_routes_accident{	get{	return m_remove_sea_routes_accident;	}
-												set{	m_remove_sea_routes_accident	= value;	}}
-
 		public int interest_days{				get{	return m_interest_days;					}
 												set{	m_interest_days		= value;			}}
 
@@ -389,7 +377,7 @@ namespace gvtrademap_cs
 		public int build_ship_days{				get{	return m_build_ship_days;				}
 												set{	m_build_ship_days		= value;		}}
 
-		public capture_interval_index capture_interval{	get{	return m_capture_interval;			}
+		public CaptureIntervalIndex capture_interval{	get{	return m_capture_interval;			}
 													set{	m_capture_interval	= value;		}}
 
 		public bool connect_web_icon{			get{	return m_connect_web_icon;				}
@@ -408,19 +396,19 @@ namespace gvtrademap_cs
 		public bool is_border_style_none{		get{	return m_is_border_style_none;			}
 												set{	m_is_border_style_none	= value;		}}
 
-		public tude_interval tude_interval{		get{	return m_tude_interval;					}
+		public TudeInterval tude_interval{		get{	return m_tude_interval;					}
 												set{	m_tude_interval		= value;			}}
 		public bool draw_web_icons{				get{	return m_draw_web_icons;				}
 												set{	m_draw_web_icons	= value;			}}
 		public bool use_mixed_map{				get{	return m_use_mixed_map;					}
 												set{	m_use_mixed_map		= value;			}}
 
-		public request_ctrl req_centering_gpos{	get{	return m_req_centering_gpos;			}}
+		public RequestCtrl req_centering_gpos{	get{	return m_req_centering_gpos;			}}
 		public Point centering_gpos{			get{	return m_centering_gpos;				}
 												set{	m_centering_gpos	= value;			}}
 
-		public request_ctrl req_spot_item{		get{	return m_req_spot_item;					}}
-		public request_ctrl req_spot_item_changed{	get{	return m_req_spot_item_changed;		}}
+		public RequestCtrl req_spot_item{		get{	return m_req_spot_item;					}}
+		public RequestCtrl req_spot_item_changed{	get{	return m_req_spot_item_changed;		}}
 
 		public bool window_top_most{			get{	return m_window_top_most;				}
 												set{	m_window_top_most	= value;			}}
@@ -453,13 +441,13 @@ namespace gvtrademap_cs
 																set{	m_debug_flag_show_potision	= value;	}}
 
 		// 表示項目
-		public draw_setting_web_icons draw_setting_web_icons{		get{	return m_draw_setting_web_icons;	}
+		public DrawSettingWebIcons draw_setting_web_icons{		get{	return m_draw_setting_web_icons;	}
 																	set{	m_draw_setting_web_icons	= value;	}}
-		public draw_setting_memo_icons draw_setting_memo_icons{		get{	return m_draw_setting_memo_icons;	}
+		public DrawSettingMemoIcons draw_setting_memo_icons{		get{	return m_draw_setting_memo_icons;	}
 																	set{	m_draw_setting_memo_icons	= value;	}}
-		public draw_setting_accidents draw_setting_accidents{		get{	return m_draw_setting_accidents;	}
+		public DrawSettingAccidents draw_setting_accidents{		get{	return m_draw_setting_accidents;	}
 																	set{	m_draw_setting_accidents	= value;	}}
-		public draw_setting_myship_angle draw_setting_myship_angle{	get{	return m_draw_setting_myship_angle;	}
+		public DrawSettingMyShipAngle draw_setting_myship_angle{	get{	return m_draw_setting_myship_angle;	}
 																	set{	m_draw_setting_myship_angle	= value;	}}
 		public bool draw_setting_myship_angle_with_speed_pos{		get{	return m_draw_setting_myship_angle_with_speed_pos;	}
 																	set{	m_draw_setting_myship_angle_with_speed_pos	= value;	}}
@@ -473,7 +461,7 @@ namespace gvtrademap_cs
 		/*-------------------------------------------------------------------------
 		 
 		---------------------------------------------------------------------------*/
-		public setting()
+		public GlobalSettings()
 		{
 			// 初期値設定
 			init();
@@ -522,11 +510,11 @@ namespace gvtrademap_cs
 			draw_myship_angle			= true;
 
 			// ダイアログ設定項目
-			server						= GvoDomains.Server.Euros;
-			country						= GvoDomains.Country.England;
-			m_map_index					= map_index.map1;
-			m_map_icon					= map_icon.big;
-			m_map_draw_names			= map_draw_names.draw;
+			server						= GvoWorldInfo.Server.Euros;
+			country						= GvoWorldInfo.Country.England;
+			m_map_index					= MapIndex.Map1;
+			m_map_icon					= MapIcon.Big;
+			m_map_draw_names			= MapDrawNames.Draw;
 			share_group					= "";
 			share_group_myname			= "";
 			searoutes_group_max			= DEF_SEAROUTES_GROUP_MAX;
@@ -536,15 +524,15 @@ namespace gvtrademap_cs
 			windows_vista_aero			= false;
 			enable_analize_log_chat		= true;
 			is_share_routes				= false;
-			capture_interval			= capture_interval_index.per_1000ms;
+			capture_interval			= CaptureIntervalIndex.Per1000ms;
 			connect_web_icon			= false;
 			compatible_windows_rclick	= false;
-			this.tude_interval			= tude_interval.only_points;
+			this.tude_interval			= TudeInterval.OnlyPoints;
 			use_mixed_map				= true;
 			window_top_most				= false;
 			enable_line_antialias		= true;
 			enable_sea_routes_aplha		= false;
-			m_ss_format					= ss_format.bmp;
+			m_ss_format					= SSFormat.Bmp;
 			remove_near_web_icons		= true;
 			draw_capture_info			= false;
 			is_server_mode				= false;
@@ -555,11 +543,6 @@ namespace gvtrademap_cs
 			draw_favorite_sea_routes_alpha_popup	= false;
 			debug_flag_show_potision	= false;
 
-			// 航路削除ダイアログ設定項目
-			remove_sea_routes_routes	= true;
-			remove_sea_routes_popup		= true;
-			remove_sea_routes_accident	= true;
-	
 			// 表示関係
 			select_info					= "";		// 選択なし
 			map_pos_x					= 0;
@@ -589,47 +572,47 @@ namespace gvtrademap_cs
 			this.build_ship_days		= 0;
 	
 			// リクエスト
-			m_req_screen_shot			= new request_ctrl();
-			m_req_update_map			= new request_ctrl();
-			m_req_centering_gpos		= new request_ctrl();
-			m_req_spot_item				= new request_ctrl();
-			m_req_spot_item_changed		= new request_ctrl();
+			m_req_screen_shot			= new RequestCtrl();
+			m_req_update_map			= new RequestCtrl();
+			m_req_centering_gpos		= new RequestCtrl();
+			m_req_spot_item				= new RequestCtrl();
+			m_req_spot_item_changed		= new RequestCtrl();
 
 			m_centering_gpos			= new Point(-1, -1);
 
 			// 表示項目	
-			this.draw_setting_web_icons		= draw_setting_web_icons.wind
-											| draw_setting_web_icons.accident_0
-											| draw_setting_web_icons.accident_1
-											| draw_setting_web_icons.accident_2
-											| draw_setting_web_icons.accident_3
-											| draw_setting_web_icons.accident_4;
-			this.draw_setting_memo_icons	= draw_setting_memo_icons.wind
-											| draw_setting_memo_icons.memo_0
-											| draw_setting_memo_icons.memo_1
-											| draw_setting_memo_icons.memo_2
-											| draw_setting_memo_icons.memo_3
-											| draw_setting_memo_icons.memo_4
-											| draw_setting_memo_icons.memo_5
-											| draw_setting_memo_icons.memo_6
-											| draw_setting_memo_icons.memo_7
-											| draw_setting_memo_icons.memo_8
-											| draw_setting_memo_icons.memo_9
-											| draw_setting_memo_icons.memo_10
-											| draw_setting_memo_icons.memo_11;
-			this.draw_setting_accidents		= draw_setting_accidents.accident_0
-											| draw_setting_accidents.accident_1
-											| draw_setting_accidents.accident_2
-											| draw_setting_accidents.accident_3
-											| draw_setting_accidents.accident_4
-											| draw_setting_accidents.accident_5
-											| draw_setting_accidents.accident_6
-											| draw_setting_accidents.accident_7
-											| draw_setting_accidents.accident_8
-											| draw_setting_accidents.accident_9
-											| draw_setting_accidents.accident_10;
-			this.draw_setting_myship_angle	= draw_setting_myship_angle.draw_0
-											| draw_setting_myship_angle.draw_1;
+			this.draw_setting_web_icons		= DrawSettingWebIcons.wind
+											| DrawSettingWebIcons.accident_0
+											| DrawSettingWebIcons.accident_1
+											| DrawSettingWebIcons.accident_2
+											| DrawSettingWebIcons.accident_3
+											| DrawSettingWebIcons.accident_4;
+			this.draw_setting_memo_icons	= DrawSettingMemoIcons.wind
+											| DrawSettingMemoIcons.memo_0
+											| DrawSettingMemoIcons.memo_1
+											| DrawSettingMemoIcons.memo_2
+											| DrawSettingMemoIcons.memo_3
+											| DrawSettingMemoIcons.memo_4
+											| DrawSettingMemoIcons.memo_5
+											| DrawSettingMemoIcons.memo_6
+											| DrawSettingMemoIcons.memo_7
+											| DrawSettingMemoIcons.memo_8
+											| DrawSettingMemoIcons.memo_9
+											| DrawSettingMemoIcons.memo_10
+											| DrawSettingMemoIcons.memo_11;
+			this.draw_setting_accidents		= DrawSettingAccidents.accident_0
+											| DrawSettingAccidents.accident_1
+											| DrawSettingAccidents.accident_2
+											| DrawSettingAccidents.accident_3
+											| DrawSettingAccidents.accident_4
+											| DrawSettingAccidents.accident_5
+											| DrawSettingAccidents.accident_6
+											| DrawSettingAccidents.accident_7
+											| DrawSettingAccidents.accident_8
+											| DrawSettingAccidents.accident_9
+											| DrawSettingAccidents.accident_10;
+			this.draw_setting_myship_angle	= DrawSettingMyShipAngle.draw_0
+											| DrawSettingMyShipAngle.draw_1;
 			draw_setting_myship_angle_with_speed_pos	= true;
 			draw_setting_myship_expect_pos				= true;
 		}
@@ -637,9 +620,9 @@ namespace gvtrademap_cs
 		/*-------------------------------------------------------------------------
 		 クローン
 		---------------------------------------------------------------------------*/
-		public setting Clone()
+		public GlobalSettings Clone()
 		{
-			setting	s	= new setting();
+			GlobalSettings	s	= new GlobalSettings();
 
 			s.window_location			= window_location;
 			s.window_size				= window_size;
@@ -688,10 +671,6 @@ namespace gvtrademap_cs
 			s.enable_analize_log_chat	= enable_analize_log_chat;
 			s.is_share_routes			= is_share_routes;
 
-			s.remove_sea_routes_routes		= remove_sea_routes_routes;
-			s.remove_sea_routes_popup		= remove_sea_routes_popup;
-			s.remove_sea_routes_accident	= remove_sea_routes_accident;
-
 			s.interest_days				= this.interest_days;
 			s.force_show_build_ship		= this.force_show_build_ship;
 			s.is_now_build_ship			= this.is_now_build_ship;
@@ -734,7 +713,7 @@ namespace gvtrademap_cs
 			return s;
 		}
 		// 地図と街名合成チェック付き
-		public void Clone(setting s)
+		public void Clone(GlobalSettings s)
 		{
 			bool	req		= false;
 			if((this.map != s.map)
@@ -791,10 +770,6 @@ namespace gvtrademap_cs
 			enable_analize_log_chat		= s.enable_analize_log_chat;
 			is_share_routes				= s.is_share_routes;
 
-			remove_sea_routes_routes	= s.remove_sea_routes_routes;
-			remove_sea_routes_popup		= s.remove_sea_routes_popup;
-			remove_sea_routes_accident	= s.remove_sea_routes_accident;
-
 			this.interest_days			= s.interest_days;
 			this.force_show_build_ship	= s.force_show_build_ship;
 			this.is_now_build_ship		= s.is_now_build_ship;
@@ -844,7 +819,7 @@ namespace gvtrademap_cs
 		/*-------------------------------------------------------------------------
 		 設定ファイル読み込み
 		---------------------------------------------------------------------------*/
-		public void IniLoad(IniBase p, string group)
+		public void IniLoad(IIni p, string group)
 		{
 		
 			// ウインドウ位置とサイズ
@@ -876,11 +851,11 @@ namespace gvtrademap_cs
 			draw_web_icons			= p.GetProfile("icon", "draw_web_icons",			draw_web_icons);
 
 			// ダイアログ設定項目
-			server					= GvoDomains.Server.Euros + p.GetProfile("dialog", "server",		(int)server);
-			country					= GvoDomains.Country.unknown + p.GetProfile("dialog", "country",		(int)country);
-			map						= map_index.map1 + p.GetProfile("dialog", "map_index_new",	(int)map);
-			map_icon				= map_icon.big + p.GetProfile("dialog", "map_icon",	(int)map_icon);
-			map_draw_names			= map_draw_names.draw + p.GetProfile("dialog", "map_draw_names",	(int)map_draw_names);
+            server                  = GvoWorldInfo.GetServerFromString(p.GetProfile("dialog", "server", server.ToString()));
+            country                 = GvoWorldInfo.GetCountryFromString(p.GetProfile("dialog", "country", country.ToString()));
+			map						= MapIndex.Map1 + p.GetProfile("dialog", "map_index_new",	(int)map);
+			map_icon				= MapIcon.Big + p.GetProfile("dialog", "map_icon",	(int)map_icon);
+			map_draw_names			= MapDrawNames.Draw + p.GetProfile("dialog", "map_draw_names",	(int)map_draw_names);
 			share_group				= p.GetProfile("dialog", "share_group",				share_group);
 			share_group_myname		= p.GetProfile("dialog", "share_group_myname",		share_group_myname);
 			searoutes_group_max		= p.GetProfile("dialog", "searoutes_group_max",		searoutes_group_max);
@@ -890,15 +865,15 @@ namespace gvtrademap_cs
 			windows_vista_aero		= p.GetProfile("dialog", "windows_vista_aero",		windows_vista_aero);
 			enable_analize_log_chat	= p.GetProfile("dialog", "enable_analize_log_chat",	enable_analize_log_chat);
 			is_share_routes			= p.GetProfile("dialog", "is_share_routes",			is_share_routes);
-			capture_interval		= capture_interval_index.per_500ms + p.GetProfile("dialog", "capture_interval",	(int)capture_interval);
+			capture_interval		= CaptureIntervalIndex.Per500ms + p.GetProfile("dialog", "capture_interval",	(int)capture_interval);
 			connect_web_icon		= p.GetProfile("dialog", "connect_web_icon",	connect_web_icon);
 			compatible_windows_rclick	= p.GetProfile("dialog", "compatible_windows_rclick",	compatible_windows_rclick);
-			this.tude_interval		= tude_interval.none + p.GetProfile("dialog", "tude_interval",	(int)this.tude_interval);
+			this.tude_interval		= TudeInterval.None + p.GetProfile("dialog", "tude_interval",	(int)this.tude_interval);
 			use_mixed_map			= p.GetProfile("dialog", "use_mixed_map",	use_mixed_map);
 			window_top_most			= p.GetProfile("dialog", "window_top_most",	window_top_most);
 			enable_line_antialias	= p.GetProfile("dialog", "enable_line_antialias",	enable_line_antialias);
 			enable_sea_routes_aplha	= p.GetProfile("dialog", "enable_sea_routes_aplha",	enable_sea_routes_aplha);
-			this.ss_format			= ss_format.bmp + p.GetProfile("dialog", "ss_format",	(int)this.ss_format);
+			this.ss_format			= SSFormat.Bmp + p.GetProfile("dialog", "ss_format",	(int)this.ss_format);
 			remove_near_web_icons	= p.GetProfile("dialog", "remove_near_web_icons",	remove_near_web_icons);
 			draw_capture_info		= p.GetProfile("dialog", "draw_capture_info",	draw_capture_info);
 			is_server_mode			= p.GetProfile("dialog", "is_server_mode",	is_server_mode);
@@ -909,11 +884,6 @@ namespace gvtrademap_cs
 			draw_favorite_sea_routes_alpha_popup	= p.GetProfile("dialog", "draw_favorite_sea_routes_alpha_popup",	draw_favorite_sea_routes_alpha_popup);
 			debug_flag_show_potision	= p.GetProfile("dialog", "debug_flag_show_potision",	debug_flag_show_potision);
 
-			// 航路削除ダイアログ
-			remove_sea_routes_routes	= p.GetProfile("dialog2", "remove_sea_routes_routes",	remove_sea_routes_routes);
-			remove_sea_routes_popup		= p.GetProfile("dialog2", "remove_sea_routes_popup",	remove_sea_routes_popup);
-			remove_sea_routes_accident	= p.GetProfile("dialog2", "remove_sea_routes_accident",	remove_sea_routes_accident);
-	
 			// 表示関係
 			m_select_info			= p.GetProfile("map", "select_info",		m_select_info);
 			map_pos_x				= p.GetProfile("map", "map_pos_x",			map_pos_x);
@@ -949,10 +919,10 @@ namespace gvtrademap_cs
 			find_filter3			= _find_filter3.full_text_search + p.GetProfile("find", "find_filter3",		(int)find_filter3);
 
 			// 表示項目
-			this.draw_setting_web_icons		= (draw_setting_web_icons)p.GetProfile("draw_setting", "draw_setting_web_icons",	(int)this.draw_setting_web_icons);
-			this.draw_setting_memo_icons	= (draw_setting_memo_icons)p.GetProfile("draw_setting", "draw_setting_memo_icons",	(int)this.draw_setting_memo_icons);
-			this.draw_setting_accidents		= (draw_setting_accidents)p.GetProfile("draw_setting", "draw_setting_accidents",	(int)this.draw_setting_accidents);
-			this.draw_setting_myship_angle	= (draw_setting_myship_angle)p.GetProfile("draw_setting", "draw_setting_myship_angle",	(int)this.draw_setting_myship_angle);
+			this.draw_setting_web_icons		= (DrawSettingWebIcons)p.GetProfile("draw_setting", "draw_setting_web_icons",	(int)this.draw_setting_web_icons);
+			this.draw_setting_memo_icons	= (DrawSettingMemoIcons)p.GetProfile("draw_setting", "draw_setting_memo_icons",	(int)this.draw_setting_memo_icons);
+			this.draw_setting_accidents		= (DrawSettingAccidents)p.GetProfile("draw_setting", "draw_setting_accidents",	(int)this.draw_setting_accidents);
+			this.draw_setting_myship_angle	= (DrawSettingMyShipAngle)p.GetProfile("draw_setting", "draw_setting_myship_angle",	(int)this.draw_setting_myship_angle);
 			this.draw_setting_myship_angle_with_speed_pos	= p.GetProfile("draw_setting", "draw_setting_myship_angle_with_speed_pos",	this.draw_setting_myship_angle_with_speed_pos);
 			this.draw_setting_myship_expect_pos	= p.GetProfile("draw_setting", "draw_setting_myship_expect_pos",	this.draw_setting_myship_expect_pos);
 		}
@@ -960,7 +930,7 @@ namespace gvtrademap_cs
 		/*-------------------------------------------------------------------------
 		 設定ファイル書き出し
 		---------------------------------------------------------------------------*/
-		public void IniSave(IniBase p, string group)
+		public void IniSave(IIni p, string group)
 		{
 			// ウインドウ位置とサイズ
 			p.SetProfile("window", "pos_x",					window_location.X);
@@ -991,8 +961,8 @@ namespace gvtrademap_cs
 			p.SetProfile("icon", "draw_web_icons",			draw_web_icons);
 
 			// ダイアログ設定項目
-			p.SetProfile("dialog", "server",					(int)server);
-			p.SetProfile("dialog", "country",					(int)country);
+			p.SetProfile("dialog", "server",					server.ToString());
+			p.SetProfile("dialog", "country",					country.ToString());
 			p.SetProfile("dialog", "map_index_new",			(int)map);
 			p.SetProfile("dialog", "map_icon",				(int)map_icon);
 			p.SetProfile("dialog", "map_draw_names",			(int)map_draw_names);
@@ -1023,11 +993,6 @@ namespace gvtrademap_cs
 			p.SetProfile("dialog", "enable_favorite_sea_routes_alpha",	enable_favorite_sea_routes_alpha);
 			p.SetProfile("dialog", "draw_favorite_sea_routes_alpha_popup",	draw_favorite_sea_routes_alpha_popup);
 			p.SetProfile("dialog", "debug_flag_show_potision",	debug_flag_show_potision);
-
-			// 航路削除ダイアログ
-			p.SetProfile("dialog2", "remove_sea_routes_routes",	remove_sea_routes_routes);
-			p.SetProfile("dialog2", "remove_sea_routes_popup",	remove_sea_routes_popup);
-			p.SetProfile("dialog2", "remove_sea_routes_accident",	remove_sea_routes_accident);
 
 			// 表示関係
 			p.SetProfile("map", "select_info",				m_select_info);

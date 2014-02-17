@@ -31,7 +31,7 @@ namespace gvo_base
 	/*-------------------------------------------------------------------------
 
 	---------------------------------------------------------------------------*/
-	public abstract class gvo_chat_base : request_ctrl
+	public abstract class gvo_chat_base : RequestCtrl
 	{
 		public enum type{
 			index0,		// 1文字目から一致するもの

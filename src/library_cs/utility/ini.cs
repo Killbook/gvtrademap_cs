@@ -32,14 +32,14 @@ namespace Utility.Ini
 		/// </summary>
 		/// <param name="ini">IIni</param>
 		/// <param name="group">グループ名</param>
-		void IniLoad(IniBase ini, string group);
+		void IniLoad(IIni ini, string group);
 
 		/// <summary>
 		/// 書き出し
 		/// </summary>
 		/// <param name="ini">IIni</param>
 		/// <param name="group">グループ名</param>
-		void IniSave(IniBase ini, string group);
+		void IniSave(IIni ini, string group);
 	}
 
 	//-------------------------------------------------------------------------
@@ -134,7 +134,7 @@ namespace Utility.Ini
 		/// IIniから読み込む
 		/// </summary>
 		/// <param name="ini"></param>
-		protected virtual void Load(IniBase ini)
+		protected virtual void Load(IIni ini)
 		{
 			if(ini == null)		throw new ArgumentException();
 			foreach(SaveLoadNode i in m_list){
@@ -155,7 +155,7 @@ namespace Utility.Ini
 		/// IIniに書きだす。
 		/// </summary>
 		/// <param name="ini">IIni</param>
-		protected virtual void Save(IniBase ini)
+		protected virtual void Save(IIni ini)
 		{
 			if(ini == null)		throw new ArgumentException();
 			foreach(SaveLoadNode i in m_list){
@@ -197,7 +197,7 @@ namespace Utility.Ini
 			/// 読み込み
 			/// </summary>
 			/// <param name="ini">IniBase</param>
-			public void Load(IniBase ini)
+			public void Load(IIni ini)
 			{
 				if(ini == null)						throw new ArgumentException();
 				m_user.IniLoad(ini, m_group);
@@ -208,7 +208,7 @@ namespace Utility.Ini
 			/// 書き出し
 			/// </summary>
 			/// <param name="ini">IIni</param>
-			public void Save(IniBase ini)
+			public void Save(IIni ini)
 			{
 				if(ini == null)						throw new ArgumentException();
 				m_user.IniSave(ini, m_group);
@@ -233,7 +233,7 @@ namespace Utility.Ini
 	/// <para>IniBaseを継承したクラスのインスタンスを直接作成するべきではない。</para>
 	/// <para>xmlを使ったクラスとしてXmlIniとXmlIniSettingが用意されている。</para>
 	/// </remarks>
-	public abstract class IniBase
+	public abstract class IniBase : IIni
 	{
 		//-------------------------------------------------------------------------
 		/// <summary>

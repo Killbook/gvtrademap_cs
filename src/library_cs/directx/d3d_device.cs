@@ -323,12 +323,12 @@ namespace directx
 		/*-------------------------------------------------------------------------
 		 present
 		---------------------------------------------------------------------------*/
-		public override void Present()
+		public override bool Present()
 		{
 			m_skip_count	= 0;
 			m_is_must_draw	= false;
 
-			base.Present();
+			return base.Present();
 		}
 
 		/*-------------------------------------------------------------------------

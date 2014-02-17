@@ -53,8 +53,8 @@ namespace gvo_base
 		};
 		private mode				m_capture_mode;		// 動作モード
 
-		private	screen_capture		m_capture1;			// 測量と日付用
-		private	screen_capture		m_capture2;			// 進行方向用
+		private	ScreenCapture		m_capture1;			// 測量と日付用
+		private	ScreenCapture		m_capture2;			// 進行方向用
 
 		// 解析結果
 		private Point				m_point;			// 解析後の測量座標
@@ -105,8 +105,8 @@ namespace gvo_base
 											set{	m_capture_mode	= value;	}}
 
 
-		protected screen_capture capture1{	get{	return m_capture1;			}}
-		protected screen_capture capture2{	get{	return m_capture2;			}}
+		protected ScreenCapture capture1{	get{	return m_capture1;			}}
+		protected ScreenCapture capture2{	get{	return m_capture2;			}}
 
 		protected bool enable_point{		get{	return m_enable_point;		}
 											set{	m_enable_point	= value;	}}
@@ -148,9 +148,9 @@ namespace gvo_base
 		 screen_captureを継承したものを使用する場合オーバーライドすること
 		 コンストラクタ内で呼ばれるので注意
 		---------------------------------------------------------------------------*/
-		protected virtual screen_capture CreateScreenCapture(int size_x, int size_y)
+		protected virtual ScreenCapture CreateScreenCapture(int size_x, int size_y)
 		{
-			return new screen_capture(size_x, size_y);
+			return new ScreenCapture(size_x, size_y);
 		}
 
 		/*-------------------------------------------------------------------------
@@ -323,8 +323,8 @@ namespace gvo_base
 				"011100110100010001100010001011111110",		// 9
 				"000000010000000010000000011000000000" };	// ,
 
-			byte[]	image	= m_capture1.image;
-			int		stride	= m_capture1.stride;
+			byte[]	image	= m_capture1.Image;
+			int		stride	= m_capture1.Stride;
 				
 			int		offset	= index * 6 * 3;
 			string	chk		= "";
@@ -421,8 +421,8 @@ namespace gvo_base
 				"110110001001110110",		// 8
 				"111011000001011110" };		// 9
 
-			byte[]	image	= m_capture1.image;
-			int		stride	= m_capture1.stride;
+			byte[]	image	= m_capture1.Image;
+			int		stride	= m_capture1.Stride;
 
 			int		max;
 			int		start;
@@ -707,8 +707,8 @@ namespace gvo_base
 		---------------------------------------------------------------------------*/
 		private bool analize_angle_sub(int i)
 		{
-			byte[]	image	= m_capture2.image;
-			int		stride	= m_capture2.stride;
+			byte[]	image	= m_capture2.Image;
+			int		stride	= m_capture2.Stride;
 
 			int		index;
 			int		r, g, b;
@@ -743,8 +743,8 @@ namespace gvo_base
 		---------------------------------------------------------------------------*/
 		private bool analize_angle_sub2(int i)
 		{
-			byte[]	image	= m_capture2.image;
-			int		stride	= m_capture2.stride;
+			byte[]	image	= m_capture2.Image;
+			int		stride	= m_capture2.Stride;
 
 			int		index;
 			int		r, g, b;

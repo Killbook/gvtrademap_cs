@@ -28,7 +28,7 @@ namespace gvtrademap_cs
 	---------------------------------------------------------------------------*/
 	public class interest_days : gvo_day_counter
 	{
-		private setting						m_setting;
+		private GlobalSettings						m_setting;
 
 		/*-------------------------------------------------------------------------
 		 
@@ -37,7 +37,7 @@ namespace gvtrademap_cs
 		/*-------------------------------------------------------------------------
 		 
 		---------------------------------------------------------------------------*/
-		public interest_days(setting _setting)
+		public interest_days(GlobalSettings _setting)
 			: base()
 		{
 			m_setting				= _setting;

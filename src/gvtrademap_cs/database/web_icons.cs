@@ -132,7 +132,7 @@ namespace gvtrademap_cs
 	
 		private bool					m_optimize;		// 描画を最適化している場合true
 														// 同じアイコンで距離が近い場合1つにまとめているとtrue
-		private draw_setting_web_icons	m_draw_flags;
+		private DrawSettingWebIcons	m_draw_flags;
 	
 		/*-------------------------------------------------------------------------
 		 
@@ -332,7 +332,7 @@ namespace gvtrademap_cs
 		private bool is_draw(int index)
 		{
 			// 描画フラグ
-			draw_setting_web_icons	flag	= m_lib.setting.draw_setting_web_icons;
+			DrawSettingWebIcons	flag	= m_lib.setting.draw_setting_web_icons;
 
 			switch((icon_index)index){
 			case icon_index.wind_0:
@@ -343,22 +343,22 @@ namespace gvtrademap_cs
 			case icon_index.wind_5:
 			case icon_index.wind_6:
 			case icon_index.wind_7:
-				if((flag & draw_setting_web_icons.wind) == 0)		return false;
+				if((flag & DrawSettingWebIcons.wind) == 0)		return false;
 				break;
 			case icon_index.memo_0:
-				if((flag & draw_setting_web_icons.accident_0) == 0)	return false;
+				if((flag & DrawSettingWebIcons.accident_0) == 0)	return false;
 				break;
 			case icon_index.memo_1:
-				if((flag & draw_setting_web_icons.accident_1) == 0)	return false;
+				if((flag & DrawSettingWebIcons.accident_1) == 0)	return false;
 				break;
 			case icon_index.memo_2:
-				if((flag & draw_setting_web_icons.accident_2) == 0)	return false;
+				if((flag & DrawSettingWebIcons.accident_2) == 0)	return false;
 				break;
 			case icon_index.memo_3:
-				if((flag & draw_setting_web_icons.accident_3) == 0)	return false;
+				if((flag & DrawSettingWebIcons.accident_3) == 0)	return false;
 				break;
 			case icon_index.memo_4:
-				if((flag & draw_setting_web_icons.accident_4) == 0)	return false;
+				if((flag & DrawSettingWebIcons.accident_4) == 0)	return false;
 				break;
 			}
 			return true;

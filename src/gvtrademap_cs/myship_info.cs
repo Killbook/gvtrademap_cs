@@ -53,7 +53,7 @@ namespace gvtrademap_cs
 		 
 		---------------------------------------------------------------------------*/
 		private gvt_lib				m_lib;					// 
-		private database			m_db;					// 
+		private GvoDatabase			m_db;					// 
 
 	
 		private Point				m_pos;					// 自分の船位置
@@ -64,10 +64,10 @@ namespace gvtrademap_cs
 
 		private gvo_server_service	m_server_service;		// ナビゲーションクライアントからの受信
 
-		private date_timer			m_capture_timer;		// キャプチャ間隔用
+		private DateTimer			m_capture_timer;		// キャプチャ間隔用
 		private int					m_capture_interval;		// キャプチャ間隔
-		private date_timer			m_expect_pos_timer;		// 予想位置計算用
-		private date_timer			m_expect_delay_timer;	// 予想位置消去用ディレイタイマ
+		private DateTimer			m_expect_pos_timer;		// 予想位置計算用
+		private DateTimer			m_expect_delay_timer;	// 予想位置消去用ディレイタイマ
 
 		private Vector2				m_expect_vector;		// 予想位置用角度
 		private bool				m_is_draw_expect_pos;	// 予想位置を描画するときtrue
@@ -103,7 +103,7 @@ namespace gvtrademap_cs
 		/*-------------------------------------------------------------------------
 		 
 		---------------------------------------------------------------------------*/
-		public myship_info(gvt_lib lib, database db)
+		public myship_info(gvt_lib lib, GvoDatabase db)
 		{
 			m_lib					= lib;
 			m_db					= db;
@@ -115,9 +115,9 @@ namespace gvtrademap_cs
 //			m_show_speed			= 0;
 
 			m_server_service		= new gvo_server_service();		// ナビゲーションクライアントからの受信
-			m_capture_timer			= new date_timer();				// キャプチャ間隔用
-			m_expect_pos_timer		= new date_timer();				// 予想位置計算用
-			m_expect_delay_timer	= new date_timer();				// 予想位置消去用ディレイタイマ
+			m_capture_timer			= new DateTimer();				// キャプチャ間隔用
+			m_expect_pos_timer		= new DateTimer();				// 予想位置計算用
+			m_expect_delay_timer	= new DateTimer();				// 予想位置消去用ディレイタイマ
 
 			m_capture_sucess		= false;
 
@@ -156,7 +156,7 @@ namespace gvtrademap_cs
 				// 画面キャプチャ
 				do_capture();
 				// ログからの海域変動更新
-				m_db.gvochat.UpdateSeaArea_DoRequest();
+				m_db.GvoChat.UpdateSeaArea_DoRequest();
 			}
 		}
 
@@ -184,16 +184,16 @@ namespace gvtrademap_cs
 		private void update_capture_interval()
 		{
 			switch(m_lib.setting.capture_interval){
-			case capture_interval_index.per_250ms:
+			case CaptureIntervalIndex.Per250ms:
 				m_capture_interval			= 250;
 				break;
-			case capture_interval_index.per_500ms:
+			case CaptureIntervalIndex.Per500ms:
 				m_capture_interval			= 500;
 				break;
-			case capture_interval_index.per_2000ms:
+			case CaptureIntervalIndex.Per2000ms:
 				m_capture_interval			= 2000;
 				break;
-			case capture_interval_index.per_1000ms:
+			case CaptureIntervalIndex.Per1000ms:
 			default:
 				m_capture_interval			= 1000;
 				break;
@@ -229,15 +229,15 @@ namespace gvtrademap_cs
 			if(!m_lib.setting.save_searoutes)	return null;
 	
 			// キャプチャ方法の指定
-			if(m_lib.setting.windows_vista_aero)	m_db.capture.capture_mode = gvo_capture.mode.vista;
-			else									m_db.capture.capture_mode = gvo_capture.mode.xp;
+			if(m_lib.setting.windows_vista_aero)	m_db.Capture.capture_mode = gvo_capture.mode.vista;
+			else									m_db.Capture.capture_mode = gvo_capture.mode.xp;
 
 			// 画面キャプチャ
 			// 日数、測量座標、コンパスの角度
-			m_db.capture.CaptureAll();
+			m_db.Capture.CaptureAll();
 
 			// 情報を構築して返す
-			return gvo_analized_data.FromAnalizedData(m_db.capture, m_db.gvochat);
+			return gvo_analized_data.FromAnalizedData(m_db.Capture, m_db.GvoChat);
 		}
 
 		/*-------------------------------------------------------------------------
@@ -284,13 +284,13 @@ namespace gvtrademap_cs
 				foreach(gvo_map_cs_chat_base.sea_area_type i in sea_info){
 					switch(i.type){
 					case gvo_map_cs_chat_base.sea_type.safty:
-						m_db.sea_area.SetType(i.name, sea_area.sea_area_once.sea_type.safty);
+						m_db.SeaArea.SetType(i.name, sea_area.sea_area_once.sea_type.safty);
 						break;
 					case gvo_map_cs_chat_base.sea_type.lawless:
-						m_db.sea_area.SetType(i.name, sea_area.sea_area_once.sea_type.lawless);
+						m_db.SeaArea.SetType(i.name, sea_area.sea_area_once.sea_type.lawless);
 						break;
 					default:
-						m_db.sea_area.SetType(i.name, sea_area.sea_area_once.sea_type.normal);
+						m_db.SeaArea.SetType(i.name, sea_area.sea_area_once.sea_type.normal);
 						break;
 					}
 				}
@@ -325,23 +325,23 @@ namespace gvtrademap_cs
 			}
 	
 			// 経過時間だけ追加
-			m_db.speed.AddIntervalOnly(sectiontime);
+			m_db.SpeedCalculator.AddIntervalOnly(sectiontime);
 
 			// 造船開始と終了
 			// 同時にフラグが立った場合は終了を優先する
 			if(data.is_start_build_ship){
-				m_db.build_ship_counter.StartBuildShip(data.build_ship_name);
+				m_db.BuildShipCounter.StartBuildShip(data.build_ship_name);
 			}
 			if(data.is_finish_build_ship){
-				m_db.build_ship_counter.FinishBuildShip();
+				m_db.BuildShipCounter.FinishBuildShip();
 			}
 			
 			// 日付キャプチャ成功なら利息からの日数を更新する
 			if(data.capture_days_success){
 				// 利息からの日数を更新する
-				m_db.interest_days.Update(data.days, data.interest);
+				m_db.InterestDays.Update(data.days, data.interest);
 				// 造船日数を更新する
-				m_db.build_ship_counter.Update(data.days);
+				m_db.BuildShipCounter.Update(data.days);
 			}else{
 				if(m_expect_delay_timer.GetSectionTimeMilliseconds() > OUT_OF_SEA_TIME_OUT){
 					// 海上ではない
@@ -370,13 +370,13 @@ namespace gvtrademap_cs
 
 			// 測量位置を追加する
 			// 位置によっては追加されない
-			m_db.searoute.AddPoint(	m_pos,
+			m_db.SeaRoute.AddPoint(	m_pos,
 									data.days,
 									gvo_chat.ToIndex(data.accident));
 
 			// 速度算出
 			// 更新間隔はすでに設定済み
-			m_db.speed.Add(m_pos, 0);
+			m_db.SpeedCalculator.Add(m_pos, 0);
 
 			// キャプチャ時は描画をスキップしない
 			m_lib.device.SetMustDrawFlag();
@@ -414,7 +414,7 @@ namespace gvtrademap_cs
 			// 到達予想位置
 			int color	= -1;
 			if(m_lib.setting.draw_setting_myship_expect_pos){
-				if(draw_expect_pos(pos, m_db.speed.speed_map)){
+				if(draw_expect_pos(pos, m_db.SpeedCalculator.speed_map)){
 					color	= Color.FromArgb(160, 255, 255, 255).ToArgb();
 				}
 			}
@@ -431,17 +431,17 @@ namespace gvtrademap_cs
 			// 
 			if(!m_lib.setting.draw_myship_angle)	return;
 	
-			draw_setting_myship_angle	flag	= m_lib.setting.draw_setting_myship_angle;
+			DrawSettingMyShipAngle	flag	= m_lib.setting.draw_setting_myship_angle;
 
-			if((flag & draw_setting_myship_angle.draw_1) != 0){
+			if((flag & DrawSettingMyShipAngle.draw_1) != 0){
 				// 測量から
 				// 精度が高いほど不透明で描画される
 				// 精度が低いときはほとんど見えない
-				int		alpha	= (int)((255f * (m_db.speed.angle_precision * m_db.speed.angle_precision)));
-				draw_angle_line(pos, image, m_db.speed.angle, Color.FromArgb(alpha, 0, 0, 255));
+				int		alpha	= (int)((255f * (m_db.SpeedCalculator.angle_precision * m_db.SpeedCalculator.angle_precision)));
+				draw_angle_line(pos, image, m_db.SpeedCalculator.angle, Color.FromArgb(alpha, 0, 0, 255));
 			}
 			if(   (is_in_the_sea)
-				&&((flag & draw_setting_myship_angle.draw_0) != 0) ){
+				&&((flag & DrawSettingMyShipAngle.draw_0) != 0) ){
 				// コンパスから
 				Color	color	= (is_draw_expect_pos)? Color.Tomato: Color.Black;
 				draw_angle_line(pos, image, m_angle, color);
@@ -451,7 +451,7 @@ namespace gvtrademap_cs
 					draw_step_position2(pos,
 										image,
 										m_angle,
-										m_db.speed.speed_map);
+										m_db.SpeedCalculator.speed_map);
 				}
 			}
 		}

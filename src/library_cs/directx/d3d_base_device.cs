@@ -170,9 +170,9 @@ namespace directx
 		/*-------------------------------------------------------------------------
 		 present
 		---------------------------------------------------------------------------*/
-		public virtual void Present()
+		public virtual bool Present()
 		{
-			if(m_d3d_device == null)	return;
+			if(m_d3d_device == null)	return true;
 
 			try{
 				m_d3d_device.Present();
@@ -180,6 +180,11 @@ namespace directx
 				// デバイスロスト
 				OnDeviceLostException();
 			}
+			catch (DriverInternalErrorException ex)
+			{
+				return false;
+			}
+			return true;
 		}
 
 		/*-------------------------------------------------------------------------

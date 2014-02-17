@@ -122,7 +122,7 @@ namespace gvtrademap_cs
 		---------------------------------------------------------------------------*/
 		private void draw_cityname_proc(Vector2 offset, LoopXImage image)
 		{
-			if(m_lib.setting.map_icon == map_icon.big){
+			if(m_lib.setting.map_icon == MapIcon.Big){
 				// 大きいアイコン
 				foreach(GvoWorldInfo.Info i in m_world.NoSeas){
 					Vector2	p	= image.GlobalPos2LocalPos(transform.ToVector2(i.position), offset);
@@ -130,7 +130,7 @@ namespace gvtrademap_cs
 						m_lib.device.sprites.AddDrawSprites(new Vector3(p.X, p.Y, 0.3f), i.IconRect);
 					}
 
-					if(m_lib.setting.map_draw_names == map_draw_names.hide)	continue;
+					if(m_lib.setting.map_draw_names == MapDrawNames.Hide)	continue;
 					if(i.NameRect == null)								continue;
 					p.X		+= i.StringOffset1.X;
 					p.Y		+= i.StringOffset1.Y;
@@ -144,7 +144,7 @@ namespace gvtrademap_cs
 						m_lib.device.sprites.AddDrawSprites(new Vector3(p.X, p.Y, 0.3f), i.SmallIconRect);
 					}
 
-					if(m_lib.setting.map_draw_names == map_draw_names.hide)	continue;
+					if(m_lib.setting.map_draw_names == MapDrawNames.Hide)	continue;
 					if(i.NameRect == null)								continue;
 					p.X		+= i.StringOffset2.X;
 					p.Y		+= i.StringOffset2.Y;
@@ -169,17 +169,17 @@ namespace gvtrademap_cs
 			effect.BeginPass(0);
 
 			m_lib.device.device.VertexDeclaration	= m_decl;
-			if(m_lib.setting.map_icon == map_icon.big){
+			if(m_lib.setting.map_icon == MapIcon.Big){
 				// 大きいアイコン
 				draw_buffer(m_icons1_vb, m_world.NoSeas.Count);
-				if(m_lib.setting.map_draw_names == map_draw_names.draw){
+				if(m_lib.setting.map_draw_names == MapDrawNames.Draw){
 					// 街名
 					draw_buffer(m_city_names1_vb, m_world.NoSeas.Count);
 				}
 			}else{
 				// 小さいアイコン
 				draw_buffer(m_icons2_vb, m_world.NoSeas.Count);
-				if(m_lib.setting.map_draw_names == map_draw_names.draw){
+				if(m_lib.setting.map_draw_names == MapDrawNames.Draw){
 					// 街名
 					draw_buffer(m_city_names2_vb, m_world.NoSeas.Count);
 				}

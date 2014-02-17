@@ -134,7 +134,7 @@ namespace gvtrademap_cs
 		{
 			m_setting.server					= domains.server.Euros + comboBox2.SelectedIndex;
 			m_setting.country					= domains.country.England + comboBox3.SelectedIndex;
-			m_setting.map						= map_index.map1 + comboBox1.SelectedIndex;
+			m_setting.map						= MapIndex.Map1 + comboBox1.SelectedIndex;
 			m_setting.map_icon					= map_icon.big + comboBox6.SelectedIndex;
 			m_setting.map_draw_names			= map_draw_names.draw + comboBox7.SelectedIndex;
 			m_setting.ss_format					= ss_format.bmp + comboBox8.SelectedIndex;
@@ -145,7 +145,7 @@ namespace gvtrademap_cs
 				m_setting.capture_interval		= capture_interval_index.per_500ms + (comboBox4.SelectedIndex - 1);
 			}
 
-			m_setting.tude_interval				= tude_interval.none + comboBox5.SelectedIndex;
+			m_setting.tude_interval				= TudeInterval.None + comboBox5.SelectedIndex;
 			m_setting.share_group				= textBox1.Text;
 			m_setting.share_group_myname		= textBox2.Text;
 			m_setting.connect_network			= checkBox1.Checked;

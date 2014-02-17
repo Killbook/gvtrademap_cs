@@ -46,7 +46,7 @@ namespace gvtrademap_cs
 		private const int					OFFSET_X	= -2;
 
 		private gvt_lib						m_lib;
-		private database					m_db;
+		private GvoDatabase					m_db;
 		private myship_info					m_myship_info;
 
 		private hittest_list				m_windows;			// ウインドウ矩形管理
@@ -63,7 +63,7 @@ namespace gvtrademap_cs
 		/*-------------------------------------------------------------------------
 
 		---------------------------------------------------------------------------*/
-		public info_windows(gvt_lib lib, database db, myship_info myship)
+		public info_windows(gvt_lib lib, GvoDatabase db, myship_info myship)
 		{
 			m_lib			= lib;
 			m_db			= db;
@@ -156,7 +156,7 @@ namespace gvtrademap_cs
 				if(m_lib.setting.is_server_mode)			ht.enable	= true;
 				if(!m_lib.setting.force_show_build_ship){
 					// 造船中でないときは非表示
-					ht.enable	= m_db.build_ship_counter.IsNowBuild;
+					ht.enable	= m_db.BuildShipCounter.IsNowBuild;
 				}
 	
 				Size		size	= new Size(78, 14*1 + 2);
@@ -245,7 +245,7 @@ namespace gvtrademap_cs
 			m_lib.device.sprites.AddDrawSpritesNC(new Vector3(pos.X+6, pos_y, 0.1f), m_lib.icons.GetIcon(icons.icon_index.string04));	// 地図
 			pos_y	+= 14-1;
 			m_lib.device.sprites.AddDrawSpritesNC(new Vector3(pos.X+6, pos_y, 0.1f), m_lib.icons.GetIcon(icons.icon_index.string03));	// 季節
-			d3d_sprite_rects.rect	_rect	= m_lib.icons.GetIcon((m_db.season.now_season == gvo_season.season.summer)? icons.icon_index.string06: icons.icon_index.string05);
+			d3d_sprite_rects.rect	_rect	= m_lib.icons.GetIcon((m_db.GvoSeason.now_season == gvo_season.season.summer)? icons.icon_index.string06: icons.icon_index.string05);
 			m_lib.device.sprites.AddDrawSpritesNC(new Vector3(pos.X + 75 +OFFSET_X - 12, pos_y, 0.1f), _rect);
 		
 			// 自分の船の位置
@@ -322,13 +322,13 @@ namespace gvtrademap_cs
 			pos2.X	+= 1;
 			pos2.Y	+= 1;
 			pos2.Z	-= 0.05f;
-			m_lib.device.DrawFillRect(pos2, new Vector2(m_db.speed.angle_precision * (ht.rect.Width-1-1), 13), Color.FromArgb(255, 160, 210, 255).ToArgb());
+			m_lib.device.DrawFillRect(pos2, new Vector2(m_db.SpeedCalculator.angle_precision * (ht.rect.Width-1-1), 13), Color.FromArgb(255, 160, 210, 255).ToArgb());
 //			m_lib.Device.DrawFillRect(pos2, new Vector2(0.5f * (ht.rect.Width-1-1), 13), Color.FromArgb(255, 160, 210, 255).ToArgb());
 
 			int		pos_x	= (int)pos.X + ht.rect.Width - 2;
 	
 			// 速度
-			m_lib.device.systemfont.DrawTextR(m_db.speed.speed_knot.ToString("0.00") + "Kt",
+			m_lib.device.systemfont.DrawTextR(m_db.SpeedCalculator.speed_knot.ToString("0.00") + "Kt",
 									pos_x, (int)pos.Y + 1+1, Color.Black);
 //			m_lib.Device.systemfont.DrawTextR(m_db.speed.speed_knot.ToString("0.00") + "Kt(" + m_db.speed.speed_map.ToString("0.00") + ")",
 //									pos_x, (int)pos.Y + 1+1, Color.Black);
@@ -339,8 +339,8 @@ namespace gvtrademap_cs
 										pos_x - 12, (int)pos.Y + 1+1 + 16 + 1, Color.Black);
 			}
 			// コンパスからの角度
-			if(m_db.speed.angle >= 0){
-				m_lib.device.systemfont.DrawTextR(m_db.speed.angle.ToString("0.0"),
+			if(m_db.SpeedCalculator.angle >= 0){
+				m_lib.device.systemfont.DrawTextR(m_db.SpeedCalculator.angle.ToString("0.0"),
 										pos_x - 12, (int)pos.Y + 1+1 + 16 + 1 + 16 + 1, Color.Black);
 			}
 		}
@@ -362,7 +362,7 @@ namespace gvtrademap_cs
 			m_lib.device.DrawLineRect(pos, size, Color.Black.ToArgb());
 
 			m_lib.device.sprites.AddDrawSpritesNC(new Vector3(pos.X+6, pos.Y + 3, 0.1f), m_lib.icons.GetIcon(icons.icon_index.string01));
-			m_lib.device.systemfont.DrawTextR(String.Format("{0}", m_db.share_routes.ShareList.Count),
+			m_lib.device.systemfont.DrawTextR(String.Format("{0}", m_db.ShareRoutes.ShareList.Count),
 									(int)pos.X + 75 +OFFSET_X, (int)pos.Y + 3, Color.White);
 		}
 
@@ -384,7 +384,7 @@ namespace gvtrademap_cs
 
 			m_lib.device.sprites.AddDrawSpritesNC(new Vector3(pos.X+6, pos.Y + 3, 0.1f), m_lib.icons.GetIcon(icons.icon_index.string02));
 			m_lib.device.sprites.AddDrawSpritesNC(new Vector3(pos.X+6 + 75 + OFFSET_X - 13, pos.Y + 3, 0.1f), m_lib.icons.GetIcon(icons.icon_index.string00));
-			m_lib.device.systemfont.DrawTextR(String.Format("{0}", m_db.interest_days.GetDays()),
+			m_lib.device.systemfont.DrawTextR(String.Format("{0}", m_db.InterestDays.GetDays()),
 									(int)pos.X + 75 +OFFSET_X - 8, (int)pos.Y + 3, Color.White);
 		}
 
@@ -406,7 +406,7 @@ namespace gvtrademap_cs
 
 			m_lib.device.sprites.AddDrawSpritesNC(new Vector3(pos.X+6, pos.Y + 3, 0.1f), m_lib.icons.GetIcon(icons.icon_index.string07));
 			m_lib.device.sprites.AddDrawSpritesNC(new Vector3(pos.X+6 + 75 + OFFSET_X - 13, pos.Y + 3, 0.1f), m_lib.icons.GetIcon(icons.icon_index.string00));
-			m_lib.device.systemfont.DrawTextR(String.Format("{0}", m_db.build_ship_counter.GetDays()),
+			m_lib.device.systemfont.DrawTextR(String.Format("{0}", m_db.BuildShipCounter.GetDays()),
 									(int)pos.X + 75 +OFFSET_X - 8, (int)pos.Y + 3, Color.White);
 		}
 	
@@ -459,7 +459,7 @@ namespace gvtrademap_cs
 			case (int)window_index.share:
 				if((mouseButtons & MouseButtons.Left) == 0)	return true;
 				// 左クリック
-				using(share_routes_form dlg = new share_routes_form(m_db.share_routes.ShareList)){
+				using(share_routes_form dlg = new share_routes_form(m_db.ShareRoutes.ShareList)){
 					if(dlg.ShowDialog(form) == DialogResult.OK){
 						if(dlg.is_selected){
 							// 選択されてる場所をセンタリングする
@@ -475,7 +475,7 @@ namespace gvtrademap_cs
 				if((mouseButtons & MouseButtons.Right) == 0)	return true;
 				// 右クリック
 				if(MessageBox.Show("造船カウンタをリセットしますか？", "確認", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes){
-					m_db.build_ship_counter.FinishBuildShip();
+					m_db.BuildShipCounter.FinishBuildShip();
 				}
 				return true;
 			}
@@ -492,7 +492,7 @@ namespace gvtrademap_cs
 			case (int)window_index.position:
 				{
 					string	str	= "地図拡縮率\n季節(";
-					str += m_db.season.next_season_start_shortstr;
+					str += m_db.GvoSeason.next_season_start_shortstr;
 					str	+= "まで)\n自分の船の位置\nクロスカーソルの位置\nマウスの位置";
 					if(m_lib.setting.debug_flag_show_potision){
 						str	+= "\n(デバッグフラグ有効)";
@@ -503,17 +503,17 @@ namespace gvtrademap_cs
 			case (int)window_index.share:
 				{
 					string	str		= "";
-					foreach(ShareRoutes.ShareShip s in m_db.share_routes.ShareList){
+					foreach(ShareRoutes.ShareShip s in m_db.ShareRoutes.ShareList){
 						if(str != "")	str			+= "\n";
 						str			+= s.Name;
 					}
 					if(str == "")	str	= "航路共有メンバーが居ません";
 					return str;
 				}
-			case (int)window_index.interest:	return m_db.interest_days.GetPopupString();
+			case (int)window_index.interest:	return m_db.InterestDays.GetPopupString();
 			case (int)window_index.build_ship:
 				{
-					return m_db.build_ship_counter.GetPopupString() + "\n(右クリックでリセット)";
+					return m_db.BuildShipCounter.GetPopupString() + "\n(右クリックでリセット)";
 				}
 			case (int)window_index.tcp_server:
 				{

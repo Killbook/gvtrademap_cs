@@ -45,38 +45,38 @@ namespace gvtrademap_cs
 			version,
 		};
 	
-		private	setting						m_setting;
+		private	GlobalSettings						m_setting;
 		private KeyAssignList				m_key_assign_list;
 		private KeyAssiginSettingHelper		m_key_assign_helper;
 
 		/*-------------------------------------------------------------------------
 		 
 		---------------------------------------------------------------------------*/
-		public setting setting{					get{	return m_setting;			}}
+		public GlobalSettings setting{					get{	return m_setting;			}}
 		public KeyAssignList KeyAssignList{		get{	return m_key_assign_list;	}}
 
 		/*-------------------------------------------------------------------------
 
 		---------------------------------------------------------------------------*/
-		public setting_form2(setting _setting, KeyAssignList assign_list, string device_info)
+		public setting_form2(GlobalSettings _setting, KeyAssignList assign_list, string device_info)
 		{
-			init(_setting, assign_list, device_info, tab_index.general, draw_setting_page.web_icons);
+			init(_setting, assign_list, device_info, tab_index.general, DrawSettingPage.WebIcons);
 		}
 		// 描画項目設定時用
-		public setting_form2(setting _setting, KeyAssignList assign_list, string device_info, draw_setting_page _draw_setting_page)
+		public setting_form2(GlobalSettings _setting, KeyAssignList assign_list, string device_info, DrawSettingPage _draw_setting_page)
 		{
 			init(_setting, assign_list, device_info, tab_index.draw_flags, _draw_setting_page);
 		}
 		// ページ指定
-		public setting_form2(setting _setting, KeyAssignList assign_list, string device_info, tab_index _tab_index)
+		public setting_form2(GlobalSettings _setting, KeyAssignList assign_list, string device_info, tab_index _tab_index)
 		{
-			init(_setting, assign_list, device_info, _tab_index, draw_setting_page.web_icons);
+			init(_setting, assign_list, device_info, _tab_index, DrawSettingPage.WebIcons);
 		}
 
 		/*-------------------------------------------------------------------------
 		 初期化
 		---------------------------------------------------------------------------*/
-		private void init(setting _setting, KeyAssignList assign_list, string device_info, tab_index index, draw_setting_page page)
+		private void init(GlobalSettings _setting, KeyAssignList assign_list, string device_info, tab_index index, DrawSettingPage page)
 		{
 			// 設定内容をコピーして持つ
 			m_setting				= _setting.Clone();
@@ -121,7 +121,7 @@ namespace gvtrademap_cs
 			toolTip1.SetToolTip(checkBox14, "一番新しい航路図以外を半透明で描画します\n日付、災害ポップアップも半透明になります");
 			toolTip1.SetToolTip(checkBox16, "@Webアイコン描画時に同じ種類で距離が近い場合、1つにまとめます。\n@Webアイコン表示時のごちゃごちゃした感じを軽減します。");
 
-			toolTip1.SetToolTip(checkBox3, "画面キャプチャ方法を指定します\nWindows Vistaを使用していて航路図がうまく書かれない場合チェックを入れてください");
+            toolTip1.SetToolTip(checkBox3, "画面キャプチャ方法を指定します\nWindows Vistaを使用していて航路図がうまく書かれない場合チェックを入れてください。\nWindows7ではこのチェックを入れる必要はありません。");
 			toolTip1.SetToolTip(checkBox5, "災害ポップアップ、利息からの経過日数、海域変動システム用にログ解析を行います");
 			toolTip1.SetToolTip(checkBox17, "キャプチャした画像を右に表示します\nコンパス解析の角度ずれの確認用です\n通常はチェックを入れる必要はありません");
 			toolTip1.SetToolTip(comboBox4, "画面キャプチャ間隔を選択します\n短い間隔でキャプチャするほどコンパスの角度のレスポンスがよくなりますがCPU時間を多く消費します\nCPUに余裕がある場合は0.5秒に1回を選択してください\nさらにCPUに余裕がある場合は0.25秒に1回を選択してください\n初期値は1秒に1回です");
@@ -151,7 +151,7 @@ namespace gvtrademap_cs
 
 			// 設定項目を反映させる
 			comboBox2.SelectedIndex	= (int)m_setting.server;
-			comboBox3.SelectedIndex	= m_setting.country - GvoDomains.Country.England;
+            comboBox3.SelectedItem  = GvoWorldInfo.GetCountryString(this.m_setting.country);
 			comboBox1.SelectedIndex	= (int)m_setting.map;
 			comboBox5.SelectedIndex	= (int)m_setting.tude_interval;
 			comboBox6.SelectedIndex	= (int)m_setting.map_icon;
@@ -178,7 +178,7 @@ namespace gvtrademap_cs
 			checkBox4.Checked		= m_setting.force_show_build_ship;
 			checkBox7.Checked		= m_setting.debug_flag_show_potision;
 	
-			if(m_setting.capture_interval == capture_interval_index.per_250ms){
+			if(m_setting.capture_interval == CaptureIntervalIndex.Per250ms){
 				comboBox4.SelectedIndex	= 0;
 			}else{
 				comboBox4.SelectedIndex	= (int)m_setting.capture_interval + 1;
@@ -234,62 +234,62 @@ namespace gvtrademap_cs
 		/*-------------------------------------------------------------------------
 		 表示項目の初期化
 		---------------------------------------------------------------------------*/
-		private void init_draw_setting(draw_setting_page page)
+		private void init_draw_setting(DrawSettingPage page)
 		{
 			// @Web icons
 			{
-				draw_setting_web_icons	flag	= m_setting.draw_setting_web_icons;
-				checkBox100.Checked			= (flag & draw_setting_web_icons.wind) != 0;
-				checkBox101.Checked			= (flag & draw_setting_web_icons.accident_0) != 0;
-				checkBox102.Checked			= (flag & draw_setting_web_icons.accident_1) != 0;
-				checkBox103.Checked			= (flag & draw_setting_web_icons.accident_2) != 0;
-				checkBox104.Checked			= (flag & draw_setting_web_icons.accident_3) != 0;
-				checkBox105.Checked			= (flag & draw_setting_web_icons.accident_4) != 0;
+				DrawSettingWebIcons	flag	= m_setting.draw_setting_web_icons;
+				checkBox100.Checked			= (flag & DrawSettingWebIcons.wind) != 0;
+				checkBox101.Checked			= (flag & DrawSettingWebIcons.accident_0) != 0;
+				checkBox102.Checked			= (flag & DrawSettingWebIcons.accident_1) != 0;
+				checkBox103.Checked			= (flag & DrawSettingWebIcons.accident_2) != 0;
+				checkBox104.Checked			= (flag & DrawSettingWebIcons.accident_3) != 0;
+				checkBox105.Checked			= (flag & DrawSettingWebIcons.accident_4) != 0;
 			}
 			// Memo icons
 			{
-				draw_setting_memo_icons	flag	= m_setting.draw_setting_memo_icons;
-				checkBox200.Checked			= (flag & draw_setting_memo_icons.wind) != 0;
-				checkBox201.Checked			= (flag & draw_setting_memo_icons.memo_0) != 0;
-				checkBox202.Checked			= (flag & draw_setting_memo_icons.memo_1) != 0;
-				checkBox203.Checked			= (flag & draw_setting_memo_icons.memo_2) != 0;
-				checkBox204.Checked			= (flag & draw_setting_memo_icons.memo_3) != 0;
-				checkBox205.Checked			= (flag & draw_setting_memo_icons.memo_4) != 0;
-				checkBox206.Checked			= (flag & draw_setting_memo_icons.memo_5) != 0;
-				checkBox207.Checked			= (flag & draw_setting_memo_icons.memo_6) != 0;
-				checkBox208.Checked			= (flag & draw_setting_memo_icons.memo_7) != 0;
-				checkBox209.Checked			= (flag & draw_setting_memo_icons.memo_8) != 0;
-				checkBox210.Checked			= (flag & draw_setting_memo_icons.memo_9) != 0;
-				checkBox211.Checked			= (flag & draw_setting_memo_icons.memo_10) != 0;
-				checkBox212.Checked			= (flag & draw_setting_memo_icons.memo_11) != 0;
+				DrawSettingMemoIcons	flag	= m_setting.draw_setting_memo_icons;
+				checkBox200.Checked			= (flag & DrawSettingMemoIcons.wind) != 0;
+				checkBox201.Checked			= (flag & DrawSettingMemoIcons.memo_0) != 0;
+				checkBox202.Checked			= (flag & DrawSettingMemoIcons.memo_1) != 0;
+				checkBox203.Checked			= (flag & DrawSettingMemoIcons.memo_2) != 0;
+				checkBox204.Checked			= (flag & DrawSettingMemoIcons.memo_3) != 0;
+				checkBox205.Checked			= (flag & DrawSettingMemoIcons.memo_4) != 0;
+				checkBox206.Checked			= (flag & DrawSettingMemoIcons.memo_5) != 0;
+				checkBox207.Checked			= (flag & DrawSettingMemoIcons.memo_6) != 0;
+				checkBox208.Checked			= (flag & DrawSettingMemoIcons.memo_7) != 0;
+				checkBox209.Checked			= (flag & DrawSettingMemoIcons.memo_8) != 0;
+				checkBox210.Checked			= (flag & DrawSettingMemoIcons.memo_9) != 0;
+				checkBox211.Checked			= (flag & DrawSettingMemoIcons.memo_10) != 0;
+				checkBox212.Checked			= (flag & DrawSettingMemoIcons.memo_11) != 0;
 			}
 			// 災害
 			{
-				draw_setting_accidents	flag	= m_setting.draw_setting_accidents;
-				checkBox300.Checked			= (flag & draw_setting_accidents.accident_0) != 0;
-				checkBox301.Checked			= (flag & draw_setting_accidents.accident_1) != 0;
-				checkBox302.Checked			= (flag & draw_setting_accidents.accident_2) != 0;
-				checkBox303.Checked			= (flag & draw_setting_accidents.accident_3) != 0;
-				checkBox304.Checked			= (flag & draw_setting_accidents.accident_4) != 0;
-				checkBox305.Checked			= (flag & draw_setting_accidents.accident_5) != 0;
-				checkBox306.Checked			= (flag & draw_setting_accidents.accident_6) != 0;
-				checkBox307.Checked			= (flag & draw_setting_accidents.accident_7) != 0;
-				checkBox308.Checked			= (flag & draw_setting_accidents.accident_8) != 0;
-				checkBox309.Checked			= (flag & draw_setting_accidents.accident_9) != 0;
-				checkBox310.Checked			= (flag & draw_setting_accidents.accident_10) != 0;
+				DrawSettingAccidents	flag	= m_setting.draw_setting_accidents;
+				checkBox300.Checked			= (flag & DrawSettingAccidents.accident_0) != 0;
+				checkBox301.Checked			= (flag & DrawSettingAccidents.accident_1) != 0;
+				checkBox302.Checked			= (flag & DrawSettingAccidents.accident_2) != 0;
+				checkBox303.Checked			= (flag & DrawSettingAccidents.accident_3) != 0;
+				checkBox304.Checked			= (flag & DrawSettingAccidents.accident_4) != 0;
+				checkBox305.Checked			= (flag & DrawSettingAccidents.accident_5) != 0;
+				checkBox306.Checked			= (flag & DrawSettingAccidents.accident_6) != 0;
+				checkBox307.Checked			= (flag & DrawSettingAccidents.accident_7) != 0;
+				checkBox308.Checked			= (flag & DrawSettingAccidents.accident_8) != 0;
+				checkBox309.Checked			= (flag & DrawSettingAccidents.accident_9) != 0;
+				checkBox310.Checked			= (flag & DrawSettingAccidents.accident_10) != 0;
 			}
 			// 予想線
 			{
-				draw_setting_myship_angle	flag	= m_setting.draw_setting_myship_angle;
-				checkBox400.Checked			= (flag & draw_setting_myship_angle.draw_0) != 0;
+				DrawSettingMyShipAngle	flag	= m_setting.draw_setting_myship_angle;
+				checkBox400.Checked			= (flag & DrawSettingMyShipAngle.draw_0) != 0;
 				checkBox401.Checked			= m_setting.draw_setting_myship_angle_with_speed_pos;
-				checkBox402.Checked			= (flag & draw_setting_myship_angle.draw_1) != 0;
+				checkBox402.Checked			= (flag & DrawSettingMyShipAngle.draw_1) != 0;
 				checkBox403.Checked			= m_setting.draw_setting_myship_expect_pos;
 			}
 
 			// 表示するページの設定
-			if((int)page < 0)							page	= draw_setting_page.web_icons;
-			if(page > draw_setting_page.myship_angle)	page	= draw_setting_page.myship_angle;
+			if((int)page < 0)							page	= DrawSettingPage.WebIcons;
+			if(page > DrawSettingPage.MyShipAngle)	page	= DrawSettingPage.MyShipAngle;
 			tabControl1.SelectTab((int)page);
 		}	
 		
@@ -333,14 +333,14 @@ namespace gvtrademap_cs
 		---------------------------------------------------------------------------*/
 		private void setting_form2_FormClosed(object sender, FormClosedEventArgs e)
 		{
-			m_setting.server					= GvoDomains.Server.Euros + comboBox2.SelectedIndex;
-			m_setting.country					= GvoDomains.Country.England + comboBox3.SelectedIndex;
-			m_setting.map						= map_index.map1 + comboBox1.SelectedIndex;
-			m_setting.map_icon					= map_icon.big + comboBox6.SelectedIndex;
-			m_setting.map_draw_names			= map_draw_names.draw + comboBox7.SelectedIndex;
-			m_setting.ss_format					= ss_format.bmp + comboBox8.SelectedIndex;
+            m_setting.server                    = GvoWorldInfo.GetServerFromString(comboBox2.Text);
+            m_setting.country                   = GvoWorldInfo.GetCountryFromString(comboBox3.Text);
+			m_setting.map						= MapIndex.Map1 + comboBox1.SelectedIndex;
+			m_setting.map_icon					= MapIcon.Big + comboBox6.SelectedIndex;
+			m_setting.map_draw_names			= MapDrawNames.Draw + comboBox7.SelectedIndex;
+			m_setting.ss_format					= SSFormat.Bmp + comboBox8.SelectedIndex;
 
-			m_setting.tude_interval				= tude_interval.none + comboBox5.SelectedIndex;
+			m_setting.tude_interval				= TudeInterval.None + comboBox5.SelectedIndex;
 			m_setting.share_group				= textBox1.Text;
 			m_setting.share_group_myname		= textBox2.Text;
 			m_setting.connect_network			= checkBox1.Checked;
@@ -367,9 +367,9 @@ namespace gvtrademap_cs
 			m_setting.port_index				= Useful.ToInt32(textBox6.Text, def.DEFALUT_PORT_INDEX);
 
 			if(comboBox4.SelectedIndex == 0){
-				m_setting.capture_interval		= capture_interval_index.per_250ms;
+				m_setting.capture_interval		= CaptureIntervalIndex.Per250ms;
 			}else{
-				m_setting.capture_interval		= capture_interval_index.per_500ms + (comboBox4.SelectedIndex - 1);
+				m_setting.capture_interval		= CaptureIntervalIndex.Per500ms + (comboBox4.SelectedIndex - 1);
 			}
 			m_setting.windows_vista_aero		= checkBox3.Checked;
 			m_setting.enable_analize_log_chat	= checkBox5.Checked;
@@ -388,51 +388,51 @@ namespace gvtrademap_cs
 		private void save_draw_setting()
 		{
 			{
-				draw_setting_web_icons	flag	= 0;
-				flag		|= (checkBox100.Checked)? draw_setting_web_icons.wind: 0;
-				flag		|= (checkBox101.Checked)? draw_setting_web_icons.accident_0: 0;
-				flag		|= (checkBox102.Checked)? draw_setting_web_icons.accident_1: 0;
-				flag		|= (checkBox103.Checked)? draw_setting_web_icons.accident_2: 0;
-				flag		|= (checkBox104.Checked)? draw_setting_web_icons.accident_3: 0;
-				flag		|= (checkBox105.Checked)? draw_setting_web_icons.accident_4: 0;
+				DrawSettingWebIcons	flag	= 0;
+				flag		|= (checkBox100.Checked)? DrawSettingWebIcons.wind: 0;
+				flag		|= (checkBox101.Checked)? DrawSettingWebIcons.accident_0: 0;
+				flag		|= (checkBox102.Checked)? DrawSettingWebIcons.accident_1: 0;
+				flag		|= (checkBox103.Checked)? DrawSettingWebIcons.accident_2: 0;
+				flag		|= (checkBox104.Checked)? DrawSettingWebIcons.accident_3: 0;
+				flag		|= (checkBox105.Checked)? DrawSettingWebIcons.accident_4: 0;
 				m_setting.draw_setting_web_icons	= flag;
 			}
 			{
-				draw_setting_memo_icons	flag	= 0;
-				flag		|= (checkBox200.Checked)? draw_setting_memo_icons.wind: 0;
-				flag		|= (checkBox201.Checked)? draw_setting_memo_icons.memo_0: 0;
-				flag		|= (checkBox202.Checked)? draw_setting_memo_icons.memo_1: 0;
-				flag		|= (checkBox203.Checked)? draw_setting_memo_icons.memo_2: 0;
-				flag		|= (checkBox204.Checked)? draw_setting_memo_icons.memo_3: 0;
-				flag		|= (checkBox205.Checked)? draw_setting_memo_icons.memo_4: 0;
-				flag		|= (checkBox206.Checked)? draw_setting_memo_icons.memo_5: 0;
-				flag		|= (checkBox207.Checked)? draw_setting_memo_icons.memo_6: 0;
-				flag		|= (checkBox208.Checked)? draw_setting_memo_icons.memo_7: 0;
-				flag		|= (checkBox209.Checked)? draw_setting_memo_icons.memo_8: 0;
-				flag		|= (checkBox210.Checked)? draw_setting_memo_icons.memo_9: 0;
-				flag		|= (checkBox211.Checked)? draw_setting_memo_icons.memo_10: 0;
-				flag		|= (checkBox212.Checked)? draw_setting_memo_icons.memo_11: 0;
+				DrawSettingMemoIcons	flag	= 0;
+				flag		|= (checkBox200.Checked)? DrawSettingMemoIcons.wind: 0;
+				flag		|= (checkBox201.Checked)? DrawSettingMemoIcons.memo_0: 0;
+				flag		|= (checkBox202.Checked)? DrawSettingMemoIcons.memo_1: 0;
+				flag		|= (checkBox203.Checked)? DrawSettingMemoIcons.memo_2: 0;
+				flag		|= (checkBox204.Checked)? DrawSettingMemoIcons.memo_3: 0;
+				flag		|= (checkBox205.Checked)? DrawSettingMemoIcons.memo_4: 0;
+				flag		|= (checkBox206.Checked)? DrawSettingMemoIcons.memo_5: 0;
+				flag		|= (checkBox207.Checked)? DrawSettingMemoIcons.memo_6: 0;
+				flag		|= (checkBox208.Checked)? DrawSettingMemoIcons.memo_7: 0;
+				flag		|= (checkBox209.Checked)? DrawSettingMemoIcons.memo_8: 0;
+				flag		|= (checkBox210.Checked)? DrawSettingMemoIcons.memo_9: 0;
+				flag		|= (checkBox211.Checked)? DrawSettingMemoIcons.memo_10: 0;
+				flag		|= (checkBox212.Checked)? DrawSettingMemoIcons.memo_11: 0;
 				m_setting.draw_setting_memo_icons	= flag;
 			}
 			{
-				draw_setting_accidents	flag	= 0;
-				flag		|= (checkBox300.Checked)? draw_setting_accidents.accident_0: 0;
-				flag		|= (checkBox301.Checked)? draw_setting_accidents.accident_1: 0;
-				flag		|= (checkBox302.Checked)? draw_setting_accidents.accident_2: 0;
-				flag		|= (checkBox303.Checked)? draw_setting_accidents.accident_3: 0;
-				flag		|= (checkBox304.Checked)? draw_setting_accidents.accident_4: 0;
-				flag		|= (checkBox305.Checked)? draw_setting_accidents.accident_5: 0;
-				flag		|= (checkBox306.Checked)? draw_setting_accidents.accident_6: 0;
-				flag		|= (checkBox307.Checked)? draw_setting_accidents.accident_7: 0;
-				flag		|= (checkBox308.Checked)? draw_setting_accidents.accident_8: 0;
-				flag		|= (checkBox309.Checked)? draw_setting_accidents.accident_9: 0;
-				flag		|= (checkBox310.Checked)? draw_setting_accidents.accident_10: 0;
+				DrawSettingAccidents	flag	= 0;
+				flag		|= (checkBox300.Checked)? DrawSettingAccidents.accident_0: 0;
+				flag		|= (checkBox301.Checked)? DrawSettingAccidents.accident_1: 0;
+				flag		|= (checkBox302.Checked)? DrawSettingAccidents.accident_2: 0;
+				flag		|= (checkBox303.Checked)? DrawSettingAccidents.accident_3: 0;
+				flag		|= (checkBox304.Checked)? DrawSettingAccidents.accident_4: 0;
+				flag		|= (checkBox305.Checked)? DrawSettingAccidents.accident_5: 0;
+				flag		|= (checkBox306.Checked)? DrawSettingAccidents.accident_6: 0;
+				flag		|= (checkBox307.Checked)? DrawSettingAccidents.accident_7: 0;
+				flag		|= (checkBox308.Checked)? DrawSettingAccidents.accident_8: 0;
+				flag		|= (checkBox309.Checked)? DrawSettingAccidents.accident_9: 0;
+				flag		|= (checkBox310.Checked)? DrawSettingAccidents.accident_10: 0;
 				m_setting.draw_setting_accidents	= flag;
 			}
 			{
-				draw_setting_myship_angle	flag	= 0;
-				flag		|= (checkBox400.Checked)? draw_setting_myship_angle.draw_0: 0;
-				flag		|= (checkBox402.Checked)? draw_setting_myship_angle.draw_1: 0;
+				DrawSettingMyShipAngle	flag	= 0;
+				flag		|= (checkBox400.Checked)? DrawSettingMyShipAngle.draw_0: 0;
+				flag		|= (checkBox402.Checked)? DrawSettingMyShipAngle.draw_1: 0;
 				m_setting.draw_setting_myship_angle	= flag;
 				m_setting.draw_setting_myship_angle_with_speed_pos	= checkBox401.Checked;
 				m_setting.draw_setting_myship_expect_pos	= checkBox403.Checked;
