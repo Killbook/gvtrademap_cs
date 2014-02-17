@@ -100,7 +100,7 @@ namespace gvtrademap_cs
 			AddRect(new Vector2(0, -8), new Rectangle(0, 224, 68 - 0, 240 - 224));	// 14
 			AddRect(new Vector2(-41, -15), new Rectangle(0, 240, 44 - 0, 256 - 240));	// 15
 			AddRect(new Vector2(-42, -1), new Rectangle(0, 256, 44 - 0, 272 - 256));	// 16
-			AddRect(new Vector2(-46, -8), new Rectangle(0, 272, 48 - 0, 288 - 272));	// 17
+            AddRect(new Vector2(-49, -10), new Rectangle(0, 272, 48, 16)); 	// 17
 			AddRect(new Vector2(-41, -16), new Rectangle(0, 288, 48 - 0, 304 - 288));	// 18
 			AddRect(new Vector2(-18, 0), new Rectangle(0, 304, 36 - 0, 320 - 304));	// 19
 			AddRect(new Vector2(0, -16), new Rectangle(0, 320, 36 - 0, 336 - 320));	// 20
@@ -266,8 +266,16 @@ namespace gvtrademap_cs
 			AddRect(new Vector2(-72, -6), new Rectangle(168, 832, 230 - 168, 848 - 832));	// 180
 			AddRect(new Vector2(-70, -20), new Rectangle(168, 848, 230 - 168, 864 - 848));	// 181
 			AddRect(new Vector2(-65, -18), new Rectangle(168, 864, 230 - 168, 880 - 864));	// 182
-//info2 
-			AddRect(new Vector2(-19, 0), new Rectangle(288, 0, 344 - 288, 10 - 0));	// 0
+
+            AddRect(new Vector2(-58f, -31f), new Rectangle(168, 880, 48, 16));
+            AddRect(new Vector2(-50f, -23f), new Rectangle(136, 896, 64, 16));
+            AddRect(new Vector2(-14f, -23f), new Rectangle(240, 768, 32, 16));
+            AddRect(new Vector2(-45f, -20f), new Rectangle(224, 880, 64, 16));
+            AddRect(new Vector2(-45f, 5f), new Rectangle(240, 752, 40, 16));
+            AddRect(new Vector2(19f, -13f), new Rectangle(208, 896, 80, 16));
+
+            //info2 
+            AddRect(new Vector2(-19, 0), new Rectangle(288, 0, 344 - 288, 10 - 0));	// 0
 			AddRect(new Vector2(0, -5), new Rectangle(288, 10, 344 - 288, 20 - 10));	// 1
 			AddRect(new Vector2(-44, -10), new Rectangle(288, 20, 352 - 288, 30 - 20));	// 2
 			AddRect(new Vector2(0, -5), new Rectangle(288, 30, 370 - 288, 40 - 30));	// 3
@@ -324,7 +332,7 @@ namespace gvtrademap_cs
 			AddRect(new Vector2(-46, -5), new Rectangle(288, 560, 334 - 288, 570 - 560));	// 54
 			AddRect(new Vector2(0, -5), new Rectangle(288, 570, 324 - 288, 580 - 570));	// 55
 			AddRect(new Vector2(0, -5), new Rectangle(288, 580, 326 - 288, 590 - 580));	// 56
-			AddRect(new Vector2(0, -5), new Rectangle(288, 590, 352 - 288, 600 - 590));	// 57
+            AddRect(new Vector2(-24f, -16f), new Rectangle(288, 590, 64, 10));	// 57
 			AddRect(new Vector2(0, -5), new Rectangle(288, 600, 330 - 288, 610 - 600));	// 58
 			AddRect(new Vector2(0, -5), new Rectangle(288, 610, 344 - 288, 620 - 610));	// 59
 			AddRect(new Vector2(0, -5), new Rectangle(288, 620, 352 - 288, 630 - 620));	// 60
@@ -423,8 +431,10 @@ namespace gvtrademap_cs
 			AddRect(new Vector2(-61, -5), new Rectangle(380, 620, 436 - 380, 630 - 620));	// 153
 			AddRect(new Vector2(-70, -5), new Rectangle(380, 630, 444 - 380, 640 - 630));	// 154
 		// 訳あって手打ち
-			AddRect(new Vector2(-5, -5), new Rectangle(380, 630+10, 444 - 380+12, 640 - 630));	// 154
 		//
+            AddRect(new Vector2(-5f, -5f), new Rectangle(376, 640, 80, 10));
+            AddRect(new Vector2(-28f, -16f), new Rectangle(380, 650, 60, 10));
+            AddRect(new Vector2(-42f, -16f), new Rectangle(380, 660, 90, 10));
 
 			AddRect(new Vector2(-52, 0), new Rectangle(184, 960, 288 - 184, 976 - 960));	// 155
 			AddRect(new Vector2(-31, -16), new Rectangle(184, 976, 246 - 184, 992 - 976));	// 156

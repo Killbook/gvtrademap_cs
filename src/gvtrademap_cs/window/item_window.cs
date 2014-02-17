@@ -48,7 +48,7 @@ namespace gvtrademap_cs
 
 		---------------------------------------------------------------------------*/
 		private gvt_lib					m_lib;						// 
-		private database				m_db;						// データベース
+		private GvoDatabase				m_db;						// データベース
 		private spot					m_spot;						// スポット表示
 		private gvtrademap_cs_form		m_form;						// 右クリックメニュー専用
 
@@ -84,7 +84,7 @@ namespace gvtrademap_cs
 		/*-------------------------------------------------------------------------
 		 
 		---------------------------------------------------------------------------*/
-		public item_window(gvt_lib lib, database db, spot _spot, TextBox memo_text_box, ListView list_view, gvtrademap_cs_form form)
+		public item_window(gvt_lib lib, GvoDatabase db, spot _spot, TextBox memo_text_box, ListView list_view, gvtrademap_cs_form form)
 			: base(lib.device, new Vector2(WINDOW_POS_X, WINDOW_POS_Y), new Vector2(WINDOW_SIZE_X, WINDOW_SIZE_Y), WINDOW_POS_Z)
 		{
 			base.title				= "アイテムウインドウ";
@@ -354,7 +354,7 @@ namespace gvtrademap_cs
 
 			// タブ
 			ht		= m_hittest_list[(int)item_index.tabs];
-			ht.rect	= new Rectangle(2, pos_y, TABS_STEP_X * 11, def.ICON_SIZE_Y);
+			ht.rect	= new Rectangle(2, pos_y, TABS_STEP_X * 12, def.ICON_SIZE_Y);
 			pos_y	+= STEP_Y;
 
 			// 縦サイズを更新する
@@ -537,7 +537,7 @@ namespace gvtrademap_cs
 			Vector3		pos		= new Vector3(rect.X, rect.Y, base.z);
 
 			// 言語
-			if(info.InfoType == GvoWorldInfo.InfoType.CITY){
+			if(info.InfoType == GvoWorldInfo.InfoType.City){
 				if(info.Lang1 != ""){
 					base.device.DrawTextR(font_type.normal, info.Lang1,
 											(int)pos.X + rect.Width, (int)pos.Y, Color.Black);
@@ -546,7 +546,7 @@ namespace gvtrademap_cs
 					base.device.DrawTextR(font_type.normal, info.Lang2,
 											(int)pos.X + rect.Width, (int)pos.Y + (STEP_Y0-1), Color.Black);
 				}
-			}else if(info.InfoType == GvoWorldInfo.InfoType.SEA){
+			}else if(info.InfoType == GvoWorldInfo.InfoType.Sea){
 				if(info.SeaInfo != null){
 					// 最大速度上昇
 					base.device.DrawTextR(font_type.normal, info.SeaInfo.SpeedUpRateString,
@@ -568,7 +568,7 @@ namespace gvtrademap_cs
 
 			Vector3		pos		= new Vector3(rect.X, rect.Y, base.z);
 
-			icons.icon_index	icon	= (info.InfoType == GvoWorldInfo.InfoType.CITY)
+			icons.icon_index	icon	= (info.InfoType == GvoWorldInfo.InfoType.City)
 											? icons.icon_index.web
 											: icons.icon_index.map_icon;
 			base.device.sprites.AddDrawSpritesNC(pos, m_lib.icons.GetIcon(icon));
@@ -604,7 +604,7 @@ namespace gvtrademap_cs
 		private int get_item_list_count(int index)
 		{
 			if(info == null)	return 0;
-			if(index == 10)		return info.GetMemoLines();		// メモ
+			if(index == 11)		return info.GetMemoLines();		// メモ
 			return info.GetCount(GvoWorldInfo.Info.GroupIndex._0 + index);
 		}
 
@@ -624,21 +624,21 @@ namespace gvtrademap_cs
 			case GvoWorldInfo.InfoType.PF:
 				index	= icons.icon_index.country_0;
 				break;
-			case GvoWorldInfo.InfoType.SEA:
+			case GvoWorldInfo.InfoType.Sea:
 				index	= icons.icon_index.country_2;
 				break;
-			case GvoWorldInfo.InfoType.SHORE:
-			case GvoWorldInfo.InfoType.OUTSIDE_CITY:
+			case GvoWorldInfo.InfoType.Shore:
+			case GvoWorldInfo.InfoType.OutsideCity:
 				index	= icons.icon_index.country_3;
 				break;
-			case GvoWorldInfo.InfoType.SHORE2:
+			case GvoWorldInfo.InfoType.Shore2:
 				index	= icons.icon_index.country_1;
 				break;
-			case GvoWorldInfo.InfoType.CITY:
+			case GvoWorldInfo.InfoType.City:
 			default:
 				index	= icons.icon_index.country_4;
 				// 同盟関係により旗を選択する
-				index	+= (int)info.Country;
+				index	+= (int)info.MyCountry;
 				break;
 			}
 	
@@ -678,7 +678,7 @@ namespace gvtrademap_cs
 
 			Vector3		pos		= new Vector3(rect.X, rect.Y, base.z);
 
-			for(int i=0; i<11; i++){
+			for(int i=0; i<12; i++){
 				icons.icon_index	index	= icons.icon_index.tab_gray_0;
 				if(info != null){
 					if(get_item_list_count(i) > 0)	index	= icons.icon_index.tab_0;
@@ -730,8 +730,8 @@ namespace gvtrademap_cs
 		private void ajust_tab_index(int index)
 		{
 			// ループさせる
-			if(index < 0)		index	= 10;
-			if(index >= 11)		index	= 0;
+			if(index < 0)		index	= 11;
+			if(index >= 12)		index	= 0;
 
 			m_tab_index				= index;
 
@@ -745,7 +745,7 @@ namespace gvtrademap_cs
 		/*-------------------------------------------------------------------------
 		 検索されたアイテムをスポット表示する
 		---------------------------------------------------------------------------*/
-		public void SpotItem(database.find select)
+		public void SpotItem(GvoDatabase.Find select)
 		{
 			if(select == null){
 				// 選択が無ければスポットを解除する
@@ -754,9 +754,9 @@ namespace gvtrademap_cs
 				return;
 			}
 			// アイテムデータベースはスポット不可能
-			if(select.type == database.find.find_type.database)		return;
+			if(select.Type == GvoDatabase.Find.FindType.Database)		return;
 
-			GvoWorldInfo.Info	_info	= m_db.world.FindInfo(select.info_name);
+			GvoWorldInfo.Info	_info	= m_db.World.FindInfo(select.InfoName);
 			if(_info != null){
 				// スポットのリセットなしで設定
 				set_info(_info, false);
@@ -764,28 +764,28 @@ namespace gvtrademap_cs
 				req_centering_info();
 			}
 
-			switch(select.type){
-			case database.find.find_type.data:
-			case database.find.find_type.data_price:
+			switch(select.Type){
+			case GvoDatabase.Find.FindType.Data:
+			case GvoDatabase.Find.FindType.DataPrice:
 				// アイテムから選択されたものを検索する
-				find_item_for_selected(select.data.Name);
+				find_item_for_selected(select.Data.Name);
 				// アイテムをスポット
-				m_spot.SetSpot(spot.type.has_item, select.data.Name);
+				m_spot.SetSpot(spot.type.has_item, select.Data.Name);
 				break;
-			case database.find.find_type.database:
+			case GvoDatabase.Find.FindType.Database:
 				// アイテムデータベースはスポット不可能
 				break;
-			case database.find.find_type.info_name:
+			case GvoDatabase.Find.FindType.InfoName:
 				// 街をスポット
-				m_spot.SetSpot(spot.type.city_name, select.info_name);
+				m_spot.SetSpot(spot.type.city_name, select.InfoName);
 				break;
-			case database.find.find_type.lang:
+			case GvoDatabase.Find.FindType.Lang:
 				// 言語をスポット
-				m_spot.SetSpot(spot.type.language, select.lang);
+				m_spot.SetSpot(spot.type.language, select.Lang);
 				break;
-			case database.find.find_type.cultural_sphere:
+			case GvoDatabase.Find.FindType.CulturalSphere:
 				// 文化圏
-				m_spot.SetSpot(spot.type.cultural_sphere, select.info_name);
+				m_spot.SetSpot(spot.type.cultural_sphere, select.InfoName);
 				break;
 			}
 			m_form.UpdateSpotList();
@@ -859,7 +859,7 @@ namespace gvtrademap_cs
 			// 国旗をスポット表示
 			// 街のみ
 			if(info == null)											return;
-			if(info.InfoType != GvoWorldInfo.InfoType.CITY)				return;
+			if(info.InfoType != GvoWorldInfo.InfoType.City)				return;
 
 			m_spot.SetSpot(spot.type.country_flags, "");
 			m_form.UpdateSpotList();
@@ -872,9 +872,9 @@ namespace gvtrademap_cs
 		{
 			// 街のみ
 			if(info == null)											return;
-			if(info.InfoType != GvoWorldInfo.InfoType.CITY)				return;
+			if(info.InfoType != GvoWorldInfo.InfoType.City)				return;
 			// 同盟できる街のみ
-			if(info.AllianceType != GvoDomains.AllianceType.alliance)	return;
+			if(info.AllianceType != GvoWorldInfo.AllianceType.Alliance)	return;
 
 			// 右クリックメニューを開く
 			m_form.ShowChangeDomainsMenuStrip(pos);
@@ -887,11 +887,11 @@ namespace gvtrademap_cs
 		{
 			// 街のみ
 			if(info == null)											return;
-			if(info.InfoType != GvoWorldInfo.InfoType.CITY)				return;
-			if(info.CulturalSphere == GvoDomains.CulturalSphere.unknown)	return;
+			if(info.InfoType != GvoWorldInfo.InfoType.City)				return;
+			if(info.CulturalSphere == GvoWorldInfo.CulturalSphere.Unknown)	return;
 
 			// スポット表示
-			SpotItem(new database.find(info.CulturalSphere, ""));
+			SpotItem(new GvoDatabase.Find(info.CulturalSphere, ""));
 		}
 	
 		/*-------------------------------------------------------------------------
@@ -950,7 +950,7 @@ namespace gvtrademap_cs
 
 			if(info.UrlIndex != -1){
 				string	url;
-				if(info.InfoType == GvoWorldInfo.InfoType.CITY){
+				if(info.InfoType == GvoWorldInfo.InfoType.City){
 					// 大商戦
 					url		= def.URL0 + info.UrlIndex.ToString();
 				}else{
@@ -998,7 +998,7 @@ namespace gvtrademap_cs
 				{
 					string	tmp		= info.TooltipString;
 					tmp	+= "\n左クリックで中心に移動";
-					if(info.InfoType == GvoWorldInfo.InfoType.CITY){
+					if(info.InfoType == GvoWorldInfo.InfoType.City){
 						tmp	+= "\n右クリックで属する文化圏をスポット表示";
 					}
 					return tmp;
@@ -1012,22 +1012,22 @@ namespace gvtrademap_cs
 				break;
 			case (int)item_index.country:
 				switch(info.InfoType){
-				case GvoWorldInfo.InfoType.CITY:
+				case GvoWorldInfo.InfoType.City:
 					switch(info.AllianceType){
-					case GvoDomains.AllianceType.piratical:
-					case GvoDomains.AllianceType.unknown:		return info.AllianceTypeStr + "\n左クリックでスポット表示";
-					case GvoDomains.AllianceType.alliance:	return info.AllianceTypeStr + " " + info.CountryStr + "\n左クリックでスポット表示\n右クリックで同盟国変更";
+					case GvoWorldInfo.AllianceType.Piratical:
+					case GvoWorldInfo.AllianceType.Unknown:		return info.AllianceTypeStr + "\n左クリックでスポット表示";
+					case GvoWorldInfo.AllianceType.Alliance:	return info.AllianceTypeStr + " " + info.CountryStr + "\n左クリックでスポット表示\n右クリックで同盟国変更";
 
-					case GvoDomains.AllianceType.capital:
-					case GvoDomains.AllianceType.territory:
+					case GvoWorldInfo.AllianceType.Capital:
+					case GvoWorldInfo.AllianceType.Territory:
 							return info.CountryStr + " " + info.AllianceTypeStr + "\n左クリックでスポット表示";
 					}
 					break;
-				case GvoWorldInfo.InfoType.OUTSIDE_CITY:
+				case GvoWorldInfo.InfoType.OutsideCity:
 				case GvoWorldInfo.InfoType.PF:
-				case GvoWorldInfo.InfoType.SEA:
-				case GvoWorldInfo.InfoType.SHORE:
-				case GvoWorldInfo.InfoType.SHORE2:
+				case GvoWorldInfo.InfoType.Sea:
+				case GvoWorldInfo.InfoType.Shore:
+				case GvoWorldInfo.InfoType.Shore2:
 //					return Info.InfoTypeStr + "\n左クリックでスポット表示";
 					return info.InfoTypeStr;
 				}
@@ -1089,19 +1089,10 @@ namespace gvtrademap_cs
 			pos.X	-= rect.X;
 			pos.X	/= TABS_STEP_X;
 
-			switch(pos.X){
-			case 0:		return "交易所店主\n右クリックでスポット表示";
-			case 1:		return "道具屋主人\n右クリックでスポット表示";
-			case 2:		return "工房職人\n右クリックでスポット表示";
-			case 3:		return "人物\n右クリックでスポット表示";
-			case 4:		return "造船所親方\n右クリックでスポット表示";
-			case 5:		return "武器職人\n右クリックでスポット表示";
-			case 6:		return "製材職人\n右クリックでスポット表示";
-			case 7:		return "製帆職人\n右クリックでスポット表示";
-			case 8:		return "彫刻家\n右クリックでスポット表示";
-			case 9:		return "行商人\n右クリックでスポット表示";
-			case 10:	return "メモ\n右クリックでスポット表示";
-			}
+            if (0 < pos.X && pos.X < 12)
+            {
+                return GvoWorldInfo.Info.GetGroupName((GvoWorldInfo.Info.GroupIndex)pos.X) + "\n右クリックでスポット表示";
+            }
 			return null;
 		}	
 
@@ -1110,7 +1101,7 @@ namespace gvtrademap_cs
 		---------------------------------------------------------------------------*/
 		private void update_memo_window()
 		{
-			if(m_tab_index == 10){
+			if(m_tab_index == 11){
 				EnableMemoWindow(true);
 				EnableItemWindow(false);
 			}else{
@@ -1193,7 +1184,7 @@ namespace gvtrademap_cs
 				m_list_view.Columns.Add("名称",	80);
 				m_list_view.Columns.Add("★",	25, HorizontalAlignment.Center);
 				m_list_view.Columns.Add("種類",	52, HorizontalAlignment.Center);
-				if(info.InfoType == GvoWorldInfo.InfoType.CITY){
+				if(info.InfoType == GvoWorldInfo.InfoType.City){
 					m_list_view.Columns.Add("値段",	55, HorizontalAlignment.Right);
 				}else{
 					m_list_view.Columns.Add("スキル", 60, HorizontalAlignment.Center);
@@ -1203,7 +1194,7 @@ namespace gvtrademap_cs
 				m_list_view.Columns.Add("名称",	140);
 				m_list_view.Columns.Add("人物",	120);
 				break;
-			case 9:	// 行商人
+			case 10:	// 行商人
 				m_list_view.Columns.Add("名称",	160);
 				m_list_view.Columns.Add("人物",	60);
 				break;

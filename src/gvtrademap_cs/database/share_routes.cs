@@ -176,7 +176,7 @@ namespace gvtrademap_cs
 			if(m_lib.setting.share_group == "")			return;
 			if(m_lib.setting.share_group_myname == "")	return;
 
-			string	url		= "/getposition.php?server=" + GvoDomains.GetServerString(m_lib.setting.server);
+			string	url		= "/getposition.php?server=" + GvoWorldInfo.GetServerStringForShare(m_lib.setting.server);
 			url				+= "&group=" + Useful.UrlEncodeShiftJis(m_lib.setting.share_group);
 			url				+= "&name=" + Useful.UrlEncodeShiftJis(m_lib.setting.share_group_myname);
 			url				+= "&x=" + x.ToString();
@@ -187,7 +187,7 @@ namespace gvtrademap_cs
 			if(data == null)	return;
 
 			update_list(data);
-		}
+        }
 
 		/*-------------------------------------------------------------------------
 		 共有情報の取得と設定

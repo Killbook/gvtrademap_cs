@@ -260,7 +260,7 @@ namespace gvtrademap_cs
 		private bool is_draw(int index)
 		{
 			// 描画フラグ
-			draw_setting_memo_icons	flag	= m_lib.setting.draw_setting_memo_icons;
+			DrawSettingMemoIcons	flag	= m_lib.setting.draw_setting_memo_icons;
 
 			switch((map_mark_type)index){
 			case map_mark_type.axis0:
@@ -271,43 +271,43 @@ namespace gvtrademap_cs
 			case map_mark_type.axis5:
 			case map_mark_type.axis6:
 			case map_mark_type.axis7:
-				if((flag & draw_setting_memo_icons.wind) == 0)		return false;
+				if((flag & DrawSettingMemoIcons.wind) == 0)		return false;
 				break;
 			case map_mark_type.icon0:
-				if((flag & draw_setting_memo_icons.memo_0) == 0)	return false;
+				if((flag & DrawSettingMemoIcons.memo_0) == 0)	return false;
 				break;
 			case map_mark_type.icon1:
-				if((flag & draw_setting_memo_icons.memo_1) == 0)	return false;
+				if((flag & DrawSettingMemoIcons.memo_1) == 0)	return false;
 				break;
 			case map_mark_type.icon2:
-				if((flag & draw_setting_memo_icons.memo_2) == 0)	return false;
+				if((flag & DrawSettingMemoIcons.memo_2) == 0)	return false;
 				break;
 			case map_mark_type.icon3:
-				if((flag & draw_setting_memo_icons.memo_3) == 0)	return false;
+				if((flag & DrawSettingMemoIcons.memo_3) == 0)	return false;
 				break;
 			case map_mark_type.icon4:
-				if((flag & draw_setting_memo_icons.memo_4) == 0)	return false;
+				if((flag & DrawSettingMemoIcons.memo_4) == 0)	return false;
 				break;
 			case map_mark_type.icon5:
-				if((flag & draw_setting_memo_icons.memo_5) == 0)	return false;
+				if((flag & DrawSettingMemoIcons.memo_5) == 0)	return false;
 				break;
 			case map_mark_type.icon6:
-				if((flag & draw_setting_memo_icons.memo_6) == 0)	return false;
+				if((flag & DrawSettingMemoIcons.memo_6) == 0)	return false;
 				break;
 			case map_mark_type.icon7:
-				if((flag & draw_setting_memo_icons.memo_7) == 0)	return false;
+				if((flag & DrawSettingMemoIcons.memo_7) == 0)	return false;
 				break;
 			case map_mark_type.icon8:
-				if((flag & draw_setting_memo_icons.memo_8) == 0)	return false;
+				if((flag & DrawSettingMemoIcons.memo_8) == 0)	return false;
 				break;
 			case map_mark_type.icon9:
-				if((flag & draw_setting_memo_icons.memo_9) == 0)	return false;
+				if((flag & DrawSettingMemoIcons.memo_9) == 0)	return false;
 				break;
 			case map_mark_type.icon10:
-				if((flag & draw_setting_memo_icons.memo_10) == 0)	return false;
+				if((flag & DrawSettingMemoIcons.memo_10) == 0)	return false;
 				break;
 			case map_mark_type.icon11:
-				if((flag & draw_setting_memo_icons.memo_11) == 0)	return false;
+				if((flag & DrawSettingMemoIcons.memo_11) == 0)	return false;
 				break;
 			}
 			return true;

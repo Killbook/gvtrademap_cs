@@ -40,12 +40,12 @@ namespace gvtrademap_cs
 		/*-------------------------------------------------------------------------
 		 できるだけ検索
 		---------------------------------------------------------------------------*/
-		public void FindAll(string find_string, List<database.find> list, database.find.FindHandler handler)
+		public void FindAll(string find_string, List<GvoDatabase.Find> list, GvoDatabase.Find.FindHandler handler)
 		{
 			IEnumerator<Data>	e	= base.GetEnumerator();
 			while(e.MoveNext()){
 				if(handler(e.Current.Name, find_string)){
-					list.Add(new database.find(e.Current));
+					list.Add(new GvoDatabase.Find(e.Current));
 				}
 			}
 		}
@@ -54,12 +54,12 @@ namespace gvtrademap_cs
 		 できるだけ検索
 		 種類での検索用
 		---------------------------------------------------------------------------*/
-		public void FindAll_FromType(string find_string, List<database.find> list, database.find.FindHandler handler)
+		public void FindAll_FromType(string find_string, List<GvoDatabase.Find> list, GvoDatabase.Find.FindHandler handler)
 		{
 			IEnumerator<Data>	e	= base.GetEnumerator();
 			while(e.MoveNext()){
 				if(handler(e.Current.Type, find_string)){
-					list.Add(new database.find(e.Current));
+					list.Add(new GvoDatabase.Find(e.Current));
 				}
 			}
 		}

@@ -75,30 +75,29 @@ namespace gvtrademap_cs
 		private Point				m_select_pos;		// マーカーを置いた位置
 
 		// 現在の地図情報
-		private	map_index			m_map_index;		// 地図番号
+		private	MapIndex			m_map_index;		// 地図番号
 		private bool				m_use_mixed_map;	// お気に入り航路と合成した地図を使用する
 
 		private bool				m_pause;			// 最小化中はtrue
 
 		// 	
 		private gvt_lib				m_lib;				// よく使う機能をまとめたもの
-		private database			m_db;				// 情報管理
+		private GvoDatabase			m_db;				// 情報管理
 	
 		// ウインドウ管理
 		// 描画関係
 		private d3d_windows			m_windows;			// ウインドウ管理
 		private	item_window			m_item_window;		// 左のウインドウ
 		private setting_window		m_setting_window;	// 設定ボタンウインドウ
-		private download_patch		m_download_patch;	// パッチのダウンロード
 		private spot				m_spot;				// スポット表示
 		private info_windows		m_info_windows;		// 情報表示ウインドウ管理
 
 		// 検索ダイアログ
 		private find_form2			m_find_form;		// 検索ダイアログ
-		private request_ctrl		m_req_show_find_form;
+		private RequestCtrl			m_req_show_find_form;
 		// 航路図一覧ダイアログ
 		private sea_routes_form2	m_sea_routes_form;
-		private request_ctrl		m_req_sea_routes_form;
+		private RequestCtrl			m_req_sea_routes_form;
 
 		// マウスフック
 		private globalmouse_hook	m_mouse_hook;		// マウスフック
@@ -115,6 +114,9 @@ namespace gvtrademap_cs
 		private Thread				m_load_info_t;		// 情報読み込みスレッド
 		private Thread				m_share_t;			// 航路共有スレッド
 		private Thread				m_chat_log_t;		// チャット解析スレッド
+
+		// ***
+		private LoadInfosStatus _LoadInfosStatus;
 
 		// タイマ
 		private System.Windows.Forms.Timer		m_share_timer;		// 航路共有タイマ
@@ -217,8 +219,6 @@ namespace gvtrademap_cs
 	
 			// 必要なパスの作成
 			file_ctrl.CreatePath(def.MAP_PATH);
-			file_ctrl.CreatePath(def.INFO_PATH);
-			file_ctrl.CreatePath(def.INFO_LOCAL_PATH);
 			file_ctrl.CreatePath(def.SEAROUTE_PATH);
 			file_ctrl.CreatePath(def.SS_PATH);
 			file_ctrl.CreatePath(def.MEMO_PATH);
@@ -255,17 +255,17 @@ namespace gvtrademap_cs
 			// ショートカットキーの表示をメニューに反映させる
 			update_menu_shortcut(null, EventArgs.Empty);
 
-			// database
-			m_db						= new database(m_lib);
+			// GvoDatabase
+			m_db						= new GvoDatabase(m_lib);
 
 			// 自分の船の情報
 			m_myship_info				= new myship_info(m_lib, m_db);
 
-			// パッチのダウンロード
-			m_download_patch			= new download_patch();
+			// ***
+			_LoadInfosStatus = new LoadInfosStatus();
 
 			// スポット表示
-			m_spot						= new spot(m_lib, m_db.world);
+			m_spot						= new spot(m_lib, m_db.World);
 			// ウインドウ管理
 			m_windows					= new d3d_windows(m_lib.device);
 			m_item_window				= new item_window(m_lib, m_db, m_spot, textBox1, listView1, this);
@@ -296,7 +296,7 @@ namespace gvtrademap_cs
 			m_find_form					= new find_form2(m_lib, m_db, m_spot, m_item_window);
 			m_find_form.Location		= m_lib.setting.find_window_location;
 			m_find_form.Size			= m_lib.setting.find_window_size;
-			m_req_show_find_form		= new request_ctrl();
+			m_req_show_find_form		= new RequestCtrl();
 			// 検索で座標を検索していると起動時にそこがセンタリングされてしまう
 			// なのでリクエストを空読みしてスキップする
 			m_lib.setting.req_centering_gpos.IsRequest();
@@ -305,10 +305,10 @@ namespace gvtrademap_cs
 			m_sea_routes_form			= new sea_routes_form2(m_lib, m_db);
 			m_sea_routes_form.Location	= m_lib.setting.sea_routes_window_location;
 			m_sea_routes_form.Size		= m_lib.setting.sea_routes_window_size;
-			m_req_sea_routes_form		= new request_ctrl();
+			m_req_sea_routes_form		= new RequestCtrl();
 	
 			// 地図読み込み
-			m_map_index					= map_index.max;				// 最初は必ず読み込み
+			m_map_index					= MapIndex.Max;				// 最初は必ず読み込み
 			m_use_mixed_map				= m_lib.setting.use_mixed_map;	// 設定を読み込む
 			load_map();													// 読み込みスレッド起動
 
@@ -354,7 +354,7 @@ namespace gvtrademap_cs
 			}
 	
 			// 選択してる街
-			m_item_window.info		= m_db.world.FindInfo(m_lib.setting.select_info);
+			m_item_window.info		= m_db.World.FindInfo(m_lib.setting.select_info);
 			m_item_window.EnableItemWindow(false);
 
 			// 位置
@@ -441,7 +441,7 @@ namespace gvtrademap_cs
 			// iniの書き出し
 			m_lib.IniManager.Save();
 
-			// databaseで書きだす必要のある情報の書き出し
+			// GvoDatabaseで書きだす必要のある情報の書き出し
 			m_db.WriteSettings();
 		}
 
@@ -596,10 +596,10 @@ namespace gvtrademap_cs
 			// 
 
 			// サーバとベース国の設定
-			m_db.world.SetServerAndCountry(m_lib.setting.server, m_lib.setting.country);
+			m_db.World.SetServerAndCountry(m_lib.setting.server, m_lib.setting.country);
 			// 最適化の更新
 			// 設定ダイアログで内容が変更された場合描画リストを作りなおす
-			m_db.web_icons.Update();
+			m_db.WebIcons.Update();
 			// 地図のオフセット更新
 			m_lib.loop_image.AddOffset(new Vector2(m_mouse_move.X, m_mouse_move.Y));
 
@@ -623,9 +623,9 @@ namespace gvtrademap_cs
 			do_mouse_hook();
 
 			// 危険海域変動システム
-			if(m_map_index == map_index.map2)		m_db.sea_area.color	= sea_area.color_type.type1;
-			else									m_db.sea_area.color	= sea_area.color_type.type2;
-			m_db.sea_area.Update();
+			if(m_map_index == MapIndex.Map2)		m_db.SeaArea.color	= sea_area.color_type.type1;
+			else									m_db.SeaArea.color	= sea_area.color_type.type2;
+			m_db.SeaArea.Update();
 
 			// スクリーンショット
 			if(m_lib.setting.req_screen_shot.IsRequest()){
@@ -633,12 +633,12 @@ namespace gvtrademap_cs
 			}
 
 			// 航路図一覧の更新
-			if(m_db.searoute.req_update_list.IsRequest()){
+			if(m_db.SeaRoute.req_update_list.IsRequest()){
 				// 再構築
 				m_sea_routes_form.UpdateAllList();
-				m_db.searoute.req_redraw_list.IsRequest();		// 空読み
+				m_db.SeaRoute.req_redraw_list.IsRequest();		// 空読み
 			}
-			if(m_db.searoute.req_redraw_list.IsRequest()){
+			if(m_db.SeaRoute.req_redraw_list.IsRequest()){
 				// 再描画
 				// 最新の航路図のみ再描画
 				m_sea_routes_form.RedrawNewestSeaRoutes();
@@ -660,7 +660,7 @@ namespace gvtrademap_cs
 			// 地図描画
 			draw_map();
 
-			// database
+			// GvoDatabase
 			m_db.Draw();
 
 			// 自分船の位置等描画
@@ -671,7 +671,7 @@ namespace gvtrademap_cs
 
 			// 緯度と経度の描画
 			// 座標
-			if(m_lib.setting.tude_interval != tude_interval.none){
+			if(m_lib.setting.tude_interval != TudeInterval.None){
 				latitude_longitude.DrawPoints(m_lib);
 			}
 
@@ -680,7 +680,7 @@ namespace gvtrademap_cs
 
 			if(!m_lib.setting.is_server_mode){
 				// キャプチャ詳細を描画
-				m_db.capture.DrawCapturedTexture();
+				m_db.Capture.DrawCapturedTexture();
 			}
 
 #if DEBUG_DRAW_DEBUG_STRING
@@ -722,10 +722,10 @@ namespace gvtrademap_cs
 
 			// 緯度と経度の描画
 			switch(m_lib.setting.tude_interval){
-			case tude_interval._1000:
+			case TudeInterval.Interval1000:
 				latitude_longitude.DrawLines(m_lib);
 				break;
-			case tude_interval._100:
+			case TudeInterval.Interval100:
 				latitude_longitude.DrawLines100(m_lib);
 				break;
 			}
@@ -769,6 +769,8 @@ namespace gvtrademap_cs
 			// マウスによるドラッグは無効
 			m_mouse_move		= new Point(0, 0);
 
+      try
+      {
 			m_lib.device.Clear(Color.White);
 			if(!m_lib.device.Begin())	return;		// デバイスロスト中
 
@@ -778,36 +780,34 @@ namespace gvtrademap_cs
 			float	y		= (float)(main_window_crect.Height / 2) - ((((16+8)+8) * 4) / 2);
 			float	x		= size_x - (size_x / 2);
 
-			// 地図読み込み
-			draw_progress("地図...", m_lib.loop_image.LoadStr,
+            // 街詳細
+            draw_progress("街詳細...", _LoadInfosStatus.StatusMessage,
+                            x, y, size_x,
+                            _LoadInfosStatus.NowStep,
+                            _LoadInfosStatus.MaxStep, Color.Tomato.ToArgb());
+
+            // 地図読み込み
+            y += 16 + 8 + 8;
+            draw_progress("地図...", m_lib.loop_image.LoadStr,
 							x, y, size_x,
 							m_lib.loop_image.LoadCurrent,
 							m_lib.loop_image.LoadMax, Color.SkyBlue.ToArgb());
 
-			// パッチ読み込み
-			y	+= 16+8+8;
-			draw_progress("パッチ...", m_download_patch.load_str,
-							x, y, size_x,
-							m_download_patch.load_current,
-							m_download_patch.load_max, Color.DeepSkyBlue.ToArgb());
-	
-			// 街詳細
-			y	+= 16+8+8;
-			draw_progress("街詳細...", m_db.world.LoadInfoStr,
-							x, y, size_x,
-							m_db.world.LoadInfoCurrent,
-							m_db.world.LoadInfoMax, Color.Tomato.ToArgb());
-
 			// マスク
 			y	+= 16+8+8;
-			draw_progress("陸地マスク...", m_db.sea_area.progress_info_str,
+			draw_progress("陸地マスク...", m_db.SeaArea.progress_info_str,
 							x, y, size_x,
-							m_db.sea_area.progress_current,
-							m_db.sea_area.progress_max, Color.SkyBlue.ToArgb());
+							m_db.SeaArea.progress_current,
+							m_db.SeaArea.progress_max, Color.SkyBlue.ToArgb());
 
 			// 画面枠
 			draw_frame();
 			m_lib.device.End();
+      }
+      catch (Exception ex)
+      {
+        Console.WriteLine("描画中の例外をキャッチ(読み込み中)\n" + ex.StackTrace);
+      }
 
 			// 画面を転送
 			m_lib.device.Present();
@@ -851,8 +851,8 @@ namespace gvtrademap_cs
 
 			// 進捗状況取得用に初期化
 			m_lib.loop_image.InitializeCreateImage();
-			if(!m_db.sea_area.IsLoadedMask){
-				m_db.sea_area.InitializeFromMaskInfo();
+			if(!m_db.SeaArea.IsLoadedMask){
+				m_db.SeaArea.InitializeFromMaskInfo();
 			}
 
 			// 地図の読み込み
@@ -883,8 +883,8 @@ namespace gvtrademap_cs
 			}
 
 			// 海域群をマスクから作成
-			if(!m_db.sea_area.IsLoadedMask){
-				m_db.sea_area.CreateFromMask(def.MAP_MASK_FULLFNAME);
+			if(!m_db.SeaArea.IsLoadedMask){
+				m_db.SeaArea.CreateFromMask(def.MAP_MASK_FULLFNAME);
 			}
 
 			// 地図合成リクエスト
@@ -905,29 +905,34 @@ namespace gvtrademap_cs
 		---------------------------------------------------------------------------*/
 		private void load_info_proc()
 		{
-			if(m_lib.setting.connect_network){
-				// ネットワークからのパッチ当て
-				m_download_patch.DoDownload(def.INFO_PATH, m_lib.setting.connect_web_icon);
-			}
+            _LoadInfosStatus.Start(3, "インターネットから同盟状況の取得");
+            
+            if (m_lib.setting.connect_network)
+            {
+                m_db.World.DownloadDomains(def.LOCAL_NEW_DOMAINS_INDEX_FULLFNAME);
+            }
 
 			// 詳細情報読み込み
-			m_db.world.Load(def.INFO_PATH, def.INFO_LOCAL_PATH);
+            _LoadInfosStatus.IncStep("街情報の読み込み");
+            m_db.World.Load(def.INFO_FULLNAME, def.NEW_DOMAINS_INDEX_FULLFNAME, def.LOCAL_NEW_DOMAINS_INDEX_FULLFNAME);
 
 			// アイテムデータベースとリンクさせる
-			m_db.world.LinkItemDatabase(m_db.item_database);
+            m_db.World.LinkItemDatabase(m_db.ItemDatabase);
 
 			// Webアイコン読み込み
 			// ネットワークから取得するかどうかに関係なく読み込もうとする
-			m_db.web_icons.Load(def.WEB_ICONS_FULLFNAME);
+            _LoadInfosStatus.IncStep("Webアイコンの読み込み");
+            m_db.WebIcons.Load(def.WEB_ICONS_FULLFNAME);
 
 			// 検索ダイアログを表示する
 			if(m_lib.setting.find_window_visible)		m_req_show_find_form.Request();
 			if(m_lib.setting.sea_routes_window_visible)	m_req_sea_routes_form.Request();
 	
 			// 終了後少しだけ100%表示
-			Thread.Sleep(100);		// 0.1秒
-			Debug.WriteLine("finish load info.");
-		}
+            _LoadInfosStatus.IncStep("完了");
+            Thread.Sleep(100);
+            Debug.WriteLine("finish load info.");
+        }
 
 		/*-------------------------------------------------------------------------
 		 ログ解析スレッド
@@ -951,17 +956,17 @@ namespace gvtrademap_cs
 					}
 
 					// ログ解析有効時のみ
-					m_db.gvochat.AnalyzeNewestChatLog();	// ログ解析を行う
-					m_db.gvochat.Request();					// 海域変動を反映させてもらうリクエスト
+					m_db.GvoChat.AnalyzeNewestChatLog();	// ログ解析を行う
+					m_db.GvoChat.Request();					// 海域変動を反映させてもらうリクエスト
 
 					// 前回解析しなかった場合は解析結果を捨てる
 					// 海域変動は反映させる
 					// スレッドの関係で捨て損ねることがある
 					// それほど問題にはならないので放置してる
 					if(!old_analize){
-						m_db.gvochat.ResetAccident();
-						m_db.gvochat.ResetInterest();
-						m_db.gvochat.ResetBuildShip();
+						m_db.GvoChat.ResetAccident();
+						m_db.GvoChat.ResetInterest();
+						m_db.GvoChat.ResetBuildShip();
 					}
 		
 					// 解析した
@@ -981,13 +986,13 @@ namespace gvtrademap_cs
 #else
 			if(!m_myship_info.is_analized_pos){
 				// 自分の位置が分からない
-				m_db.share_routes.Share(0, 0, ShareRoutes.State.outof_sea);
+				m_db.ShareRoutes.Share(0, 0, ShareRoutes.State.outof_sea);
 			}else{
 				// コンパスの角度が得られていれば海上
 				ShareRoutes.State	_state	= (m_myship_info.is_in_the_sea)
 													? ShareRoutes.State.in_the_sea
 													: ShareRoutes.State.outof_sea;
-				m_db.share_routes.Share((int)m_myship_info.pos.X, (int)m_myship_info.pos.Y, _state);
+				m_db.ShareRoutes.Share((int)m_myship_info.pos.X, (int)m_myship_info.pos.Y, _state);
 			}
 #endif
 		}
@@ -1001,7 +1006,7 @@ namespace gvtrademap_cs
 		private void share_timer_Tick(object sender, EventArgs e)
 		{
 			// 季節チェック更新
-			if(m_db.season.UpdateSeason()){
+			if(m_db.GvoSeason.UpdateSeason()){
 				// 季節が変わった
 				// 地図更新をリクエストする
 				m_lib.setting.req_update_map.Request();
@@ -1067,7 +1072,7 @@ namespace gvtrademap_cs
 
 					if(!m_spot.is_spot){
 						// 何かあれば選択する
-						m_item_window.info		= m_db.world.FindInfo(m_lib.loop_image.MousePos2GlobalPos(pos));
+						m_item_window.info		= m_db.World.FindInfo(m_lib.loop_image.MousePos2GlobalPos(pos));
 					}
 				}
 			}else{
@@ -1078,7 +1083,7 @@ namespace gvtrademap_cs
 					m_select_pos			= transform.client_pos2_game_pos(pos, m_lib.loop_image);
 
 					// 何かあれば選択する
-					m_item_window.info		= m_db.world.FindInfo(m_lib.loop_image.MousePos2GlobalPos(pos));
+					m_item_window.info		= m_db.World.FindInfo(m_lib.loop_image.MousePos2GlobalPos(pos));
 				}
 			}
 
@@ -1352,7 +1357,7 @@ namespace gvtrademap_cs
 			if(tip == null)		tip	= m_spot.GetToolTipString(gpos);
 
 			// メモアイコン
-			if(tip == null)		tip	= m_db.map_mark.GetToolTip(gpos);
+			if(tip == null)		tip	= m_db.MapMark.GetToolTip(gpos);
 
 			// 街名等
 /*			if(m_lib.setting.map_draw_names == map_draw_names.draw){
@@ -1370,15 +1375,15 @@ namespace gvtrademap_cs
 			}
 */
 			if(tip == null){
-				GvoWorldInfo.Info		info	= m_db.world.FindInfo(gpos);
+				GvoWorldInfo.Info		info	= m_db.World.FindInfo(gpos);
 				if(info != null){
 					tip		= info.TooltipString;
-					if(m_lib.setting.map_draw_names == map_draw_names.draw){
+					if(m_lib.setting.map_draw_names == MapDrawNames.Draw){
 						// 街名等を描画するモード
 						// 上陸地点等はポップアップしない
-						if(info.InfoType == GvoWorldInfo.InfoType.OUTSIDE_CITY)	return null;
-						if(info.InfoType == GvoWorldInfo.InfoType.SHORE)		return null;
-						if(info.InfoType == GvoWorldInfo.InfoType.SHORE2)		return null;
+						if(info.InfoType == GvoWorldInfo.InfoType.OutsideCity)	return null;
+						if(info.InfoType == GvoWorldInfo.InfoType.Shore)		return null;
+						if(info.InfoType == GvoWorldInfo.InfoType.Shore2)		return null;
 					}
 				}
 			}
@@ -1407,7 +1412,7 @@ namespace gvtrademap_cs
 			// レンダリング開始位置とサイズ
 			Point		tmp;
 			Size		size;
-			m_db.searoute.CalcScreenShotBoundingBox(out tmp, out size);
+			m_db.SeaRoute.CalcScreenShotBoundingBox(out tmp, out size);
 			if((size.Width <= 0)||(size.Height <= 0)){
 				MessageBox.Show("航路情報がないため、SSを作成できません。",
 								"報告", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -1501,15 +1506,15 @@ namespace gvtrademap_cs
 													handle.AddrOfPinnedObject());
 				string	fname		= "searoute" + DateTime.Now.ToString("yyyyMMddHHmmss");
 				switch(m_lib.setting.ss_format){
-				case ss_format.png:
+				case SSFormat.Png:
 					fname	= Path.Combine(m_current_path, def.SS_PATH + fname + ".png");
 					bitmap.Save(fname, ImageFormat.Png);
 					break;
-				case ss_format.jpeg:
+				case SSFormat.Jpeg:
 					fname	= Path.Combine(m_current_path, def.SS_PATH + fname + ".jpg");
 					bitmap.Save(fname, ImageFormat.Jpeg);
 					break;
-				case ss_format.bmp:
+				case SSFormat.Bmp:
 				default:
 					fname	= Path.Combine(m_current_path, def.SS_PATH + fname + ".bmp");
 					bitmap.Save(fname, ImageFormat.Bmp);
@@ -1550,7 +1555,7 @@ namespace gvtrademap_cs
 			// 地図描画
 			draw_map();
 
-			// database
+			// GvoDatabase
 			m_db.DrawForScreenShot();
 			m_lib.device.End();
 		}
@@ -1618,27 +1623,27 @@ namespace gvtrademap_cs
 		/*-------------------------------------------------------------------------
 		 同盟国変更
 		---------------------------------------------------------------------------*/
-		private void ToolStripMenuItem_country0_Click(object sender, EventArgs e){	set_domain(GvoDomains.Country.England);		}
-		private void ToolStripMenuItem_country1_Click(object sender, EventArgs e){	set_domain(GvoDomains.Country.Spain);			}
-		private void ToolStripMenuItem_country2_Click(object sender, EventArgs e){	set_domain(GvoDomains.Country.Portugal);		}
-		private void ToolStripMenuItem_country3_Click(object sender, EventArgs e){	set_domain(GvoDomains.Country.Netherlands);	}
-		private void ToolStripMenuItem_country4_Click(object sender, EventArgs e){	set_domain(GvoDomains.Country.France);			}
-		private void ToolStripMenuItem_country5_Click(object sender, EventArgs e){	set_domain(GvoDomains.Country.Venezia);		}
-		private void ToolStripMenuItem_country6_Click(object sender, EventArgs e){	set_domain(GvoDomains.Country.Turkey);			}
-		private void ToolStripMenuItem_country00_Click(object sender, EventArgs e){	set_domain(GvoDomains.Country.unknown);		}
+		private void ToolStripMenuItem_country0_Click(object sender, EventArgs e){	set_domain(GvoWorldInfo.Country.England);		}
+		private void ToolStripMenuItem_country1_Click(object sender, EventArgs e){	set_domain(GvoWorldInfo.Country.Spain);			}
+		private void ToolStripMenuItem_country2_Click(object sender, EventArgs e){	set_domain(GvoWorldInfo.Country.Portugal);		}
+		private void ToolStripMenuItem_country3_Click(object sender, EventArgs e){	set_domain(GvoWorldInfo.Country.Netherlands);	}
+		private void ToolStripMenuItem_country4_Click(object sender, EventArgs e){	set_domain(GvoWorldInfo.Country.France);			}
+		private void ToolStripMenuItem_country5_Click(object sender, EventArgs e){	set_domain(GvoWorldInfo.Country.Venezia);		}
+		private void ToolStripMenuItem_country6_Click(object sender, EventArgs e){	set_domain(GvoWorldInfo.Country.Turkey);			}
+		private void ToolStripMenuItem_country00_Click(object sender, EventArgs e){	set_domain(GvoWorldInfo.Country.Unknown);		}
 
 		/*-------------------------------------------------------------------------
 		 同盟国変更
 		---------------------------------------------------------------------------*/
-		private void set_domain(GvoDomains.Country country)
+		private void set_domain(GvoWorldInfo.Country country)
 		{
 			if(m_item_window.info == null)										return;
 
 			// 更新
-			if(!m_db.world.SetDomain(m_item_window.info.Name, country))	return;
+			if(!m_db.World.SetDomain(m_item_window.info.Name, country))	return;
 	
 			// 更新された
-			string	str	= m_db.world.GetNetUpdateString(m_item_window.info.Name);
+			string	str	= m_db.World.GetNetUpdateString(m_item_window.info.Name);
 			if(str == null)						return;
 
 			// サーバに更新情報を送る
@@ -1648,8 +1653,7 @@ namespace gvtrademap_cs
 			// どうも変更できなくなってる？
 			// オリジナル交易Mapでも変更できない
 //			str	= Useful.UrlEncodeShiftJis(str);
-			HttpDownload.Download(def.URL_HP_ORIGINAL + @"/gvgetdomain.cgi?" + str,
-									Encoding.UTF8);
+            Console.WriteLine("同盟国変更:" + HttpDownload.Download(def.URL_HP_ORIGINAL + @"/gvgetdomain.cgi?" + str, Encoding.UTF8));
 
 //			str				= "/gvgetdomain.cgi?" + str;
 //			string	Data	= tcp_text.Download("gvtrademap.daa.jp", str, Encoding.UTF8);
@@ -1664,7 +1668,7 @@ namespace gvtrademap_cs
 		private void main_window_context_menu(Point p)
 		{
 			m_memo_icon_pos		= m_lib.loop_image.MousePos2GlobalPos(p);
-			m_memo_icon_data	= m_db.map_mark.FindData(m_memo_icon_pos);
+			m_memo_icon_data	= m_db.MapMark.FindData(m_memo_icon_pos);
 
 			if(m_memo_icon_data == null){
 				edit_memo_icon_ToolStripMenuItem.Enabled	= false;
@@ -1675,7 +1679,7 @@ namespace gvtrademap_cs
 			}
 
 			// 海域変動システムの更新
-			string	name	= m_db.sea_area.Find(m_memo_icon_pos);
+			string	name	= m_db.SeaArea.Find(m_memo_icon_pos);
 			if(name == null){
 				normal_sea_area_ToolStripMenuItem.Text		= "--を危険海域(通常状態)に設定する";
 				normal_sea_area_ToolStripMenuItem.Enabled	= false;
@@ -1700,7 +1704,7 @@ namespace gvtrademap_cs
 		---------------------------------------------------------------------------*/
 		private void set_target_memo_icon_ToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			m_db.map_mark.Add(	m_memo_icon_pos,
+			m_db.MapMark.Add(	m_memo_icon_pos,
 							map_mark.map_mark_type.icon11,
 							"目的地周辺です");
 			m_memo_icon_data			= null;
@@ -1718,7 +1722,7 @@ namespace gvtrademap_cs
 			using(map_mark_form dlg = new map_mark_form(transform.map_pos2_game_pos(m_memo_icon_pos, m_lib.loop_image))){
 				if(dlg.ShowDialog(this) == DialogResult.OK){
 					// 追加する
-					m_db.map_mark.Add(	transform.game_pos2_map_pos(dlg.position, m_lib.loop_image),
+					m_db.MapMark.Add(	transform.game_pos2_map_pos(dlg.position, m_lib.loop_image),
 									map_mark.map_mark_type.axis0 + dlg.icon_index,
 									dlg.memo);
 
@@ -1757,7 +1761,7 @@ namespace gvtrademap_cs
 		private void remove_memo_icon_ToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			if(m_memo_icon_data == null)	return;
-			m_db.map_mark.RemoveData(m_memo_icon_data);
+			m_db.MapMark.RemoveData(m_memo_icon_data);
 			m_memo_icon_data	= null;		// 参照を切る
 		}
 
@@ -1767,7 +1771,7 @@ namespace gvtrademap_cs
 		---------------------------------------------------------------------------*/
 		private void remove_all_target_memo_icon_ToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			m_db.map_mark.RemoveAllTargetData();
+			m_db.MapMark.RemoveAllTargetData();
 			m_memo_icon_data	= null;
 
 			// 非表示だとあれなので強制表示とする
@@ -1780,7 +1784,7 @@ namespace gvtrademap_cs
 		---------------------------------------------------------------------------*/
 		private void remove_all_memo_icon_ToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			m_db.map_mark.RemoveAllData();
+			m_db.MapMark.RemoveAllData();
 			m_memo_icon_data	= null;
 		}
 		/*-------------------------------------------------------------------------
@@ -1809,7 +1813,7 @@ namespace gvtrademap_cs
 		---------------------------------------------------------------------------*/
 		private void set_sea_area_rclick(sea_area.sea_area_once.sea_type type)
 		{
-			m_db.sea_area.SetType(	m_db.sea_area.Find(m_memo_icon_pos),
+			m_db.SeaArea.SetType(	m_db.SeaArea.Find(m_memo_icon_pos),
 									type);
 		}
 		#endregion
@@ -1974,7 +1978,7 @@ namespace gvtrademap_cs
 					// 反映させる
 					// フィルタの内容を反映したリストを使用する
 					// 海域情報は全て初期化してから反映される
-					m_db.sea_area.UpdateFromDD(dlg.filterd_list, true);
+					m_db.SeaArea.UpdateFromDD(dlg.filterd_list, true);
 				}
 			}catch{
 				MessageBox.Show("海域情報受け取りに失敗しました。");
@@ -1991,11 +1995,11 @@ namespace gvtrademap_cs
 		{
 			if(m_lib.setting.req_spot_item.IsRequest()){
 				// スポット開始
-				database.find	item	= m_lib.setting.req_spot_item.arg1 as database.find;
+				GvoDatabase.Find	item	= m_lib.setting.req_spot_item.Arg1 as GvoDatabase.Find;
 				m_item_window.SpotItem(item);
 			}else if(m_lib.setting.req_spot_item_changed.IsRequest()){
 				// スポット対象の変更
-				spot.spot_once	item	= m_lib.setting.req_spot_item_changed.arg1 as spot.spot_once;
+				spot.spot_once	item	= m_lib.setting.req_spot_item_changed.Arg1 as spot.spot_once;
 				m_item_window.SpotItemChanged(item);
 			}
 		}
@@ -2081,8 +2085,8 @@ namespace gvtrademap_cs
 			case KeyFunction.map_change:
 				// 地図切り替え
 				if(!is_load){
-					if(++m_lib.setting.map >= map_index.max){
-						m_lib.setting.map = map_index.map1;
+					if(++m_lib.setting.map >= MapIndex.Max){
+						m_lib.setting.map = MapIndex.Map1;
 					}
 				}
 				break;
@@ -2094,7 +2098,7 @@ namespace gvtrademap_cs
 				break;
 			case KeyFunction.blue_line_reset:
 				// 角度計算のリセット
-				m_db.speed.ResetAngle();
+				m_db.SpeedCalculator.ResetAngle();
 				m_lib.device.SetMustDrawFlag();
 				break;
 			case KeyFunction.map_zoom_in:
@@ -2151,7 +2155,7 @@ namespace gvtrademap_cs
 				break;
 			case KeyFunction.cancel_select_sea_routes:
 				// 航路図の選択をリセットする
-				m_db.searoute.ResetSelectFlag();
+				m_db.SeaRoute.ResetSelectFlag();
 				m_lib.device.SetMustDrawFlag();
 				break;
 			case KeyFunction.item_window_show_min:
@@ -2321,10 +2325,10 @@ namespace gvtrademap_cs
 		---------------------------------------------------------------------------*/
 		private void edit_sea_area_dlg()
 		{
-			using(setting_sea_area_form dlg = new setting_sea_area_form(m_db.sea_area)){
+			using(setting_sea_area_form dlg = new setting_sea_area_form(m_db.SeaArea)){
 				if(dlg.ShowDialog(this) == DialogResult.OK){
 					// 更新する
-					dlg.Update(m_db.sea_area);
+					dlg.Update(m_db.SeaArea);
 				}
 			}
 		}

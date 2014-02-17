@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
@@ -12,8 +12,6 @@
     <AssemblyName>gvtrademap_cs_</AssemblyName>
     <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <TargetFrameworkSubset>
-    </TargetFrameworkSubset>
     <ApplicationIcon>gvicon.ico</ApplicationIcon>
     <IsWebBootstrapper>false</IsWebBootstrapper>
     <ManifestCertificateThumbprint>B607B16883336FD101FBBC1333F205497689954D</ManifestCertificateThumbprint>
@@ -40,6 +38,13 @@
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <OldToolsVersion>3.5</OldToolsVersion>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -126,7 +131,6 @@
     <Compile Include="globalmouse_hook.cs" />
     <Compile Include="gvo\gvo_build_ship_counter.cs" />
     <Compile Include="gvo\gvo_capture.cs" />
-    <Compile Include="download_patch.cs" />
     <Compile Include="gvo\gvo_chat.cs" />
     <Compile Include="form\gvtrademap_cs_form.cs">
       <SubType>Form</SubType>
@@ -137,6 +141,7 @@
     <Compile Include="gvo\gvo_day_counter.cs" />
     <Compile Include="gvo\gvo_server_service.cs" />
     <Compile Include="gvotms_key_assign.cs" />
+    <Compile Include="LoadInfosStatus.cs" />
     <Compile Include="myship_info.cs" />
     <Compile Include="sprite_rects\infonameimage.cs" />
     <Compile Include="window\info_windows.cs" />
@@ -322,6 +327,6 @@
   </Target>
   -->
   <PropertyGroup>
-    <PostBuildEvent>ilmerge /out:gvtrademap_cs.exe $(TargetFileName) utility.dll directx.dll gvo_base.dll net.dll gvo_net_base.dll PanelManager.dll</PostBuildEvent>
+    <PostBuildEvent>"c:\Program Files (x86)\Microsoft\ILMerge\ILMerge.exe" /out:gvtrademap_cs.exe $(TargetFileName) utility.dll directx.dll gvo_base.dll net.dll gvo_net_base.dll PanelManager.dll</PostBuildEvent>
   </PropertyGroup>
 </Project>

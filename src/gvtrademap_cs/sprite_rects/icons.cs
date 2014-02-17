@@ -64,7 +64,8 @@ namespace gvtrademap_cs
 			tab_7,
 			tab_8,
 			tab_9,
-			tab_10,
+            tab_10,
+            tab_11,
 
 			tab_gray_0,
 			tab_gray_1,
@@ -76,7 +77,8 @@ namespace gvtrademap_cs
 			tab_gray_7,
 			tab_gray_8,
 			tab_gray_9,
-			tab_gray_10,
+            tab_gray_10,
+            tab_gray_11,
 
 			// 人物とかのアイコン
 			tab2_0,
@@ -227,7 +229,8 @@ namespace gvtrademap_cs
 			spot_tab_7,
 			spot_tab_8,
 			spot_tab_9,
-			spot_tab_10,
+            spot_tab_10,
+            spot_tab_11,
 
 			// 航路共有 街に居る
 			share_city,
@@ -293,271 +296,254 @@ namespace gvtrademap_cs
 		private void add_rects()
 		{
 			// 影
-			AddRect(	new Vector2(-5, -6-8), 
-								new Rectangle(24, 160, 23, 15));
+			AddRect(new Vector2(-5, -6-8), new Rectangle(24, 160, 23, 15));
 
 			// 日付表示用数値
-			{
-				Vector2		offset	= new Vector2(-3, -16);
-				for(int i=0; i<10; i++){
-					AddRect(	offset, 
-										new Rectangle(i * 8, 232, 6, 9));
-				}
-			}
-			// 船
-			{
-				AddRect(	new Vector2(-6, -9), 
-									new Rectangle(216, 32, 12, 11));
-			}
+            AddRect(new Vector2(-3, -16), new Rectangle(0, 232, 6, 9));
+            AddRect(new Vector2(-3, -16), new Rectangle(8, 232, 6, 9));
+            AddRect(new Vector2(-3, -16), new Rectangle(16, 232, 6, 9));
+            AddRect(new Vector2(-3, -16), new Rectangle(24, 232, 6, 9));
+            AddRect(new Vector2(-3, -16), new Rectangle(32, 232, 6, 9));
+            AddRect(new Vector2(-3, -16), new Rectangle(40, 232, 6, 9));
+            AddRect(new Vector2(-3, -16), new Rectangle(48, 232, 6, 9));
+            AddRect(new Vector2(-3, -16), new Rectangle(56, 232, 6, 9));
+            AddRect(new Vector2(-3, -16), new Rectangle(64, 232, 6, 9));
+            AddRect(new Vector2(-3, -16), new Rectangle(72, 232, 6, 9));
+            
+            // 船
+            AddRect(new Vector2(-6, -9), new Rectangle(216, 32, 12, 11));
 
 			// 国アイコン
-			{
-				Vector2		offset	= new Vector2(0, 0);
-				for(int i=0; i<12; i++){
-					AddRect(	offset, 
-										new Rectangle(0, i*16, 24, 16));
-				}
-			}
+            AddRect(new Vector2(0, 0), new Rectangle(0, 0, 24, 16));
+            AddRect(new Vector2(0, 0), new Rectangle(0, 16, 24, 16));
+            AddRect(new Vector2(0, 0), new Rectangle(0, 32, 24, 16));
+            AddRect(new Vector2(0, 0), new Rectangle(0, 48, 24, 16));
+            AddRect(new Vector2(0, 0), new Rectangle(0, 64, 24, 16));
+            AddRect(new Vector2(0, 0), new Rectangle(0, 80, 24, 16));
+            AddRect(new Vector2(0, 0), new Rectangle(0, 96, 24, 16));
+            AddRect(new Vector2(0, 0), new Rectangle(0, 112, 24, 16));
+            AddRect(new Vector2(0, 0), new Rectangle(0, 128, 24, 16));
+            AddRect(new Vector2(0, 0), new Rectangle(0, 144, 24, 16));
+            AddRect(new Vector2(0, 0), new Rectangle(0, 160, 24, 16));
+            AddRect(new Vector2(0, 0), new Rectangle(0, 176, 24, 16));
 
 			// タブアイコン
-			{
-				Vector2		offset	= new Vector2(0, 0);
-				for(int i=0; i<11; i++){
-					AddRect(	offset, 
-										new Rectangle(24 + i*16, 16, 16, 16));
-				}
-				for(int i=0; i<11; i++){
-					AddRect(	offset, 
-										new Rectangle(24 + i*16, 0, 16, 16));
-				}
-			}
+            AddRect(new Vector2(1, 0), new Rectangle(25, 16, 15, 16));
+            AddRect(new Vector2(0, 0), new Rectangle(40, 16, 16, 16));
+            AddRect(new Vector2(0, 0), new Rectangle(56, 16, 16, 16));
+            AddRect(new Vector2(0, 0), new Rectangle(72, 16, 16, 16));
+            AddRect(new Vector2(0, 0), new Rectangle(88, 16, 16, 16));
+            AddRect(new Vector2(0, 0), new Rectangle(144, 208, 16, 16));
+            AddRect(new Vector2(0, 0), new Rectangle(104, 16, 16, 16));
+            AddRect(new Vector2(0, 0), new Rectangle(120, 16, 16, 16));
+            AddRect(new Vector2(0, 0), new Rectangle(136, 16, 16, 16));
+            AddRect(new Vector2(0, 0), new Rectangle(152, 16, 16, 16));
+            AddRect(new Vector2(0, 0), new Rectangle(168, 16, 16, 16));
+            AddRect(new Vector2(0, 0), new Rectangle(184, 16, 16, 16));
+
+            AddRect(new Vector2(1, 0), new Rectangle(25, 0, 15, 16));
+            AddRect(new Vector2(0, 0), new Rectangle(40, 0, 16, 16));
+            AddRect(new Vector2(0, 0), new Rectangle(56, 0, 16, 16));
+            AddRect(new Vector2(0, 0), new Rectangle(72, 0, 16, 16));
+            AddRect(new Vector2(0, 0), new Rectangle(88, 0, 16, 16));
+            AddRect(new Vector2(0, 0), new Rectangle(160, 208, 16, 16));
+            AddRect(new Vector2(0, 0), new Rectangle(104, 0, 16, 16));
+            AddRect(new Vector2(0, 0), new Rectangle(120, 0, 16, 16));
+            AddRect(new Vector2(0, 0), new Rectangle(136, 0, 16, 16));
+            AddRect(new Vector2(0, 0), new Rectangle(152, 0, 16, 16));
+            AddRect(new Vector2(0, 0), new Rectangle(168, 0, 16, 16));
+            AddRect(new Vector2(0, 0), new Rectangle(184, 0, 16, 16));
 
 			// 人物とかのアイコン
-			{
-				Vector2		offset	= new Vector2(0, 0);
-				for(int i=0; i<2; i++){
-					AddRect(	offset, 
-										new Rectangle(24 + i*16, 48, 16, 16));
-				}
-				for(int i=0; i<2; i++){
-					AddRect(	offset, 
-										new Rectangle(200 + i*16, 16, 16, 16));
-				}
-				for(int i=0; i<2; i++){
-					AddRect(	offset, 
-										new Rectangle(24 + i*16, 32, 16, 16));
-				}
-				for(int i=0; i<2; i++){
-					AddRect(	offset, 
-										new Rectangle(200 + i*16, 0, 16, 16));
-				}
-			}
+            AddRect(new Vector2(0, 0), new Rectangle(24, 48, 16, 16));
+            AddRect(new Vector2(0, 0), new Rectangle(40, 48, 16, 16));
 
+            AddRect(new Vector2(0, 0), new Rectangle(200, 16, 16, 16));
+            AddRect(new Vector2(0, 0), new Rectangle(216, 16, 16, 16));
+
+            AddRect(new Vector2(0, 0), new Rectangle(24, 32, 16, 16));
+            AddRect(new Vector2(0, 0), new Rectangle(40, 32, 16, 16));
+
+            AddRect(new Vector2(0, 0), new Rectangle(200, 0, 16, 16));
+            AddRect(new Vector2(0, 0), new Rectangle(216, 0, 16, 16));
+            
 			// 設定アイコン
-			{
-				Vector2		offset	= new Vector2(0, 0);
-				for(int i=0; i<8; i++){
-					AddRect(	offset, 
-										new Rectangle(56 + i*16, 48, 16, 16));
-				}
-				// @Web icon
-				AddRect(	offset, 
-									new Rectangle(216, 80, 16, 16));
+            AddRect(new Vector2(0, 0), new Rectangle(56, 48, 16, 16));
+            AddRect(new Vector2(0, 0), new Rectangle(72, 48, 16, 16));
+            AddRect(new Vector2(0, 0), new Rectangle(88, 48, 16, 16));
+            AddRect(new Vector2(0, 0), new Rectangle(104, 48, 16, 16));
+            AddRect(new Vector2(0, 0), new Rectangle(120, 48, 16, 16));
+            AddRect(new Vector2(0, 0), new Rectangle(136, 48, 16, 16));
+            AddRect(new Vector2(0, 0), new Rectangle(152, 48, 16, 16));
+            AddRect(new Vector2(0, 0), new Rectangle(168, 48, 16, 16));
+            
+        	// @Web icon
+            AddRect(new Vector2(0, 0), new Rectangle(216, 80, 16, 16));
 
-				for(int i=0; i<8; i++){
-					AddRect(	offset, 
-										new Rectangle(56 + i*16, 32, 16, 16));
-				}
-				// @Web icon
-				AddRect(	offset, 
-									new Rectangle(216, 64, 16, 16));
+            AddRect(new Vector2(0, 0), new Rectangle(56, 32, 16, 16));
+            AddRect(new Vector2(0, 0), new Rectangle(72, 32, 16, 16));
+            AddRect(new Vector2(0, 0), new Rectangle(88, 32, 16, 16));
+            AddRect(new Vector2(0, 0), new Rectangle(104, 32, 16, 16));
+            AddRect(new Vector2(0, 0), new Rectangle(120, 32, 16, 16));
+            AddRect(new Vector2(0, 0), new Rectangle(136, 32, 16, 16));
+            AddRect(new Vector2(0, 0), new Rectangle(152, 32, 16, 16));
+            AddRect(new Vector2(0, 0), new Rectangle(168, 32, 16, 16));
 
-				AddRect(	offset, 
-									new Rectangle(232, 64, 16, 16));
-				AddRect(	offset, 
-									new Rectangle(184, 32, 16, 16));
-				AddRect(	offset, 
-									new Rectangle(184, 48, 16, 16));
-				// 5日アイコン
-				AddRect(	offset, 
-									new Rectangle(200, 48, 16, 16));
-			}
+            // @Web icon
+            AddRect(new Vector2(0, 0), new Rectangle(216, 64, 16, 16));
+            AddRect(new Vector2(0, 0), new Rectangle(232, 64, 16, 16));
+            AddRect(new Vector2(0, 0), new Rectangle(184, 32, 16, 16));
+            AddRect(new Vector2(0, 0), new Rectangle(184, 48, 16, 16));
+            
+            // 5日アイコン
+            AddRect(new Vector2(0, 0), new Rectangle(200, 48, 16, 16));
 
 			// スポット
-			{
-				Vector2		offset	= new Vector2(-20, -20);
-				for(int i=0; i<3; i++){
-					if(i == 2)	offset	= new Vector2(-20, -26);
-					AddRect(	offset, 
-										new Rectangle(25 + i*41, 97, 40, 40));
-				}
-			}
+            AddRect(new Vector2(-20, -20), new Rectangle(25, 97, 40, 40));
+            AddRect(new Vector2(-20, -20), new Rectangle(66, 97, 40, 40));
+            AddRect(new Vector2(-20, -26), new Rectangle(107, 97, 40, 40));
 
 			// web
-			{
-				Vector2		offset	= new Vector2(0, 0);
-				AddRect(	offset, 
-									new Rectangle(232, 0, 17, 17));
-			}
+            AddRect(new Vector2(0, 0), new Rectangle(232, 0, 17, 17));
 
 			// 選択用三角
-			{
-				Vector2		offset	= new Vector2(0, -3);
-				for(int i=0; i<2; i++){
-					AddRect(	offset, 
-										new Rectangle(40 + i*8, 144, 8, 8));
-				}
-			}
+            AddRect(new Vector2(0, -3), new Rectangle(40, 144, 8, 8));
+            AddRect(new Vector2(0, -3), new Rectangle(48, 144, 8, 8));
 
 			// 選択用クロスカーソル
-			{
-				Vector2		offset	= new Vector2(-6, -6);
-				AddRect(	offset, 
-									new Rectangle(24, 144, 14, 14));
-			}
+            AddRect(new Vector2(-6, -6), new Rectangle(24, 144, 14, 14));
 
 			// 設定ボタン
-			{
-				Vector2		offset	= new Vector2(0, 0);
-				AddRect(	offset, 
-									new Rectangle(128, 144, 48	, 17));
-			}
+            AddRect(new Vector2(0, 0), new Rectangle(128, 144, 48, 17));
 
 			// 速度表示用背景
-			{
-				Vector2		offset	= new Vector2(0, 0);
-				AddRect(	offset, 
-									new Rectangle(80, 144, 43+4	, 16));
-			}
+            AddRect(new Vector2(0, 0), new Rectangle(80, 144, 47, 16));
 
 			// スポット用国アイコン
-			{
-				Vector2		offset	= new Vector2(-12, -8);
-				for(int i=0; i<12; i++){
-					AddRect(	offset, 
-										new Rectangle(0, i*16, 24, 16));
-				}
-			}
+            AddRect(new Vector2(-12, -8), new Rectangle(0, 0, 24, 16));
+            AddRect(new Vector2(-12, -8), new Rectangle(0, 16, 24, 16));
+            AddRect(new Vector2(-12, -8), new Rectangle(0, 32, 24, 16));
+            AddRect(new Vector2(-12, -8), new Rectangle(0, 48, 24, 16));
+            AddRect(new Vector2(-12, -8), new Rectangle(0, 64, 24, 16));
+            AddRect(new Vector2(-12, -8), new Rectangle(0, 80, 24, 16));
+            AddRect(new Vector2(-12, -8), new Rectangle(0, 96, 24, 16));
+            AddRect(new Vector2(-12, -8), new Rectangle(0, 112, 24, 16));
+            AddRect(new Vector2(-12, -8), new Rectangle(0, 128, 24, 16));
+            AddRect(new Vector2(-12, -8), new Rectangle(0, 144, 24, 16));
+            AddRect(new Vector2(-12, -8), new Rectangle(0, 160, 24, 16));
+            AddRect(new Vector2(-12, -8), new Rectangle(0, 176, 24, 16));
 
 			// スポット用人物とかのアイコン
-			{
-				Vector2		offset	= new Vector2(-8, -8);
-				for(int i=0; i<2; i++){
-					AddRect(	offset, 
-										new Rectangle(24 + i*16, 48, 16, 16));
-				}
-				for(int i=0; i<2; i++){
-					AddRect(	offset, 
-										new Rectangle(200 + i*16, 16, 16, 16));
-				}
-			}
+            AddRect(new Vector2(-8, -8), new Rectangle(24, 48, 16, 16));
+            AddRect(new Vector2(-8, -8), new Rectangle(40, 48, 16, 16));
+
+            AddRect(new Vector2(-8, -8), new Rectangle(200, 16, 16, 16));
+            AddRect(new Vector2(-8, -8), new Rectangle(216, 16, 16, 16));
 	
 			// メモ用アイコン
-			{
-				// 風向き
-				for(int i=0; i<8; i++){
-					AddRect(	new Vector2(-6, -6),
-										new Rectangle(64 + i*16, 192, 12, 12));
-				}
-				// 災害アイコン
-				for(int i=0; i<12; i++){
-					if(i==11){
-						AddRect(	new Vector2(-8, -13),		// 目的地のみ特殊
-											new Rectangle(24 + i*16 + 1, 64 + 1, 15, 15));
-					}else{
-						AddRect(	new Vector2(-8, -8),
-											new Rectangle(24 + i*16, 64, 16, 16));
-					}
-				}
-			}
+			
+		    //   風向き
+            AddRect(new Vector2(-6, -6), new Rectangle(64, 192, 12, 12));
+            AddRect(new Vector2(-6, -6), new Rectangle(80, 192, 12, 12));
+            AddRect(new Vector2(-6, -6), new Rectangle(96, 192, 12, 12));
+            AddRect(new Vector2(-6, -6), new Rectangle(112, 192, 12, 12));
+            AddRect(new Vector2(-6, -6), new Rectangle(128, 192, 12, 12));
+            AddRect(new Vector2(-6, -6), new Rectangle(144, 192, 12, 12));
+            AddRect(new Vector2(-6, -6), new Rectangle(160, 192, 12, 12));
+            AddRect(new Vector2(-6, -6), new Rectangle(176, 192, 12, 12));
+            
+            //   災害アイコン
+            AddRect(new Vector2(-8, -8), new Rectangle(24, 64, 16, 16));
+            AddRect(new Vector2(-8, -8), new Rectangle(40, 64, 16, 16));
+            AddRect(new Vector2(-8, -8), new Rectangle(56, 64, 16, 16));
+            AddRect(new Vector2(-8, -8), new Rectangle(72, 64, 16, 16));
+            AddRect(new Vector2(-8, -8), new Rectangle(88, 64, 16, 16));
+            AddRect(new Vector2(-8, -8), new Rectangle(104, 64, 16, 16));
+            AddRect(new Vector2(-8, -8), new Rectangle(120, 64, 16, 16));
+            AddRect(new Vector2(-8, -8), new Rectangle(136, 64, 16, 16));
+            AddRect(new Vector2(-8, -8), new Rectangle(152, 64, 16, 16));
+            AddRect(new Vector2(-8, -8), new Rectangle(168, 64, 16, 16));
+            AddRect(new Vector2(-8, -8), new Rectangle(184, 64, 16, 16));
+            AddRect(new Vector2(-8, -13), new Rectangle(201, 65, 15, 15));// 目的地のみ特殊
 
 			// web icon
-			{
-				// 風向き
-				for(int i=0; i<8; i++){
-					AddRect(	new Vector2(-6, -6),
-										new Rectangle(64 + i*16, 192, 12, 12));
-				}
-				// 災害アイコン
-				for(int i=0; i<5; i++){
-					AddRect(	new Vector2(-7, -7),
-										new Rectangle(88 + i*16, 168, 14, 14));
-				}
-			}
+			//   風向き
+            AddRect(new Vector2(-6, -6), new Rectangle(64, 192, 12, 12));
+            AddRect(new Vector2(-6, -6), new Rectangle(80, 192, 12, 12));
+            AddRect(new Vector2(-6, -6), new Rectangle(96, 192, 12, 12));
+            AddRect(new Vector2(-6, -6), new Rectangle(112, 192, 12, 12));
+            AddRect(new Vector2(-6, -6), new Rectangle(128, 192, 12, 12));
+            AddRect(new Vector2(-6, -6), new Rectangle(144, 192, 12, 12));
+            AddRect(new Vector2(-6, -6), new Rectangle(160, 192, 12, 12));
+            AddRect(new Vector2(-6, -6), new Rectangle(176, 192, 12, 12));
+            
+            //   災害アイコン
+            AddRect(new Vector2(-7, -7), new Rectangle(88, 168, 14, 14));
+            AddRect(new Vector2(-7, -7), new Rectangle(104, 168, 14, 14));
+            AddRect(new Vector2(-7, -7), new Rectangle(120, 168, 14, 14));
+            AddRect(new Vector2(-7, -7), new Rectangle(136, 168, 14, 14));
+            AddRect(new Vector2(-7, -7), new Rectangle(152, 168, 14, 14));
 
 			// 災害アイコン
-			{
-				Vector2		offset	= new Vector2(-8, -7 - 25);
-				for(int i=0; i<11; i++){
-					AddRect(	offset,
-										new Rectangle(24 + i*16, 80, 16, 15));
-				}
+            AddRect(new Vector2(-8, -32), new Rectangle(24, 80, 16, 15));
+            AddRect(new Vector2(-8, -32), new Rectangle(40, 80, 16, 15));
+            AddRect(new Vector2(-8, -32), new Rectangle(56, 80, 16, 15));
+            AddRect(new Vector2(-8, -32), new Rectangle(72, 80, 16, 15));
+            AddRect(new Vector2(-8, -32), new Rectangle(88, 80, 16, 15));
+            AddRect(new Vector2(-8, -32), new Rectangle(104, 80, 16, 15));
+            AddRect(new Vector2(-8, -32), new Rectangle(120, 80, 16, 15));
+            AddRect(new Vector2(-8, -32), new Rectangle(136, 80, 16, 15));
+            AddRect(new Vector2(-8, -32), new Rectangle(152, 80, 16, 15));
+            AddRect(new Vector2(-8, -32), new Rectangle(168, 80, 16, 15));
+            AddRect(new Vector2(-8, -32), new Rectangle(184, 80, 16, 15));
 
-				offset		= new Vector2(-14, -33);
-				AddRect(	offset,
-									new Rectangle(152, 96, 30, 34));
-				offset		= new Vector2(-3, -17);
-				AddRect(	offset,
-									new Rectangle(48, 168, 30, 18));
+            AddRect(new Vector2(-14, -33), new Rectangle(152, 96, 30, 34));
 
-			}
+            AddRect(new Vector2(-3, -17), new Rectangle(48, 168, 30, 18));
 
-			// スポット用タブアイコン
-			{
-				Vector2		offset	= new Vector2(-8, -8);
-				for(int i=0; i<11; i++){
-					AddRect(	offset, 
-										new Rectangle(24 + i*16, 16, 16, 16));
-				}
-			}
+            // スポット用タブアイコン
+            AddRect(new Vector2(-8, -8), new Rectangle(24, 16, 16, 16));
+            AddRect(new Vector2(-8, -8), new Rectangle(40, 16, 16, 16));
+            AddRect(new Vector2(-8, -8), new Rectangle(56, 16, 16, 16));
+            AddRect(new Vector2(-8, -8), new Rectangle(72, 16, 16, 16));
+            AddRect(new Vector2(-8, -8), new Rectangle(88, 16, 16, 16));
+            AddRect(new Vector2(-8, -8), new Rectangle(144, 208, 16, 16));
+            AddRect(new Vector2(-8, -8), new Rectangle(104, 16, 16, 16));
+            AddRect(new Vector2(-8, -8), new Rectangle(120, 16, 16, 16));
+            AddRect(new Vector2(-8, -8), new Rectangle(136, 16, 16, 16));
+            AddRect(new Vector2(-8, -8), new Rectangle(152, 16, 16, 16));
+            AddRect(new Vector2(-8, -8), new Rectangle(168, 16, 16, 16));
+            AddRect(new Vector2(-8, -8), new Rectangle(184, 16, 16, 16));
 
 			// 航路共有 街に居る
-			{
-				Vector2		offset	= new Vector2(-4, -4);
-				AddRect(	offset, 
-									new Rectangle(80, 160, 10, 10));
-			}
+            AddRect(new Vector2(-4, -4), new Rectangle(80, 160, 10, 10));
 
 			// 街、郊外
-			{
-				AddRect(	new Vector2(-11, -18), 
-									new Rectangle(232, 160, 24, 26));
-				AddRect(	new Vector2(-6, -11), 
-									new Rectangle(232, 192, 14, 16));
-				AddRect(	new Vector2(-10, -12), 
-									new Rectangle(232, 216, 22, 20));
-				AddRect(	new Vector2(-6, -11), 
-									new Rectangle(232, 240, 14, 16));
+            AddRect(new Vector2(-11, -18), new Rectangle(232, 160, 24, 26));
+            AddRect(new Vector2(-6, -11), new Rectangle(232, 192, 14, 16));
+            AddRect(new Vector2(-10, -12), new Rectangle(232, 216, 22, 20));
+            AddRect(new Vector2(-6, -11), new Rectangle(232, 240, 14, 16));
 
-				AddRect(	new Vector2(-5, -5), 
-									new Rectangle(240, 96, 10, 10));
-				AddRect(	new Vector2(-5, -5), 
-									new Rectangle(240, 112, 10, 10));
-				AddRect(	new Vector2(-4, -4), 
-									new Rectangle(240, 128, 8, 8));
-				AddRect(	new Vector2(-4, -4), 
-									new Rectangle(240, 144, 8, 8));
-			}
-
-			{
-				AddRect(	new Vector2(0, 0), 
-									new Rectangle(168, 168, 16, 26));
-				AddRect(	new Vector2(0, 0), 
-									new Rectangle(208, 144, 12, 12));
-			}
+            AddRect(new Vector2(-5, -5), new Rectangle(240, 96, 10, 10));
+            AddRect(new Vector2(-5, -5), new Rectangle(240, 112, 10, 10));
+            AddRect(new Vector2(-4, -4), new Rectangle(240, 128, 8, 8));
+            AddRect(new Vector2(-4, -4), new Rectangle(240, 144, 8, 8));
+            
+            AddRect(new Vector2(0, 0), new Rectangle(168, 168, 16, 16));
+            AddRect(new Vector2(0, 0), new Rectangle(208, 144, 12, 12));
 
 			// スクリプトにより切りだされたもの
-			AddRect(new Vector2(-3, -5), new Rectangle(32, 184, 38 - 32, 190 - 184));	// 0
-			AddRect(new Vector2(-8, -19), new Rectangle(0, 192, 18 - 0, 212 - 192));	// 1
-			AddRect(new Vector2(-12, -19), new Rectangle(24, 192, 50 - 24, 212 - 192));	// 2
-			AddRect(new Vector2(0, 0), new Rectangle(224, 144, 234 - 224, 156 - 144));	// 3
-			AddRect(new Vector2(0, 0), new Rectangle(0, 216, 48 - 0, 228 - 216));	// 4
-			AddRect(new Vector2(0, 0), new Rectangle(48, 216, 90 - 48, 228 - 216));	// 5
-			AddRect(new Vector2(0, 0), new Rectangle(200, 192, 224 - 200, 204 - 192));	// 6
-			AddRect(new Vector2(0, 0), new Rectangle(200, 208, 224 - 200, 220 - 208));	// 7
-			AddRect(new Vector2(0, 0), new Rectangle(208, 160, 220 - 208, 172 - 160));	// 8
-			AddRect(new Vector2(0, 0), new Rectangle(208, 176, 220 - 208, 188 - 176));	// 9
-			AddRect(new Vector2(0, 0), new Rectangle(96, 216, 140 - 96, 228 - 216));	// 10
+            AddRect(new Vector2(-3, -5), new Rectangle(32, 184, 6, 6));
+            AddRect(new Vector2(-8, -19), new Rectangle(0, 192, 18, 20));
+            AddRect(new Vector2(-12, -19), new Rectangle(24, 192, 26, 20));
+            AddRect(new Vector2(0, 0), new Rectangle(224, 144, 10, 12));
+            AddRect(new Vector2(0, 0), new Rectangle(0, 216, 48, 12));
+            AddRect(new Vector2(0, 0), new Rectangle(48, 216, 42, 12));
+            AddRect(new Vector2(0, 0), new Rectangle(200, 192, 24, 12));
+            AddRect(new Vector2(0, 0), new Rectangle(200, 208, 24, 12));
+            AddRect(new Vector2(0, 0), new Rectangle(208, 160, 12, 12));
+            AddRect(new Vector2(0, 0), new Rectangle(208, 176, 12, 12));
+            AddRect(new Vector2(0, 0), new Rectangle(96, 216, 44, 12));
 		}
 	
 		/*-------------------------------------------------------------------------

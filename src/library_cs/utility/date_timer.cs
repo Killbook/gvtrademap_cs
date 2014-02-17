@@ -18,7 +18,7 @@ namespace Utility
 	/*-------------------------------------------------------------------------
 	 
 	---------------------------------------------------------------------------*/
-	public class date_timer
+	public sealed class DateTimer
 	{
 		private DateTime			m_elapsed_time_tmp;
 		private DateTime			m_section_time_tmp;
@@ -26,7 +26,7 @@ namespace Utility
 		/*-------------------------------------------------------------------------
 		 
 		---------------------------------------------------------------------------*/
-		public date_timer()
+		public DateTimer()
 		{
 			m_elapsed_time_tmp		= DateTime.Now;
 			m_section_time_tmp		= DateTime.Now;

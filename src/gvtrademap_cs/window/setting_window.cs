@@ -48,7 +48,7 @@ namespace gvtrademap_cs
 		---------------------------------------------------------------------------*/
 		private gvtrademap_cs_form		m_form;
 		private gvt_lib					m_lib;						// 
-		private database				m_db;						// データベース
+		private GvoDatabase				m_db;						// データベース
 
 		private hittest_list			m_hittest_list;				// 矩形管理
 	
@@ -77,7 +77,7 @@ namespace gvtrademap_cs
 		/*-------------------------------------------------------------------------
 		 
 		---------------------------------------------------------------------------*/
-		public setting_window(gvt_lib lib, database db, gvtrademap_cs_form form)
+		public setting_window(gvt_lib lib, GvoDatabase db, gvtrademap_cs_form form)
 			: base(lib.device, new Vector2(WINDOW_POS_X, WINDOW_POS_Y), new Vector2(WINDOW_SIZE_X, WINDOW_SIZE_Y), WINDOW_POS_Z)
 		{
 			base.title				= "設定ウインドウ";
@@ -464,16 +464,16 @@ namespace gvtrademap_cs
 				break;
 
 			case setting_icons_index.web_icons:
-				set_draw_setting(draw_setting_page.web_icons);
+				set_draw_setting(DrawSettingPage.WebIcons);
 				break;
 			case setting_icons_index.memo_icons:
-				set_draw_setting(draw_setting_page.memo_icons);
+				set_draw_setting(DrawSettingPage.MemoIcons);
 				break;
 			case setting_icons_index.accident:
-				set_draw_setting(draw_setting_page.accidents);
+				set_draw_setting(DrawSettingPage.Accidents);
 				break;
 			case setting_icons_index.myship_angle:
-				set_draw_setting(draw_setting_page.myship_angle);
+				set_draw_setting(DrawSettingPage.MyShipAngle);
 				break;
 			case setting_icons_index.show_searoutes_list:
 				{
@@ -492,7 +492,7 @@ namespace gvtrademap_cs
 		/*-------------------------------------------------------------------------
 		 表示項目設定
 		---------------------------------------------------------------------------*/
-		private void set_draw_setting(draw_setting_page type)
+		private void set_draw_setting(DrawSettingPage type)
 		{
 			string	info	= m_lib.device.deviec_info_string;
 			using(setting_form2	dlg	= new setting_form2(m_lib.setting, m_lib.KeyAssignManager.List, info, type)){

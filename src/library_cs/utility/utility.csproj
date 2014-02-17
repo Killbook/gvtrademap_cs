@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
@@ -12,6 +12,13 @@
     <AssemblyName>utility</AssemblyName>
     <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <OldToolsVersion>3.5</OldToolsVersion>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -42,6 +49,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="date_timer.cs" />
+    <Compile Include="EnumParser.cs" />
+    <Compile Include="EnumParserUtility.cs" />
     <Compile Include="HashDatabase.cs" />
     <Compile Include="HttpDownload.cs" />
     <Compile Include="error_form.cs">
@@ -52,6 +61,7 @@
     </Compile>
     <Compile Include="file_ctrl.cs" />
     <Compile Include="hittest.cs" />
+    <Compile Include="IIni.cs" />
     <Compile Include="ini.cs" />
     <Compile Include="ini_profile.cs" />
     <Compile Include="key_assigin_setting_helper.cs" />

@@ -39,11 +39,12 @@ namespace gvtrademap_cs
 			tab_1,						// 道具
 			tab_2,						// 工房
 			tab_3,						// 人物
-			tab_4,						// 船
-			tab_5,						// 大砲
-			tab_6,						// 板
-			tab_7,						// 帆
-			tab_8,						// 像
+            tab_4,						// 造船所親方
+            tab_4_1,					// 船大工
+            tab_5,						// 武器職人
+			tab_6,						// 製材職人
+			tab_7,						// 製帆職人
+			tab_8,						// 彫刻家
 			tab_9,						// 行商人
 			tab_10,						// メモ
 
@@ -132,7 +133,7 @@ namespace gvtrademap_cs
 			case type.country_flags:		// 国旗
 				// 国一覧を作成する
 				foreach(GvoWorldInfo.Info i in m_world.World){
-					if(i.InfoType == GvoWorldInfo.InfoType.CITY){
+					if(i.InfoType == GvoWorldInfo.InfoType.City){
 						m_spots.Add(i);
 						m_spot_list.Add(new spot_once(i, i.CountryStr, i.AllianceTypeStr));
 					}
@@ -178,11 +179,12 @@ namespace gvtrademap_cs
 			case type.tab_1:				// 道具
 			case type.tab_2:				// 工房
 			case type.tab_3:				// 人物
-			case type.tab_4:				// 船
-			case type.tab_5:				// 大砲
-			case type.tab_6:				// 板
-			case type.tab_7:				// 帆
-			case type.tab_8:				// 像
+            case type.tab_4:				// 造船所親方
+            case type.tab_4_1:				// 船大工
+			case type.tab_5:				// 武器職人
+			case type.tab_6:				// 製材職人
+			case type.tab_7:				// 製帆職人
+			case type.tab_8:				// 彫刻家
 			case type.tab_9:				// 行商人
 				int	index	= (int)(_type - type.tab_0);
 				foreach(GvoWorldInfo.Info i in m_world.World){
@@ -266,11 +268,12 @@ namespace gvtrademap_cs
 			case type.tab_1:				// 道具
 			case type.tab_2:				// 工房
 			case type.tab_3:				// 人物
-			case type.tab_4:				// 船
-			case type.tab_5:				// 大砲
-			case type.tab_6:				// 板
-			case type.tab_7:				// 帆
-			case type.tab_8:				// 像
+            case type.tab_4:				// 造船所親方
+            case type.tab_4_1:				// 船大工
+            case type.tab_5:				// 武器職人
+			case type.tab_6:				// 製材職人
+			case type.tab_7:				// 製帆職人
+			case type.tab_8:				// 彫刻家
 			case type.tab_9:				// 行商人
 			case type.tab_10:				// メモ
 				draw_spot(offset);
@@ -298,7 +301,7 @@ namespace gvtrademap_cs
 			m_device.sprites.BeginDrawSprites(m_icons.texture, offset, m_loop_image.ImageScale, new Vector2(size, size));
 			foreach(GvoWorldInfo.Info i in m_spots){
 				m_device.sprites.AddDrawSprites(new Vector3(i.position.X, i.position.Y, 0.3f),
-										m_icons.GetIcon(icons.icon_index.spot_country_4 + (int)i.Country));
+										m_icons.GetIcon(icons.icon_index.spot_country_4 + (int)i.MyCountry));
 			}
 			m_device.sprites.EndDrawSprites();
 		}
@@ -350,7 +353,7 @@ namespace gvtrademap_cs
 			int	color		= Color.FromArgb(100, 255, 255, 255).ToArgb();
 			m_device.sprites.BeginDrawSprites(m_icons.texture, offset, m_loop_image.ImageScale, new Vector2(size, size));
 			foreach(GvoWorldInfo.Info i in m_spots){
-				if(i.Country != m_world.MyCountry)	continue;
+				if(i.MyCountry != m_world.MyCountry)	continue;
 
 				m_device.sprites.AddDrawSprites(new Vector3(i.position.X, i.position.Y, 0.3f),
 										m_icons.GetIcon(icons.icon_index.spot_0), color);
@@ -447,24 +450,24 @@ namespace gvtrademap_cs
 			foreach(GvoWorldInfo.Info i in m_spots){
 				icons.icon_index	index;
 				switch(i.InfoType){
-				case GvoWorldInfo.InfoType.CITY:			// 街
+				case GvoWorldInfo.InfoType.City:			// 街
 					// 街の種類によりアイコンを変える
 					index	= icons.icon_index.city_icon_0;
 					index	+= (int)i.CityType;
 					break;
-				case GvoWorldInfo.InfoType.SHORE:		// 上陸地点
+				case GvoWorldInfo.InfoType.Shore:		// 上陸地点
 					index	= icons.icon_index.city_icon_4;
 					break;
 
-				case GvoWorldInfo.InfoType.SHORE2:		// 上陸地点 奥地
+				case GvoWorldInfo.InfoType.Shore2:		// 上陸地点 奥地
 				case GvoWorldInfo.InfoType.PF:			// プライベートファーム
 					index	= icons.icon_index.city_icon_5;
 					break;
-				case GvoWorldInfo.InfoType.OUTSIDE_CITY:	// 郊外
+				case GvoWorldInfo.InfoType.OutsideCity:	// 郊外
 					index	= icons.icon_index.city_icon_6;
 					break;
 
-				case GvoWorldInfo.InfoType.SEA:			// 海域
+				case GvoWorldInfo.InfoType.Sea:			// 海域
 				default:
 					continue;
 				}
@@ -481,9 +484,9 @@ namespace gvtrademap_cs
 		---------------------------------------------------------------------------*/
 		private void spot_tab(Vector2 offset)
 		{
-			float	size	= m_loop_image.ImageScale * 1.2f;
-			if(size < 0.5)				size	= 0.5f;
-			else if(size > 1 * 1.2f)	size	= 1 * 1.2f;
+			float	size	= m_loop_image.ImageScale;
+			if(size < 0.5)				size = 0.5f;
+            else if (size > 1.0f)       size = 1.0f;
 	
 			m_device.sprites.BeginDrawSprites(m_icons.texture, offset, m_loop_image.ImageScale, new Vector2(size, size));
 			foreach(GvoWorldInfo.Info i in m_spots){
@@ -508,11 +511,12 @@ namespace gvtrademap_cs
 			case type.tab_1:				// 道具
 			case type.tab_2:				// 工房
 			case type.tab_3:				// 人物
-			case type.tab_4:				// 船
-			case type.tab_5:				// 大砲
-			case type.tab_6:				// 板
-			case type.tab_7:				// 帆
-			case type.tab_8:				// 像
+            case type.tab_4:				// 船大工
+            case type.tab_4_1:				// 造船所親方
+            case type.tab_5:				// 武器職人
+			case type.tab_6:				// 製材職人
+			case type.tab_7:				// 製帆職人
+			case type.tab_8:				// 彫刻家
 			case type.tab_9:				// 行商人
 			case type.city_name:			// 街名
 				break;
@@ -561,11 +565,12 @@ namespace gvtrademap_cs
 			case type.tab_1:					return "道具屋";
 			case type.tab_2:					return "工房";
 			case type.tab_3:					return "人物";
-			case type.tab_4:					return "船";
-			case type.tab_5:					return "大砲";
-			case type.tab_6:					return "板";
-			case type.tab_7:					return "帆";
-			case type.tab_8:					return "像";
+			case type.tab_4:					return "造船所親方";
+            case type.tab_4_1:                  return "船大工";
+            case type.tab_5:                    return "武器職人";
+			case type.tab_6:					return "製材職人";
+			case type.tab_7:					return "製帆職人";
+			case type.tab_8:					return "彫刻家";
 			case type.tab_9:					return "行商人";
 			case type.tab_10:					return "メモ";
 			case type.city_name:				return "街名";
@@ -594,7 +599,8 @@ namespace gvtrademap_cs
 			case type.tab_2:					return "";
 			case type.tab_3:					return "";
 			case type.tab_4:					return "";
-			case type.tab_5:					return "";
+            case type.tab_4_1:                  return "";
+            case type.tab_5:                    return "";
 			case type.tab_6:					return "";
 			case type.tab_7:					return "";
 			case type.tab_8:					return "";

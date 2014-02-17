@@ -44,7 +44,7 @@ namespace gvtrademap_cs
 		/*-------------------------------------------------------------------------
 
 		---------------------------------------------------------------------------*/
-		class capture_image : screen_capture
+		class capture_image : ScreenCapture
 		{
 			/*-------------------------------------------------------------------------
 
@@ -60,23 +60,23 @@ namespace gvtrademap_cs
 			---------------------------------------------------------------------------*/
 			public Texture CreateTexture(Device device)
 			{
-				if(base.image == null)	return null;
+				if(base.Image == null)	return null;
 
 				try{
-					using(Texture tex	= new Texture(device, base.size.Width, base.size.Height,
+					using(Texture tex	= new Texture(device, base.Size.Width, base.Size.Height,
 														1, Usage.Dynamic, Format.X8R8G8B8, Pool.SystemMemory)){
-						UInt32[,] buf	= (UInt32[,])tex.LockRectangle(typeof(UInt32), 0, LockFlags.Discard, base.size.Height, base.size.Width);
+						UInt32[,] buf	= (UInt32[,])tex.LockRectangle(typeof(UInt32), 0, LockFlags.Discard, base.Size.Height, base.Size.Width);
 
 						// テクスチャ内容の生成
 						int		index	= 0;
-						for(int y=0; y<base.size.Height; y++){
-							for(int x=0; x<base.size.Width; x++){
-								buf[y, x]	= (UInt32)((image[index + x * 3 + 2] << 16)
-													| (image[index + x * 3 + 1] << 8)
-													| (image[index + x * 3 + 0] << 0)
+						for(int y=0; y<base.Size.Height; y++){
+							for(int x=0; x<base.Size.Width; x++){
+								buf[y, x]	= (UInt32)((Image[index + x * 3 + 2] << 16)
+													| (Image[index + x * 3 + 1] << 8)
+													| (Image[index + x * 3 + 0] << 0)
 													| (255 << 24));
 							}
-							index	+= stride;
+							index	+= Stride;
 						}
 						tex.UnlockRectangle(0);
 
@@ -140,7 +140,7 @@ namespace gvtrademap_cs
 		 screen_captureを継承したものを使用する場合オーバーライドすること
 		 コンストラクタ内で呼ばれるので注意
 		---------------------------------------------------------------------------*/
-		protected override screen_capture CreateScreenCapture(int size_x, int size_y)
+		protected override ScreenCapture CreateScreenCapture(int size_x, int size_y)
 		{
 			return new capture_image(size_x, size_y);
 		}
