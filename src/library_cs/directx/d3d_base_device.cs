@@ -180,7 +180,7 @@ namespace directx
 				// デバイスロスト
 				OnDeviceLostException();
 			}
-			catch (DriverInternalErrorException ex)
+			catch (DriverInternalErrorException)
 			{
 				return false;
 			}

@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <info_root>
   <info name="アムステルダム" url_index="32" info_type="City">
     <position x="29" y="733" />
@@ -2748,9 +2748,7 @@
   </info>
 
 
-<!--以下勝手に変更を加えた部分-->
-<!--name_offset の意味がわからん・・数字変えても見た目変化ない・・-->
-    <info name="コッコラ" url_index="" info_type="City">
+  <info name="コッコラ" url_index="" info_type="City">
     <position x="290" y="500" />
     <name_offset1 x="-4" y="-2" />
     <name_offset2 x="-2" y="-2" />
@@ -2813,34 +2811,168 @@
   </info>
 
 
-
-
-
-
-
-
-
-<!-- これ以上書き込んでも反映されない??
   <info name="デンマーク海盆" info_type="Sea">
-    <position x="4456" y="360" />
+    <position x="4426" y="360" />
     <name_offset1 x="0" y="0" />
     <name_offset2 x="0" y="0" />
     <sea_detail speedup_rate="?" summer_angle_deg="300" winter_angle_deg="?">
       <name_position x="4452" y="376" />
     </sea_detail>
   </info>
-  <info name="北ノルウェー海盆" info_type="Sea">
-    <position x="4726" y="360" />
+  <info name="ノルウェー海盆" info_type="Sea">
+    <position x="4696" y="360" />
     <name_offset1 x="0" y="0" />
     <name_offset2 x="0" y="0" />
     <sea_detail speedup_rate="?" summer_angle_deg="15" winter_angle_deg="?">
       <name_position x="4722" y="376" />
     </sea_detail>
-  </info-->
+  </info>
 
 
-
-
+  <info name="北ノルウェー海" info_type="Sea">
+    <position x="130" y="340" />
+    <name_offset1 x="0" y="0" />
+    <name_offset2 x="0" y="0" />
+    <sea_detail speedup_rate="?" summer_angle_deg="?" winter_angle_deg="?">
+      <name_position x="155" y="356" />
+    </sea_detail>
+  </info>
+  <info name="フラム海峡" info_type="Sea">
+    <position x="4384" y="254" />
+    <name_offset1 x="0" y="0" />
+    <name_offset2 x="0" y="0" />
+    <sea_detail speedup_rate="?" summer_angle_deg="?" winter_angle_deg="?">
+      <name_position x="4400" y="270" />
+    </sea_detail>
+  </info>
+  <info name="ロフォーテン海盆" info_type="Sea">
+    <position x="4660" y="254" />
+    <name_offset1 x="0" y="0" />
+    <name_offset2 x="0" y="0" />
+    <sea_detail speedup_rate="?" summer_angle_deg="?" winter_angle_deg="?">
+      <name_position x="4690" y="270" />
+    </sea_detail>
+  </info>
+  <info name="西バレンツ海" info_type="Sea">
+    <position x="190" y="254" />
+    <name_offset1 x="0" y="0" />
+    <name_offset2 x="0" y="0" />
+    <sea_detail speedup_rate="?" summer_angle_deg="?" winter_angle_deg="?">
+      <name_position x="210" y="270" />
+    </sea_detail>
+  </info>
+  <info name="東バレンツ海" info_type="Sea">
+    <position x="580" y="254" />
+    <name_offset1 x="0" y="0" />
+    <name_offset2 x="0" y="0" />
+    <sea_detail speedup_rate="?" summer_angle_deg="?" winter_angle_deg="?">
+      <name_position x="600" y="270" />
+    </sea_detail>
+  </info>
+  <info name="白海" info_type="Sea">
+    <position x="500" y="340" />
+    <name_offset1 x="0" y="0" />
+    <name_offset2 x="0" y="0" />
+    <sea_detail speedup_rate="?" summer_angle_deg="?" winter_angle_deg="?">
+      <name_position x="500" y="356" />
+    </sea_detail>
+  </info>
+  <info name="西カラ海" info_type="Sea">
+    <position x="858" y="254" />
+    <name_offset1 x="0" y="0" />
+    <name_offset2 x="0" y="0" />
+    <sea_detail speedup_rate="?" summer_angle_deg="?" winter_angle_deg="?">
+      <name_position x="870" y="270" />
+    </sea_detail>
+  </info>
+  <info name="東カラ海" info_type="Sea">
+    <position x="1160" y="164" />
+    <name_offset1 x="0" y="0" />
+    <name_offset2 x="0" y="0" />
+    <sea_detail speedup_rate="?" summer_angle_deg="?" winter_angle_deg="?">
+      <name_position x="1170" y="180" />
+    </sea_detail>
+  </info>
+  <info name="ラプテフ海" info_type="Sea">
+    <position x="1585" y="209" />
+    <name_offset1 x="0" y="0" />
+    <name_offset2 x="0" y="0" />
+    <sea_detail speedup_rate="?" summer_angle_deg="?" winter_angle_deg="?">
+      <name_position x="1600" y="225" />
+    </sea_detail>
+  </info>
+  <info name="コラリヌイ島沖" info_type="Sea">
+    <position x="1735" y="209" />
+    <name_offset1 x="0" y="0" />
+    <name_offset2 x="0" y="0" />
+    <sea_detail speedup_rate="?" summer_angle_deg="?" winter_angle_deg="?">
+      <name_position x="1760" y="225" />
+    </sea_detail>
+  </info>
+  <info name="東シベリア海" info_type="Sea">
+    <position x="2180" y="304" />
+    <name_offset1 x="0" y="0" />
+    <name_offset2 x="0" y="0" />
+    <sea_detail speedup_rate="?" summer_angle_deg="?" winter_angle_deg="?">
+      <name_position x="2200" y="320" />
+    </sea_detail>
+  </info>
+  <info name="チュクシ海" info_type="Sea">
+    <position x="2525" y="304" />
+    <name_offset1 x="0" y="0" />
+    <name_offset2 x="0" y="0" />
+    <sea_detail speedup_rate="?" summer_angle_deg="?" winter_angle_deg="?">
+      <name_position x="2540" y="320" />
+    </sea_detail>
+  </info>
+  <info name="東ベーリング海" info_type="Sea">
+    <position x="2535" y="610" />
+    <name_offset1 x="0" y="0" />
+    <name_offset2 x="0" y="0" />
+    <sea_detail speedup_rate="?" summer_angle_deg="?" winter_angle_deg="?">
+      <name_position x="2560" y="626" />
+    </sea_detail>
+  </info>
+  <info name="西ベーリング海" info_type="Sea">
+    <position x="2335" y="610" />
+    <name_offset1 x="0" y="0" />
+    <name_offset2 x="0" y="0" />
+    <sea_detail speedup_rate="?" summer_angle_deg="?" winter_angle_deg="?">
+      <name_position x="2360" y="626" />
+    </sea_detail>
+  </info>
+  <info name="カムチャツカ半島沖" info_type="Sea">
+    <position x="2037" y="610" />
+    <name_offset1 x="0" y="0" />
+    <name_offset2 x="0" y="0" />
+    <sea_detail speedup_rate="?" summer_angle_deg="?" winter_angle_deg="?">
+      <name_position x="2063" y="626" />
+    </sea_detail>
+  </info>
+  <info name="オホーツク海" info_type="Sea">
+    <position x="1923" y="610" />
+    <name_offset1 x="0" y="0" />
+    <name_offset2 x="0" y="0" />
+    <sea_detail speedup_rate="?" summer_angle_deg="?" winter_angle_deg="?">
+      <name_position x="1943" y="626" />
+    </sea_detail>
+  </info>
+  <info name="北グリーンランド島沖" info_type="Sea">
+    <position x="4077" y="114" />
+    <name_offset1 x="0" y="0" />
+    <name_offset2 x="0" y="0" />
+    <sea_detail speedup_rate="?" summer_angle_deg="?" winter_angle_deg="?">
+      <name_position x="4117" y="130" />
+    </sea_detail>
+  </info>
+  <info name="南グリーンランド島沖" info_type="Sea">
+    <position x="4055" y="404" />
+    <name_offset1 x="0" y="0" />
+    <name_offset2 x="0" y="0" />
+    <sea_detail speedup_rate="?" summer_angle_deg="?" winter_angle_deg="?">
+      <name_position x="4095" y="420" />
+    </sea_detail>
+  </info>
 
 
 
