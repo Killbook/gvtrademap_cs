@@ -83,7 +83,7 @@ namespace gvtrademap_cs
 			AddRect(new Vector2(-2, -2), new Rectangle(176, 96, 182 - 176, 102 - 96));	// 10
 			AddRect(new Vector2(-2, -2), new Rectangle(176, 104, 182 - 176, 110 - 104));	// 11
 //Info 
-			AddRect(new Vector2(0, 0), new Rectangle(0, 0, 76 - 0, 16 - 0));	// 0
+			AddRect(new Vector2(0, 0), new Rectangle(0, 0, 76 - 0, 16 - 0));	// 0 アムステルダム
 			AddRect(new Vector2(-12, 0), new Rectangle(0, 16, 64 - 0, 32 - 16));	// 1
 			AddRect(new Vector2(-28, -16), new Rectangle(0, 32, 56 - 0, 48 - 32));	// 2
 			AddRect(new Vector2(0, -16), new Rectangle(0, 48, 40 - 0, 64 - 48));	// 3
@@ -147,7 +147,7 @@ namespace gvtrademap_cs
 			AddRect(new Vector2(-22, 0), new Rectangle(0, 976, 44 - 0, 992 - 976));	// 61
 			AddRect(new Vector2(-36, 0), new Rectangle(0, 992, 72 - 0, 1008 - 992));	// 62
 			AddRect(new Vector2(-1, -8), new Rectangle(0, 1008, 64 - 0, 1024 - 1008));	// 63
-			AddRect(new Vector2(-1, -3), new Rectangle(96, 0, 148 - 96, 16 - 0));	// 64
+			AddRect(new Vector2(-1, -3), new Rectangle(96, 0, 148 - 96, 16 - 0));	// 64 ベンガジ
 			AddRect(new Vector2(-1, -8), new Rectangle(96, 16, 144 - 96, 32 - 16));	// 65
 			AddRect(new Vector2(-24, -15), new Rectangle(96, 32, 144 - 96, 48 - 32));	// 66
 			AddRect(new Vector2(-32, -1), new Rectangle(96, 48, 160 - 96, 64 - 48));	// 67
@@ -211,7 +211,7 @@ namespace gvtrademap_cs
 			AddRect(new Vector2(-53, -14), new Rectangle(96, 976, 172 - 96, 992 - 976));	// 125
 			AddRect(new Vector2(-1, -1), new Rectangle(96, 992, 128 - 96, 1008 - 992));	// 126
 			AddRect(new Vector2(-25, -14), new Rectangle(96, 1008, 152 - 96, 1024 - 1008));	// 127
-			AddRect(new Vector2(-21, -14), new Rectangle(200, 0, 244 - 200, 16 - 0));	// 128
+			AddRect(new Vector2(-21, -14), new Rectangle(200, 0, 244 - 200, 16 - 0));	// 128 スラバヤ
 			AddRect(new Vector2(-20, -2), new Rectangle(200, 16, 240 - 200, 32 - 16));	// 129
 			AddRect(new Vector2(-51, -8), new Rectangle(200, 32, 256 - 200, 48 - 32));	// 130
 			AddRect(new Vector2(-45, -14), new Rectangle(200, 48, 280 - 200, 64 - 48));	// 131
@@ -260,19 +260,19 @@ namespace gvtrademap_cs
 			AddRect(new Vector2(-14, -16), new Rectangle(200, 736, 228 - 200, 752 - 736));	// 174
 			AddRect(new Vector2(-16, -16), new Rectangle(200, 752, 232 - 200, 768 - 752));	// 175
 			AddRect(new Vector2(-16, -2), new Rectangle(200, 768, 232 - 200, 784 - 768));	// 176
-			AddRect(new Vector2(-101, 6), new Rectangle(168, 784, 266 - 168, 800 - 784));	// 177
-			AddRect(new Vector2(-114, -8), new Rectangle(168, 800, 272 - 168, 816 - 800));	// 178
+			AddRect(new Vector2(-101, 6), new Rectangle(168, 784, 266 - 168, 800 - 784));	// 177 ヌーベルフランス
+			AddRect(new Vector2(-114, -8), new Rectangle(168, 800, 272 - 168, 816 - 800));	// 178 
 			AddRect(new Vector2(-124, -17), new Rectangle(168, 816, 284 - 168, 832 - 816));	// 179
 			AddRect(new Vector2(-72, -6), new Rectangle(168, 832, 230 - 168, 848 - 832));	// 180
 			AddRect(new Vector2(-70, -20), new Rectangle(168, 848, 230 - 168, 864 - 848));	// 181
-			AddRect(new Vector2(-65, -18), new Rectangle(168, 864, 230 - 168, 880 - 864));	// 182
+			AddRect(new Vector2(-65, -18), new Rectangle(168, 864, 230 - 168, 880 - 864));	// 182 ジョージア
 
-            AddRect(new Vector2(-58f, -31f), new Rectangle(168, 880, 48, 16));
-            AddRect(new Vector2(-50f, -23f), new Rectangle(136, 896, 64, 16));
-            AddRect(new Vector2(-14f, -23f), new Rectangle(240, 768, 32, 16));
-            AddRect(new Vector2(-45f, -20f), new Rectangle(224, 880, 64, 16));
-            AddRect(new Vector2(-45f, 5f), new Rectangle(240, 752, 40, 16));
-            AddRect(new Vector2(19f, -13f), new Rectangle(208, 896, 80, 16));
+            AddRect(new Vector2(-58f, -31f), new Rectangle(168, 880, 48, 16)); // 183 フロリダ
+            AddRect(new Vector2(-50f, -23f), new Rectangle(136, 896, 64, 16)); // 184 ルイジアナ
+            AddRect(new Vector2(-14f, -23f), new Rectangle(240, 768, 32, 16)); // 185 ローマ
+            AddRect(new Vector2(-45f, -20f), new Rectangle(224, 880, 64, 16)); // 186 フィレンツェ
+            AddRect(new Vector2(-45f, 5f), new Rectangle(240, 752, 40, 16)); // 187 パリ
+            AddRect(new Vector2(19f, -13f), new Rectangle(208, 896, 80, 16)); // 188 オクスフォード
 
             //info2 
             AddRect(new Vector2(-19, 0), new Rectangle(288, 0, 344 - 288, 10 - 0));	// 0
@@ -436,10 +436,20 @@ namespace gvtrademap_cs
             AddRect(new Vector2(-28f, -16f), new Rectangle(380, 650, 60, 10));
             AddRect(new Vector2(-42f, -16f), new Rectangle(380, 660, 90, 10));
 
-			AddRect(new Vector2(-52, 0), new Rectangle(184, 960, 288 - 184, 976 - 960));	// 155
-			AddRect(new Vector2(-31, -16), new Rectangle(184, 976, 246 - 184, 992 - 976));	// 156
-			AddRect(new Vector2(0, -8), new Rectangle(184, 992, 260 - 184, 1008 - 992));	// 157
-			AddRect(new Vector2(-38, -16), new Rectangle(184, 1008, 260 - 184, 1024 - 1008));	// 158
-		}
+			AddRect(new Vector2(-52, 0), new Rectangle(184, 960, 288 - 184, 976 - 960));	// 155 ディエゴガルシア島
+			AddRect(new Vector2(-31, -16), new Rectangle(184, 976, 246 - 184, 992 - 976));	// 156 サバイー島
+			AddRect(new Vector2(0, -8), new Rectangle(184, 992, 260 - 184, 1008 - 992));	// 157 セントルシア島
+			AddRect(new Vector2(-38, -16), new Rectangle(184, 1008, 260 - 184, 1024 - 1008));	// 158 アセンション島
+
+            AddRect(new Vector2(0, 0), new Rectangle(168, 913, 114, 16)); // 189 サンクトペテルブルク
+            AddRect(new Vector2(0, 0), new Rectangle(168, 929,  47, 15)); // 190 コッコラ
+            AddRect(new Vector2(0, 0), new Rectangle(226, 929,  39, 16)); // 191 ハワイ
+            AddRect(new Vector2(0, 0), new Rectangle(168, 944,  58, 16)); // 192 ナルヴィク
+            AddRect(new Vector2(0, 0), new Rectangle(376, 959,  59, 16)); // 193 マンガゼヤ
+            AddRect(new Vector2(0, 0), new Rectangle(376, 944,  49, 16)); // 194 ティクシ
+            AddRect(new Vector2(0, 0), new Rectangle(376, 928,  80, 16)); // 195 フランクフルト
+            AddRect(new Vector2(0, 0), new Rectangle(376, 912, 102, 16)); // 196 ペトロパブロフスク
+            AddRect(new Vector2(0, 0), new Rectangle(376, 896,  82, 16)); // 197 ポートロイヤル
+        }
 	}
 }
