@@ -2748,17 +2748,23 @@
   </info>
 
 
+  <info name="サンクトペテルブルク" url_index="495" info_type="City">
+    <position x="360" y="575" />
+    <name_offset1 x="0" y="3" />
+    <name_offset2 x="0" y="3" />
+    <city_detail index="10" city_type="Capital" alliance_type="Capital" cultural_sphere="Russia" has_name_image="True" default_country="Russia" lang1="ノルド語" bar_flags="7" />
+  </info>
   <info name="コッコラ" url_index="" info_type="City">
     <position x="290" y="500" />
-    <name_offset1 x="-4" y="-2" />
-    <name_offset2 x="-2" y="-2" />
+    <name_offset1 x="2" y="2" />
+    <name_offset2 x="2" y="2" />
     <city_detail index="201" city_type="City" alliance_type="Alliance" cultural_sphere="NorthEurope" has_name_image="True" lang1="ノルド語" lang2="スラブ諸語" bar_flags="0" />
   </info>
       <info name="ハワイ" url_index="" info_type="City">
     <position x="2662" y="1155" />
     <name_offset1 x="-4" y="-2" />
     <name_offset2 x="-2" y="-2" />
-    <city_detail index="10" city_type="City" alliance_type="Alliance" cultural_sphere="Oceania" has_name_image="True" lang1="オセアニア諸語" bar_flags="0" />
+    <city_detail index="202" city_type="City" alliance_type="Alliance" cultural_sphere="Oceania" has_name_image="True" lang1="オセアニア諸語" bar_flags="0" />
   </info> 
    <info name="ハワイ沖" info_type="Sea">
     <position x="2550" y="975" />
@@ -2770,44 +2776,39 @@
   </info> 
   <info name="ナルヴィク" url_index="" info_type="City">
     <position x="208" y="385" />
-    <name_offset1 x="-4" y="-2" />
-    <name_offset2 x="-2" y="-2" />
-    <city_detail index="10" city_type="City" alliance_type="Unknown" cultural_sphere="Unknown" has_name_image="True" lang1="補給港" bar_flags="0" />
+    <name_offset1 x="8" y="0" />
+    <name_offset2 x="8" y="0" />
+    <city_detail index="203" city_type="City" alliance_type="Unknown" cultural_sphere="Unknown" has_name_image="True" lang1="補給港" bar_flags="0" />
   </info> 
   <info name="マンガゼヤ" url_index="" info_type="City">
     <position x="968" y="310" />
-    <name_offset1 x="-4" y="-2" />
-    <name_offset2 x="-2" y="-2" />
-    <city_detail index="10" city_type="City" alliance_type="Unknown" cultural_sphere="Unknown" has_name_image="True" lang1="補給港" bar_flags="0" />
+    <name_offset1 x="-50" y="4" />
+    <name_offset2 x="-50" y="4" />
+    <city_detail index="204" city_type="City" alliance_type="Unknown" cultural_sphere="Unknown" has_name_image="True" lang1="補給港" bar_flags="0" />
   </info> 
   <info name="ティクシ" url_index="" info_type="City">
     <position x="1730" y="278" />
-    <name_offset1 x="-4" y="-2" />
-    <name_offset2 x="-2" y="-2" />
-    <city_detail index="10" city_type="City" alliance_type="Unknown" cultural_sphere="Unknown" has_name_image="True" lang1="補給港" bar_flags="0" />
+    <name_offset1 x="-40" y="15" />
+    <name_offset2 x="-40" y="15" />
+    <city_detail index="205" city_type="City" alliance_type="Unknown" cultural_sphere="Unknown" has_name_image="True" lang1="補給港" bar_flags="0" />
   </info> 
   <info name="フランクフルト" url_index="495" info_type="City">
     <position x="118" y="712" />
     <name_offset1 x="0" y="3" />
     <name_offset2 x="0" y="3" />
-  </info>
-  <info name="サンクトペテルブルク" url_index="495" info_type="City">
-    <position x="360" y="575" />
-    <name_offset1 x="0" y="3" />
-    <name_offset2 x="0" y="3" />
-	<city_detail index="10" city_type="Capital" alliance_type="Capital" cultural_sphere="Roshia" has_name_image="True" default_country="Roshia" lang1="ノルド語" bar_flags="7" />
+    <city_detail index="206" city_type="City" alliance_type="Territory" cultural_sphere="Unknown" default_country="France" has_name_image="True" lang1="フランス語" bar_flags="0" />
   </info>
    <info name="ペトロパブロフスク" url_index="" info_type="City">
     <position x="2142" y="711" />
-    <name_offset1 x="-4" y="-2" />
-    <name_offset2 x="-2" y="-2" />
-    <city_detail index="10" city_type="City" alliance_type="Unknown" cultural_sphere="Unknown" has_name_image="True" lang1="補給港" bar_flags="0" />
+    <name_offset1 x="8" y="8" />
+    <name_offset2 x="8" y="8" />
+    <city_detail index="207" city_type="City" alliance_type="Unknown" cultural_sphere="Unknown" has_name_image="True" lang1="補給港" bar_flags="0" />
   </info>
   <info name="ポートロイヤル" url_index="147" info_type="City">
     <position x="3858" y="1188" />
     <name_offset1 x="0" y="0" />
     <name_offset2 x="0" y="0" />
-    <city_detail index="116" city_type="City" alliance_type="Piratical" cultural_sphere="Caribbean" has_name_image="True" bar_flags="0" />
+    <city_detail index="208" city_type="City" alliance_type="Piratical" cultural_sphere="Caribbean" has_name_image="True" bar_flags="0" />
   </info>
 
 
