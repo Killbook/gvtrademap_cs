@@ -5,6 +5,7 @@
 *.suo
 *.user
 *.sln.docstates
+map/map.xcf
 
 # Build results
 [Dd]ebug/
@@ -182,3 +183,4 @@ Desktop.ini
 
 # Recycle Bin used on file shares
 $RECYCLE.BIN/
+/map/canvas.html

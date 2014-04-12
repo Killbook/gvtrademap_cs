@@ -279,10 +279,12 @@ namespace gvtrademap_cs
 				if(scale >= 0.7f)	scale	= 1;
 				if(scale < 0.5f)	scale	= 0.5f;
 
+                Graphics g = Graphics.FromHwnd(IntPtr.Zero);
 				float[]	vector	= {	m_lib.device.client_size.X, m_lib.device.client_size.Y };
 				float[] _offset	= { offset.X, offset.Y };
-				float[] gscale	= { scale, scale };
-				effect.SetValue("ViewportSize", vector);
+                //float[] gscale  = { scale * (g.DpiX / 96.0f), scale * (g.DpiY / 96.0f) };
+                float[] gscale  = { scale, scale };
+                effect.SetValue("ViewportSize", vector);
 				effect.SetValue("Texture", tex);
 				effect.SetValue("MapOffset", _offset);
 				effect.SetValue("MapScale", mapscale);
