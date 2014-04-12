@@ -15,6 +15,7 @@ using System.Drawing;
 
 using directx;
 using gvo_base;
+using Utility;
 using Microsoft.DirectX;
 using System.Runtime.InteropServices;
 using Microsoft.DirectX.Direct3D;
@@ -276,13 +277,12 @@ namespace gvtrademap_cs
 
 			try{
 				float	scale	= mapscale;
-				if(scale >= 0.7f)	scale	= 1;
-				if(scale < 0.5f)	scale	= 0.5f;
+                if (scale >= 0.7f) scale = 1f;
+                if (scale < 0.5f) scale = 0.5f;
+                scale *= this.GetDpiScaleRatio();
 
-                Graphics g = Graphics.FromHwnd(IntPtr.Zero);
 				float[]	vector	= {	m_lib.device.client_size.X, m_lib.device.client_size.Y };
 				float[] _offset	= { offset.X, offset.Y };
-                //float[] gscale  = { scale * (g.DpiX / 96.0f), scale * (g.DpiY / 96.0f) };
                 float[] gscale  = { scale, scale };
                 effect.SetValue("ViewportSize", vector);
 				effect.SetValue("Texture", tex);
@@ -387,10 +387,16 @@ namespace gvtrademap_cs
 			sprite_vertex[]		vbo2	= new sprite_vertex[(m_world.Seas.Count * 3) * 4];
 
 			int	index	= 0;
-			foreach(GvoWorldInfo.Info i in m_world.Seas){
+            float scale = this.GetDpiScaleRatio();
+            int offset = (int)(6 * scale);
+            foreach (GvoWorldInfo.Info i in m_world.Seas)
+            {
+
 				// 文字
-				set_vbo(ref vbo1, index, i.position, new Point(-6,0), m_lib.seainfonameimage.GetRect(index), -1);
-				set_vbo(ref vbo2, index, i.position, new Point(-6,0), m_lib.seainfonameimage.GetRect(index), -1);
+                var pos = new Point(i.position.X, i.position.Y);
+                pos.Y += (int)((pos.Y - i.SeaInfo.WindPos.Y) * scale * 0.2f); // 文字表示位置をちょっとだけ調整するの
+                set_vbo(ref vbo1, index, pos, new Point(-offset, 0), m_lib.seainfonameimage.GetRect(index), -1);
+				set_vbo(ref vbo2, index, pos, new Point(-offset, 0), m_lib.seainfonameimage.GetRect(index), -1);
 				index++;
 			}
 
@@ -401,12 +407,12 @@ namespace gvtrademap_cs
 											i.SeaInfo.WindPos.Y - i.position.Y);
 
 					// 夏
-					set_vbo(ref vbo1, index, i.position, new Point(pos.X - 6, pos.Y), m_lib.seainfonameimage.GetWindArrowIcon(), i.SeaInfo.SummerAngle, -1);
-					set_vbo(ref vbo2, index, i.position, new Point(pos.X - 6, pos.Y), m_lib.seainfonameimage.GetWindArrowIcon(), i.SeaInfo.SummerAngle, WIND_ANGLE_COLOR2);
+                    set_vbo(ref vbo1, index, i.position, new Point(pos.X - offset, pos.Y), m_lib.seainfonameimage.GetWindArrowIcon(), i.SeaInfo.SummerAngle, -1);
+                    set_vbo(ref vbo2, index, i.position, new Point(pos.X - offset, pos.Y), m_lib.seainfonameimage.GetWindArrowIcon(), i.SeaInfo.SummerAngle, WIND_ANGLE_COLOR2);
 					index++;
 					// 冬
-					set_vbo(ref vbo1, index, i.position, new Point(pos.X + 6, pos.Y), m_lib.seainfonameimage.GetWindArrowIcon(), i.SeaInfo.WinterAngle, WIND_ANGLE_COLOR2);
-					set_vbo(ref vbo2, index, i.position, new Point(pos.X + 6, pos.Y), m_lib.seainfonameimage.GetWindArrowIcon(), i.SeaInfo.WinterAngle, -1);
+                    set_vbo(ref vbo1, index, i.position, new Point(pos.X + offset, pos.Y), m_lib.seainfonameimage.GetWindArrowIcon(), i.SeaInfo.WinterAngle, WIND_ANGLE_COLOR2);
+                    set_vbo(ref vbo2, index, i.position, new Point(pos.X + offset, pos.Y), m_lib.seainfonameimage.GetWindArrowIcon(), i.SeaInfo.WinterAngle, -1);
 					index++;
 				}
 			}
@@ -510,5 +516,20 @@ namespace gvtrademap_cs
 				get { return Marshal.SizeOf( typeof( sprite_vertex ) ); }
 			}
 		}
-	}
+
+        /*-------------------------------------------------------------------------
+         DPIスケーリング倍率取得
+        ---------------------------------------------------------------------------*/
+        private float GetDpiScaleRatio()
+        {
+            if (this.m_lib.setting.enable_dpi_scaling)
+            {
+                return Useful.GetDpiRatio();
+            }
+            else 
+            {
+                return 1f;
+            }
+        }
+    }
 }
