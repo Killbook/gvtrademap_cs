@@ -3111,6 +3111,11 @@
       <name_position x="3975" y="384" />
     </sea_detail>
   </info>
+  <info name="北米大陸西岸" url_index="" info_type="Shore">
+    <position x="3110" y="816" />
+    <name_offset1 x="5" y="-5" />
+    <name_offset2 x="0" y="0" />
+  </info>
 
 
 </info_root>
