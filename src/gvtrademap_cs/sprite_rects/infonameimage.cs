@@ -450,6 +450,12 @@ namespace gvtrademap_cs
             AddRect(new Vector2(0, 0), new Rectangle(376, 928,  80, 16)); // 195 フランクフルト
             AddRect(new Vector2(0, 0), new Rectangle(376, 912, 102, 16)); // 196 ペトロパブロフスク
             AddRect(new Vector2(0, 0), new Rectangle(376, 896,  82, 16)); // 197 ポートロイヤル
+
+            AddRect(new Vector2(0, 0), new Rectangle(502, 1, 93, 16)); // 198 サンフランシスコ
+            AddRect(new Vector2(0, 0), new Rectangle(502, 17, 40, 16)); // 199 タコマ
+            AddRect(new Vector2(0, 0), new Rectangle(502, 33, 40, 16)); // 200 シトカ
+            AddRect(new Vector2(0, 0), new Rectangle(502, 49, 40, 16)); // 201 バロー
+            AddRect(new Vector2(0, 0), new Rectangle(502, 65, 62, 16)); // 202 チャーチル
         }
 	}
 }
