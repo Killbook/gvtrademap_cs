@@ -441,6 +441,7 @@ namespace gvtrademap_cs
 			AddRect(new Vector2(0, -8), new Rectangle(184, 992, 260 - 184, 1008 - 992));	// 157 セントルシア島
 			AddRect(new Vector2(-38, -16), new Rectangle(184, 1008, 260 - 184, 1024 - 1008));	// 158 アセンション島
 
+
             AddRect(new Vector2(0, 0), new Rectangle(168, 913, 114, 16)); // 189 サンクトペテルブルク
             AddRect(new Vector2(0, 0), new Rectangle(168, 929,  47, 15)); // 190 コッコラ
             AddRect(new Vector2(0, 0), new Rectangle(226, 929,  39, 16)); // 191 ハワイ
@@ -451,11 +452,13 @@ namespace gvtrademap_cs
             AddRect(new Vector2(0, 0), new Rectangle(376, 912, 102, 16)); // 196 ペトロパブロフスク
             AddRect(new Vector2(0, 0), new Rectangle(376, 896,  82, 16)); // 197 ポートロイヤル
 
+            // 2014-08-05 Gran Atlas C3 Wild West
             AddRect(new Vector2(0, 0), new Rectangle(502, 1, 93, 16)); // 198 サンフランシスコ
             AddRect(new Vector2(0, 0), new Rectangle(502, 17, 40, 16)); // 199 タコマ
             AddRect(new Vector2(0, 0), new Rectangle(502, 33, 40, 16)); // 200 シトカ
             AddRect(new Vector2(0, 0), new Rectangle(502, 49, 40, 16)); // 201 バロー
             AddRect(new Vector2(0, 0), new Rectangle(502, 65, 62, 16)); // 202 チャーチル
+            AddRect(new Vector2(0, 0), new Rectangle(380, 672, 56, 10)); // 北米大陸西岸
         }
 	}
 }
