@@ -173,6 +173,20 @@ namespace gvtrademap_cs
             AddRect(new Vector2(-6, -6), new Rectangle(180, 360, 101, 12)); // 110 北グリーンランド島沖
             AddRect(new Vector2(-6, -6), new Rectangle(180, 372, 101, 12)); // 111 南グリーンランド島沖
 
+            AddRect(new Vector2(-6, -6), new Rectangle(285,   0,  52, 12)); // 112 ハドソン湾
+            AddRect(new Vector2(-6, -6), new Rectangle(285,  12,  62, 12)); // 113 ハドソン海峡
+            AddRect(new Vector2(-6, -6), new Rectangle(285,  24,  82, 12)); // 114 カリフォルニア湾
+            AddRect(new Vector2(-6, -6), new Rectangle(285,  36,  92, 12)); // 115 サンフランシスコ沖
+            AddRect(new Vector2(-6, -6), new Rectangle(285,  48, 104, 12)); // 116 アレキサンダー諸島沖
+            AddRect(new Vector2(-6, -6), new Rectangle(285,  60,  54, 12)); // 117 北東太平洋
+            AddRect(new Vector2(-6, -6), new Rectangle(285,  72,  52, 12)); // 118 アラスカ湾
+            AddRect(new Vector2(-6, -6), new Rectangle(285,  84,  54, 12)); // 119 バロー岬沖
+            AddRect(new Vector2(-6, -6), new Rectangle(285,  96,  72, 12)); // 120 ボーフォート海
+            AddRect(new Vector2(-6, -6), new Rectangle(285, 108,  54, 12)); // 121 北極諸島沖
+            AddRect(new Vector2(-6, -6), new Rectangle(285, 120,  82, 12)); // 122 エルズミーア島沖
+            AddRect(new Vector2(-6, -6), new Rectangle(285, 132,  62, 12)); // 123 バフィン島沖
+            AddRect(new Vector2(-6, -6), new Rectangle(285, 144,  52, 12)); // 124 バフィン湾
+
             AddRect(new Vector2(-4, -7), new Rectangle(240, 492, 250 - 240, 504 - 492)); // WindArrowIcon
             AddRect(new Vector2(-2, -2), new Rectangle(240, 480, 246 - 240, 486 - 480)); // CityIcon
         }
