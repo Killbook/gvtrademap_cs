@@ -177,6 +177,7 @@ namespace gvtrademap_cs
 			checkBox19.Checked		= m_setting.draw_favorite_sea_routes_alpha_popup;
 			checkBox4.Checked		= m_setting.force_show_build_ship;
 			checkBox7.Checked		= m_setting.debug_flag_show_potision;
+            checkBox15.Checked      = m_setting.enable_dpi_scaling;
 	
 			if(m_setting.capture_interval == CaptureIntervalIndex.Per250ms){
 				comboBox4.SelectedIndex	= 0;
@@ -358,6 +359,7 @@ namespace gvtrademap_cs
 			m_setting.draw_favorite_sea_routes_alpha_popup	= checkBox19.Checked;
 			m_setting.force_show_build_ship		= checkBox4.Checked;
 			m_setting.debug_flag_show_potision	= checkBox7.Checked;
+            m_setting.enable_dpi_scaling        = checkBox15.Checked;
 
 			m_setting.searoutes_group_max		= Useful.ToInt32(textBox3.Text, -1);
 			m_setting.trash_searoutes_group_max	= Useful.ToInt32(textBox9.Text, -1);
@@ -462,7 +464,11 @@ namespace gvtrademap_cs
 		{
 			update_gray_ctrl();
 		}
-		private void checkBox400_CheckedChanged(object sender, EventArgs e)
+        private void checkBox15_CheckedChanged(object sender, EventArgs e)
+        {
+            update_gray_ctrl();
+        }
+        private void checkBox400_CheckedChanged(object sender, EventArgs e)
 		{
 			update_gray_ctrl();
 		}

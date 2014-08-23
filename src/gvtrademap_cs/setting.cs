@@ -193,6 +193,7 @@ namespace gvtrademap_cs
 		private bool					m_enable_favorite_sea_routes_alpha;	// お気に入り航路図を半透明で描画する
 		private bool					m_draw_favorite_sea_routes_alpha_popup;	// お気に入り航路図の災害ポップアップを描画する
 		private	bool					m_debug_flag_show_potision;	// 情報ウインドウの座標を地図座標系で表示する
+        private bool                    m_enable_dpi_scaling;       // DPIスケーリングに対応するフリをする
 
 		// 表示関係
 		private string					m_select_info;				// 選択中の世界情報
@@ -439,6 +440,8 @@ namespace gvtrademap_cs
 																set{	m_draw_favorite_sea_routes_alpha_popup	= value;	}}
 		public bool debug_flag_show_potision				{	get{	return m_debug_flag_show_potision;		}
 																set{	m_debug_flag_show_potision	= value;	}}
+        public bool enable_dpi_scaling                      {   get{    return m_enable_dpi_scaling;  }
+                                                                set{    m_enable_dpi_scaling = value; }}
 
 		// 表示項目
 		public DrawSettingWebIcons draw_setting_web_icons{		get{	return m_draw_setting_web_icons;	}
@@ -541,7 +544,8 @@ namespace gvtrademap_cs
 			minimum_draw_days			= 0;
 			enable_favorite_sea_routes_alpha		= true;
 			draw_favorite_sea_routes_alpha_popup	= false;
-			debug_flag_show_potision	= false;
+            debug_flag_show_potision    = false;
+            enable_dpi_scaling          = false;
 
 			// 表示関係
 			select_info					= "";		// 選択なし
@@ -707,6 +711,7 @@ namespace gvtrademap_cs
 			s.enable_favorite_sea_routes_alpha		= enable_favorite_sea_routes_alpha;
 			s.draw_favorite_sea_routes_alpha_popup	= draw_favorite_sea_routes_alpha_popup;
 			s.debug_flag_show_potision	= debug_flag_show_potision;
+            s.enable_dpi_scaling        = enable_dpi_scaling;
 
 			// リクエストはすべてキャンセル
 			s.CancelAllRequests();
@@ -806,6 +811,7 @@ namespace gvtrademap_cs
 			this.enable_favorite_sea_routes_alpha		= s.enable_favorite_sea_routes_alpha;
 			this.draw_favorite_sea_routes_alpha_popup	= s.draw_favorite_sea_routes_alpha_popup;
 			this.debug_flag_show_potision	= s.debug_flag_show_potision;
+            this.enable_dpi_scaling         = s.enable_dpi_scaling;
 
 			// リクエストはすべてキャンセル
 			CancelAllRequests();
@@ -883,6 +889,7 @@ namespace gvtrademap_cs
 			enable_favorite_sea_routes_alpha		= p.GetProfile("dialog", "enable_favorite_sea_routes_alpha",	enable_favorite_sea_routes_alpha);
 			draw_favorite_sea_routes_alpha_popup	= p.GetProfile("dialog", "draw_favorite_sea_routes_alpha_popup",	draw_favorite_sea_routes_alpha_popup);
 			debug_flag_show_potision	= p.GetProfile("dialog", "debug_flag_show_potision",	debug_flag_show_potision);
+            enable_dpi_scaling          = p.GetProfile("dialog", "enable_dpi_scaling", enable_dpi_scaling);
 
 			// 表示関係
 			m_select_info			= p.GetProfile("map", "select_info",		m_select_info);
@@ -993,6 +1000,7 @@ namespace gvtrademap_cs
 			p.SetProfile("dialog", "enable_favorite_sea_routes_alpha",	enable_favorite_sea_routes_alpha);
 			p.SetProfile("dialog", "draw_favorite_sea_routes_alpha_popup",	draw_favorite_sea_routes_alpha_popup);
 			p.SetProfile("dialog", "debug_flag_show_potision",	debug_flag_show_potision);
+            p.SetProfile("dialog", "enable_dpi_scaling", enable_dpi_scaling);
 
 			// 表示関係
 			p.SetProfile("map", "select_info",				m_select_info);
