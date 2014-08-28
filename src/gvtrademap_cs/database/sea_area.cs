@@ -415,7 +415,8 @@ namespace gvtrademap_cs
 			once.Add("南太平洋海盆北", new Vector2(2622,1498), new Vector2(523,299), false);
 			once.Add("南太平洋海盆", new Vector2(2771,1798), new Vector2(374,300), false);
 			once.Add("南太平洋海盆東", new Vector2(3146,1498), new Vector2(448,600), false);
-			m_groups.Add(once);
+            once.Add("ハワイ沖", new Vector2(2321,751), new Vector2(449,447), true);
+            m_groups.Add(once);
 
 			// 中南米西岸
 			once		= new sea_area_once("中南米西岸");
@@ -434,14 +435,71 @@ namespace gvtrademap_cs
 			once.Add("北西太平洋海盆", new Vector2(2024,751), new Vector2(297,447), true);
 			m_groups.Add(once);
 
-// 独立してないっぽい
-/*			// 北米
-			once		= new sea_area_once("北米");
-			once.Add("コッド岬沖", new Vector2(3819,750), new Vector2(224,148), true);
-			once.Add("バミューダ諸島沖", new Vector2(3717,899), new Vector2(326,149), true);
-			once.Add("テラ・ノヴァ海", new Vector2(3790-1,600), new Vector2(254,149), true);
+			// 極北大西洋
+			once		= new sea_area_once("極北大西洋");
+			once.Add("フラム海峡",           new Vector2(4344,   0), new Vector2(224,294), true);
+			once.Add("デンマーク海盆",       new Vector2(4344, 295), new Vector2(224,155), false);
+			once.Add("ロフォーテン海盆",     new Vector2(4569,   0), new Vector2(223,294), true);
+			once.Add("ノルウェー海盆",       new Vector2(4569, 295), new Vector2(224,155), false);
+            once.Add("ノルウェー海盆2",      new Vector2(   0, 295), new Vector2( 74,155), false);
+            m_groups.Add(once);
+
+			// ヨーロッパ極北
+			once		= new sea_area_once("ヨーロッパ極北");
+            once.Add("西バレンツ海",         new Vector2(   1,   0), new Vector2(447,294), true);
+            once.Add("北ノルウェー海",       new Vector2(  75, 295), new Vector2(300,155), true);
+            once.Add("東バレンツ海",         new Vector2( 449,   0), new Vector2(304,294), true);
+            once.Add("東バレンツ海2",        new Vector2( 601, 294), new Vector2(152,156), true);
+            once.Add("白海",                 new Vector2( 376, 295), new Vector2(223,225), true);
+            m_groups.Add(once);
+
+            // ユーラシア北
+            once = new sea_area_once("ユーラシア北");
+            once.Add("西カラ海",             new Vector2( 754,   0), new Vector2(369,450), true);
+			once.Add("東カラ海",             new Vector2(1124,   0), new Vector2(294,450), true);
+			once.Add("ラプテフ海",           new Vector2(1419,   0), new Vector2(298,450), true);
 			m_groups.Add(once);
-*/	
+
+			// ユーラシア極東
+			once		= new sea_area_once("ユーラシア極東");
+            once.Add("コテリヌイ島沖",       new Vector2(1718,   0), new Vector2(304,450), true);
+            once.Add("東シベリア海",         new Vector2(2023,   0), new Vector2(373,450), true);
+            once.Add("チュクチ海",           new Vector2(2397,   0), new Vector2(297,450), true);
+			m_groups.Add(once);
+
+			// ベーリング海
+			once		= new sea_area_once("ベーリング海");
+            once.Add("東ベーリング海",       new Vector2(2472, 451), new Vector2(222,298), true);
+            once.Add("西ベーリング海",       new Vector2(2246, 451), new Vector2(225,298), true);
+            once.Add("カムチャツカ半島沖",   new Vector2(2023, 451), new Vector2(222,298), true);
+            once.Add("オホーツク海",         new Vector2(1648, 451), new Vector2(374,298), true);
+            m_groups.Add(once);
+
+			// 北米西岸
+			once		= new sea_area_once("北米西岸");
+			once.Add("アレキサンダー諸島沖", new Vector2(2994, 451), new Vector2(223,447), true);
+			once.Add("北東太平洋",           new Vector2(2770, 750), new Vector2(223,448), false);
+			once.Add("アラスカ湾",           new Vector2(2695, 451), new Vector2(298,298), true);
+			once.Add("カリフォルニア湾",     new Vector2(3218, 899), new Vector2(254,299), true);
+			once.Add("サンフランシスコ沖",   new Vector2(2994, 899), new Vector2(223,299), true);
+			m_groups.Add(once);
+
+			// 東カナダ
+			once		= new sea_area_once("東カナダ");
+			once.Add("ハドソン海峡",         new Vector2(3746, 451), new Vector2(148,148), true);
+            once.Add("ハドソン湾",           new Vector2(3595, 451), new Vector2(150,298), true);
+			once.Add("バフィン湾",           new Vector2(3895, 295), new Vector2(147,155), false);
+			once.Add("バフィン島沖",         new Vector2(3595, 295), new Vector2(299,155), true);
+			once.Add("エルズミーア島沖",     new Vector2(3595,   0), new Vector2(447,294), true);
+			m_groups.Add(once);
+
+			// 西カナダ
+			once		= new sea_area_once("西カナダ");
+			once.Add("北極諸島沖",           new Vector2(3218,   0), new Vector2(376,450), true);
+			once.Add("ボーフォート海",       new Vector2(2994,   0), new Vector2(223,450), true);
+			once.Add("バロー岬沖",           new Vector2(2695,   0), new Vector2(298,450), true);
+			m_groups.Add(once);
+
 			// 読み込み
 			load(fname);
 		}

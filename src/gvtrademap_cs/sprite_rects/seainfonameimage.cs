@@ -163,7 +163,7 @@ namespace gvtrademap_cs
             AddRect(new Vector2(-6, -6), new Rectangle(180, 216,  41, 12)); // 100 西カラ海
             AddRect(new Vector2(-6, -6), new Rectangle(180, 228,  41, 12)); // 101 東カラ海
             AddRect(new Vector2(-6, -6), new Rectangle(180, 240,  49, 12)); // 102 ラプテフ海
-            AddRect(new Vector2(-6, -6), new Rectangle(180, 252,  70, 12)); // 103 コラリヌイ島沖
+            AddRect(new Vector2(-6, -6), new Rectangle(180, 252,  70, 12)); // 103 コテリヌイ島沖
             AddRect(new Vector2(-6, -6), new Rectangle(180, 264,  60, 12)); // 104 東シベリア海
             AddRect(new Vector2(-6, -6), new Rectangle(180, 276,  50, 12)); // 105 チュクシ海
             AddRect(new Vector2(-6, -6), new Rectangle(180, 300,  71, 12)); // 106 東ベーリング海

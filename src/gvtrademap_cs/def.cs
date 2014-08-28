@@ -22,14 +22,14 @@ namespace gvtrademap_cs
 		public const string		URL_HP						= @"http://www.geocities.jp/cookiezephyros/";
 	
 		// 更新確認用
-		static public int		VERSION						= 1323003;
+		static public int		VERSION						= 1323004;
 		static public string	VERSION_URL					= URL_HP + @"download/gvtrademap_cs_version.dat";
 		static public string	VERSION_FNAME				= "version.txt";
 		static public string	DOWNLOAD_URL				= URL_HP + @"gvtrademap.html";
 
 		// Window title 及びバージョン情報
 //		public const string		WINDOW_TITLE				= "大航海時代Online 交易MAP C# ver.1.22β1";
-		public const string		WINDOW_TITLE				= "大航海時代Online 交易MAP C# ver.1.32.3+3";
+		public const string		WINDOW_TITLE				= "大航海時代Online 交易MAP C# ver.1.32.3+4";
 
 		// 海域変動収集アプリケーション
 		public const string		SEAAREA_APP_FNAME			= "gvoac.exe";
